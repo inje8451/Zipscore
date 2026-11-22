@@ -9,8 +9,8 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 | 배포본 | `work/zipscore-pages/index.html` → **https://zipscore.github.io/** (조직 대표) · https://inje8451.github.io/Zipscore/ (개인 미러). 두 곳 모두 `bash work/zipscore-pages/deploy.sh` 한 번으로 배포 |
 | 이전 버전 | `index-v1.html`(v1)·Git 히스토리(v2·v2.1·v2.2·v3.0) |
 | 미리보기 | `preview/v35-share-card-sample.png`(성적표 카드 PNG 실물·6공구 크리스탈 80 A) · `v35-share-modal.png`(카드 미리보기 모달) · `v35-share-card-first.png` · `v35-share-card-lake4.png` · `preview/v34-crystal.png`(6공구 크리스탈 80 A) · `v34-thestar.png` · `v34-lake4.png` · `v34-lux.png` · `v34-lake1.png` · `v34-report-songdo.png` · `v34-rank-songdo.png` · `v34-desktop.png` · `preview/v3-main.png`(성적표) · `v3-map-cluster.png`(클러스터 지도) · `v3-map-pins.png` · `v3-map-popup.png` · `v3-rank.png` · `v3-budget.png` · `v3-battle.png` · `v3-report.png` · `v3-report-fact.png` · `v3-new-gyeyang.png` · `v3-search.png` · `v3-map-fallback.png` · `v31-ocean-top.png` · `v31-ocean-fact.png` |
-| 검증 | `test_e2e_v3.py` — 실제 Chromium E2E **191/191 통과** (`test-report-v3.json`) · 라이브 검증 `live_check_v35.py` 14/14 (`test-report-v35-live.json`) |
-| 실행 | `cd work/apt-scorecard && python3 test_e2e_v3.py` → `191/191 checks passed — RESULT: PASS` · 라이브 `ZS_URL=https://zipscore.github.io/ python3 live_check_v35.py` |
+| 검증 | `test_e2e_v3.py` — 실제 Chromium E2E **195/195 통과** (`test-report-v3.json`) · 라이브 검증 `live_check_v35.py` 14/14 (`test-report-v35-live.json`) |
+| 실행 | `cd work/apt-scorecard && python3 test_e2e_v3.py` → `195/195 checks passed — RESULT: PASS` · 라이브 `ZS_URL=https://zipscore.github.io/ python3 live_check_v35.py` |
 | 데이터 빌드 | `data/build3.py` → `complexes3.json` → `data/make_html3.py`(← `template3.html`) |
 | 템플릿 생성 | `data/make_template3.py` (v2.2 `template.html` → `template3.html` 패치) |
 
@@ -171,7 +171,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 - 배경: OSM Korea HOT 타일(`https://tiles.osm.kr/hot/{z}/{x}/{y}.png`, 한글 라벨·API 키 불필요, `maxNativeZoom:18, maxZoom:19`). Esri로 되돌리거나 다른 타일로 바꾸려면 `initMap()`의 `L.tileLayer` URL과 `attribution`만 교체하면 된다.
 - CDN 순서: Leaflet CSS/JS → markercluster CSS/JS. **markercluster만 차단되면** 클러스터 없이 518개 개별 마커로 자동 폴백(`window.__clusterFailed`), **Leaflet까지 차단되면** 기존 폴백 안내 문구 노출. 타일 로드 실패(`tileerror`) 시에도 폴백 안내.
 
-## 8. 검증 (187/187 PASS)
+## 8. 검증 (195/195 PASS)
 
 - JS 런타임/콘솔 오류 0, `하보카`·`havoka` 문자열 0
 - 탭 5개·패널 5개, hero 518개 단지·11개 권역, 권역 칩 12개, 그룹 헤더 11개, 첫 노출 88칩 + 더 보기 11개
@@ -183,7 +183,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 - 배틀: 기본 A/B·79 vs 92·듀얼 레이더·갈아타기 자금·셀렉트 518옵션
 - 지도: Leaflet·markercluster 로드, OSM Korea 타일 렌더(고줌 회색 없음), 클러스터 버블, 송도 flyTo(zoom 13.4), 확대 시 점수 핀, 팝업 카드 → 성적표 이동, **markercluster CDN만 차단 시 개별 마커 518**, 전체 CDN 차단 시 폴백
 - **6공구(v3.4)**: 크리스탈 80 A(송도 6공구 태그·송빛초 242m·84㎡ 10.8억) · 자이더스타 80 A · 레이크4차 78 B+ · 럭스오션 77 B+ · 레이크1차 78 B+ · 검색 별칭(힐레이크1~4차·럭스오션·크리스탈)
-- **성적표 카드(v3.5, 58개 체크)**: 버튼 노출·문구(성적표 카드 저장/카톡·블로그)·복사 버튼 위 배치 → 모달 열림(`role=dialog`, aria-hidden 토글, 배경 스크롤 잠금) → `data:image/png` dataURL · `naturalWidth/Height 1080×1350` · 파일명 `zipscore_송도자이크리스탈오션.png` · 아이폰 길게 눌러 사진 저장 안내 · 캔버스 1080×1350 · 비백색 픽셀 41.8% · 헤더 딥네이비/그린 면적 · 단지명·총점·항목 바·코멘트·워터마크 영역 잉크 · **한글 글리프 렌더(같은 4자리 문자열 두 개의 잉크 해시가 달라 토푸 아님을 확인)** · 카드 정보(단지명·80 A·`송도 6공구` 배지·6항목 점수·인천 51위/송도 23위·코멘트·준공·세대·시세·기준일·워터마크 `zipscore.github.io`) · PNG 시그니처/샘플 저장 · **다운로드 이벤트 파일명·크기·토스트** · Web Share 미지원 시 안내 토스트 · ESC·배경 클릭·✕ 닫기와 스크롤 복원 · 다른 단지(퍼스트파크 92 S) 재사용·파일명 교체 · 6문항 직접 진단 카드(`직접 진단` 배지)
+- **성적표 카드(v3.5, 62개 체크)**: 버튼 노출·문구(성적표 카드 저장/카톡·블로그)·복사 버튼 위 배치 → 모달 열림(`role=dialog`, aria-hidden 토글, 배경 스크롤 잠금) → `data:image/png` dataURL · `naturalWidth/Height 1080×1350` · 파일명 `zipscore_송도자이크리스탈오션.png` · 아이폰 길게 눌러 사진 저장 안내 · 캔버스 1080×1350 · 비백색 픽셀 41.8% · 헤더 딥네이비/그린 면적 · 단지명·총점·항목 바·코멘트·워터마크 영역 잉크 · **한글 글리프 렌더(같은 4자리 문자열 두 개의 잉크 해시가 달라 토푸 아님을 확인)** · 카드 정보(단지명·80 A·`송도 6공구` 배지·6항목 점수·인천 51위/송도 23위·코멘트·준공·세대·시세·기준일·워터마크 `zipscore.github.io`) · PNG 시그니처/샘플 저장 · **다운로드 이벤트 파일명·크기·토스트** · Web Share 미지원 시 안내 토스트 · **아이폰 Web Share 시뮬레이션: `image/png` 파일 `zipscore_송도자이크리스탈오션.png`(670KB) 실제 전달 + 공유 문구에 점수·순위** · `-webkit-touch-callout:default` CSS · ESC·배경 클릭·✕ 닫기와 스크롤 복원 · 다른 단지(퍼스트파크 92 S) 재사용·파일명 교체 · 6문항 직접 진단 카드(`직접 진단` 배지)
 - **주소 표기(v3.5)**: 페이지 푸터·카드 워터마크·og:url·canonical·요약복사 문구가 모두 `zipscore.github.io`이고, HTML 안에 옛 주소 `inje8451.github.io` 문자열이 0개
 - 375/390/430px 가로 오버플로 0
 
