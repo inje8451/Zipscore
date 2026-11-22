@@ -4,86 +4,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d1836">
-<meta name="description" content="인천 8개 권역 대표 아파트 32곳을 교통·학군·단지·인프라·가격·미래가치 6개 영역, 100점 만점으로 채점한 하보카 아파트 성적표. 1:1 배틀과 인천 랭킹까지.">
-<meta name="keywords" content="인천 아파트, 송도 아파트, 청라 아파트, 검단 아파트, 아파트 성적표, 집점수, 하보카">
-<meta name="author" content="하보카">
-<title>인천 아파트 성적표 · 100점 만점 진단 · 하보카</title>
+<meta name="description" content="집스코어 ZIPSCORE — 인천 8개 권역 120개 아파트 단지를 100점으로 채점한 입지 성적표. 연 소득·현금으로 대출 한도(DSR·LTV)를 계산해 살 수 있는 단지를 추려주고, 지도·1:1 배틀·랭킹까지 제공합니다.">
+<meta name="keywords" content="인천 아파트, 송도 아파트, 청라 아파트, 검단 아파트, 영종 아파트, 아파트 성적표, 집점수, ZIPSCORE, 집스코어">
+<meta name="author" content="ZIPSCORE">
+<title>집스코어 ZIPSCORE · 인천 아파트 100점 성적표 · 입지 분석 지도</title>
 
-<!-- 카카오톡 · 블로그 · SNS 링크 공유용 Open Graph -->
+<!-- 링크 공유용 Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="하보카 아파트 성적표">
+<meta property="og:site_name" content="집스코어 ZIPSCORE">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:title" content="인천 아파트 성적표 — 우리 단지 몇 점일까?">
-<meta property="og:description" content="송도·청라·검단·영종·부평·남동·미추홀·서구 대표 32단지를 6개 영역 100점으로 채점했습니다. 1:1 배틀과 인천 랭킹으로 한눈에 비교하세요.">
+<meta property="og:title" content="집스코어 ZIPSCORE — 우리 단지 몇 점일까?">
+<meta property="og:description" content="인천 8개 권역 120개 단지를 100점으로 채점하고, 내 소득·현금으로 대출 가능액과 살 수 있는 단지를 계산해 드립니다. 지도·배틀·랭킹까지.">
 <meta property="og:url" content="https://inje8451.github.io/Zipscore/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="인천 아파트 성적표 — 우리 단지 몇 점일까?">
-<meta name="twitter:description" content="인천 8개 권역 32단지를 100점 만점으로 채점. 성적표 진단 · 1:1 배틀 · 인천 랭킹.">
+<meta name="twitter:title" content="집스코어 ZIPSCORE — 인천 아파트 100점 성적표">
+<meta name="twitter:description" content="인천 137개 단지 입지 성적표 · 인터랙티브 지도 · 1:1 배틀 · 인천 랭킹.">
 <link rel="canonical" href="https://inje8451.github.io/Zipscore/">
-<!--
-  하보카 인천 아파트 100점 성적표 · 웹시안 v2 (2026-11-22)
-  - 단일 HTML 파일: 외부 CDN / 폰트 / 차트 / 아이콘 라이브러리 의존 0 (file:// 로 바로 열려도 동작)
-  - 3탭: 성적표 진단 / 1:1 배틀 / 인천 랭킹
-  - 단지 점수와 84㎡ 참고 시세는 시안용 예시 값 ('예시 참고값' 표기)
--->
+
+<!-- 무료 지도: Leaflet + OpenStreetMap (API 키 불필요) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{
-  --ink:#101828;
-  --ink-2:#344054;
-  --muted:#667085;
-  --muted-2:#98a2b3;
-  --line:#e6eaf2;
-  --line-2:#eef1f7;
-  --bg:#eef1f6;
-  --card:#ffffff;
-  --navy:#0d1836;
-  --navy-2:#16306b;
-  --blue:#2f6bff;
-  --blue-soft:#eff4ff;
-  --emerald:#0ea472;
-  --emerald-2:#0b8f66;
-  --emerald-soft:#f1fbf6;
-  --mint:#7ef0c2;
-  --amber:#b54708;
-  --amber-bg:#fffaeb;
-  --red:#d92d20;
-  --radius:16px;
-  --shadow:0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.06);
+  --ink:#101828; --ink-2:#344054; --muted:#667085; --muted-2:#98a2b3;
+  --line:#e6eaf2; --line-2:#eef1f7; --bg:#eef1f6; --card:#ffffff;
+  --navy:#0d1836; --navy-2:#16306b; --blue:#2f6bff; --blue-soft:#eff4ff;
+  --emerald:#0ea472; --emerald-2:#0b8f66; --emerald-soft:#f1fbf6; --mint:#7ef0c2;
+  --amber:#b54708; --amber-bg:#fffaeb; --red:#d92d20;
+  --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.06);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
+  margin:0; background:var(--bg); color:var(--ink);
   font-family:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Noto Sans CJK KR","Helvetica Neue",Arial,sans-serif;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-  font-size:14px;
-  word-break:keep-all;
-  overflow-wrap:break-word;
-  font-variant-numeric:tabular-nums;
+  line-height:1.5; -webkit-font-smoothing:antialiased; font-size:14px;
+  word-break:keep-all; overflow-wrap:break-word; font-variant-numeric:tabular-nums;
 }
 button{font-family:inherit}
-.wrap{
-  max-width:480px;
-  margin:0 auto;
-  background:#fff;
-  min-height:100vh;
-  padding-bottom:34px;
-  box-shadow:0 0 0 1px rgba(16,24,40,.04);
-}
+.wrap{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;padding-bottom:34px;box-shadow:0 0 0 1px rgba(16,24,40,.04)}
 @media (min-width:560px){
   body{padding:28px 0}
   .wrap{border-radius:26px;box-shadow:0 24px 60px rgba(16,24,40,.14);min-height:0}
   .hero{border-radius:26px}
 }
 
-/* ---------- hero ---------- */
+/* hero */
 .hero{
-  position:relative;
-  padding:22px 20px 46px;
-  color:#fff;
+  position:relative; padding:22px 20px 44px; color:#fff;
   background:
     radial-gradient(120% 80% at 90% -20%, rgba(47,107,255,.55) 0%, rgba(47,107,255,0) 58%),
     radial-gradient(90% 70% at 0% 110%, rgba(14,164,114,.35) 0%, rgba(14,164,114,0) 60%),
@@ -91,460 +58,330 @@ button{font-family:inherit}
   border-radius:0 0 26px 26px;
 }
 .brand{display:flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.2px;color:rgba(255,255,255,.78)}
-.brand .logo{
-  width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
-  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-size:14px;
-}
+.brand .logo{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-size:14px}
 .brand b{color:#fff;font-weight:700}
-.hero h1{
-  margin:16px 0 8px;
-  font-size:26px;
-  line-height:1.3;
-  letter-spacing:-.9px;
-  font-weight:800;
-}
+.brand .en{font-size:10.5px;letter-spacing:1.4px;color:var(--mint);font-weight:700}
+.hero h1{margin:16px 0 8px;font-size:26px;line-height:1.3;letter-spacing:-.9px;font-weight:800}
 .hero h1 em{font-style:normal;color:var(--mint)}
-.hero .lead{
-  margin:0;
-  font-size:12.6px;
-  line-height:1.62;
-  color:rgba(255,255,255,.72);
-  max-width:340px;
-}
+.hero .lead{margin:0;font-size:12.6px;line-height:1.62;color:rgba(255,255,255,.72);max-width:352px}
 .hero-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:14px;font-size:11px;color:rgba(255,255,255,.62)}
-.hero-meta .pill{
-  padding:4px 9px;border-radius:999px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
-  color:rgba(255,255,255,.88);font-weight:600;
-}
+.hero-meta .pill{padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.88);font-weight:600}
 
-/* ---------- tabs ---------- */
-.tabs{
-  position:relative;
-  z-index:3;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:4px;
-  margin:-32px 14px 0;
-  padding:5px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:15px;
-  box-shadow:0 10px 24px rgba(16,24,40,.10);
-}
-.tab{
-  border:0;background:transparent;cursor:pointer;
-  padding:9px 2px;border-radius:11px;
-  font-size:12.3px;font-weight:700;color:var(--muted);
-  letter-spacing:-.3px;line-height:1.25;white-space:nowrap;
-  transition:background .16s,color .16s,box-shadow .16s;
-}
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:-24px 12px 0;padding:5px 4px;background:#fff;border-radius:16px;box-shadow:var(--shadow);position:relative;z-index:2}
+.tab{border:0;background:transparent;border-radius:11px;padding:8px 1px;color:var(--muted);font-size:10.2px;font-weight:700;cursor:pointer;transition:.16s;line-height:1.2;letter-spacing:-.3px}
 .tab span{display:block;font-size:14px;line-height:1.1;margin-bottom:2px}
 .tab.is-active{background:linear-gradient(135deg,#0e2246,#16306b);color:#fff;box-shadow:0 6px 14px rgba(13,24,54,.24)}
 .tab:focus-visible{outline:2px solid #8fd8bd;outline-offset:1px}
 
-/* ---------- shared ---------- */
-.panel[hidden]{display:none}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px;
-  margin:14px 14px 0;
-  box-shadow:var(--shadow);
-}
+/* card / section */
+.panel{padding:16px 14px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
 .sec-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
-.sec-head h2{margin:0;font-size:15.5px;font-weight:800;letter-spacing:-.3px}
-.sec-head .sub{font-size:11.5px;color:var(--muted)}
-.tag-soft{
-  font-size:10.5px;font-weight:700;color:#1d4ed8;background:var(--blue-soft);
-  border:1px solid #dbe6ff;padding:3px 8px;border-radius:999px;white-space:nowrap;
-}
-.tag-step{
-  font-size:10.5px;font-weight:700;color:#0b7a58;background:var(--emerald-soft);
-  border:1px solid #cdeee0;padding:3px 8px;border-radius:999px;white-space:nowrap;
-}
-.hint{margin:10px 2px 0;font-size:11px;line-height:1.55;color:var(--muted-2)}
+.sec-head h2{margin:0;font-size:15.5px;letter-spacing:-.3px}
+.tag-soft{font-size:10px;font-weight:700;color:var(--emerald-2);background:var(--emerald-soft);border:1px solid #d5f2e6;padding:3px 7px;border-radius:999px;white-space:nowrap}
+.tag-step{font-size:10px;font-weight:700;color:#1e4fc0;background:var(--blue-soft);border:1px solid #dbe6ff;padding:3px 7px;border-radius:999px}
+.hint{margin:10px 0 0;font-size:10.6px;line-height:1.6;color:var(--muted-2)}
 
-/* ---------- 필터 칩 ---------- */
-.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.chip{
-  border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;
-  padding:7px 4px;font-size:11.4px;font-weight:700;color:var(--ink-2);
-  display:inline-flex;align-items:center;justify-content:center;gap:3px;transition:.14s;white-space:nowrap;
-  min-width:0;
-}
-.chip small{font-size:10px;font-weight:700;color:var(--muted-2)}
-.chip:hover{border-color:#cfd8e6}
-.chip.is-active{background:var(--emerald-soft);border-color:#9fe3c7;color:#0b6b4c}
-.chip.is-active small{color:#0b8f66}
-.chip:focus-visible{outline:2px solid #8fd8bd;outline-offset:1px}
+/* chips */
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:999px;padding:6px 11px;font-size:11.5px;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap}
+.chip small{font-size:9.5px;color:var(--muted-2);font-weight:700;margin-left:2px}
+.chip.is-active{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.is-active small{color:rgba(255,255,255,.6)}
+.search-row{display:flex;gap:8px;align-items:center;margin-top:10px}
+.search-row input{flex:1;border:1px solid var(--line);border-radius:11px;padding:9px 12px;font-size:12.5px;color:var(--ink);background:#fbfcfe}
+.search-row input:focus{outline:none;border-color:#b8c8ea;background:#fff}
+.search-count{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap}
 
-/* ---------- 검색 ---------- */
-.search-row{display:flex;align-items:center;gap:8px;margin:11px 0 9px}
-.search-row input{
-  flex:1;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:11px;
-  font:inherit;font-size:13px;color:var(--ink);background:#fbfcfe;transition:border-color .15s,box-shadow .15s;
-}
-.search-row input::placeholder{color:#b6bfcd}
-.search-row input:focus{outline:none;border-color:#8fd8bd;box-shadow:0 0 0 3px rgba(14,164,114,.12);background:#fff}
-.search-count{font-size:10.8px;font-weight:700;color:var(--muted-2);white-space:nowrap}
+/* apt grid */
+.apt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:11px;max-height:396px;overflow-y:auto;padding-right:2px;overscroll-behavior:contain}
+.ag-head{grid-column:1/-1;display:flex;align-items:center;gap:4px;font-size:9.8px;font-weight:800;color:var(--muted);padding:7px 2px 2px;border-bottom:1px solid var(--line-2);margin-top:2px}
+.ag-head small{font-weight:700;color:var(--muted-2);font-size:9px}
+.ag-head:first-child{margin-top:0}
+.apt-chip{display:flex;flex-direction:column;gap:1px;text-align:left;border:1px solid var(--line);background:#fff;border-radius:11px;padding:7px 9px;cursor:pointer;transition:.14s;min-width:0}
+.apt-chip:hover{border-color:#c9d6ee;background:#fbfcff}
+.apt-chip .sc{font-size:14px;font-weight:800;letter-spacing:-.4px;line-height:1.15}
+.apt-chip .nm{font-size:10.8px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.apt-chip .rg{font-size:9.4px;color:var(--muted-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.apt-chip.is-active{border-color:var(--emerald);background:var(--emerald-soft);box-shadow:0 0 0 1px var(--emerald) inset}
+.empty-note{margin:16px 0;text-align:center;font-size:12px;color:var(--muted)}
 
-/* ---------- 단지 선택 칩 ---------- */
-.apt-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.apt-chip{
-  position:relative;text-align:left;cursor:pointer;
-  border:1px solid var(--line);background:#fff;border-radius:12px;
-  padding:9px 10px 8px;transition:border-color .14s,background .14s,transform .12s;
-}
-.apt-chip:active{transform:scale(.985)}
-.apt-chip .sc{
-  position:absolute;right:8px;top:7px;font-size:11.5px;font-weight:800;letter-spacing:-.3px;
-}
-.apt-chip .nm{display:block;padding-right:26px;font-size:11.8px;font-weight:800;line-height:1.32;letter-spacing:-.35px;color:var(--ink)}
-.apt-chip .rg{display:block;margin-top:3px;font-size:9.8px;font-weight:600;color:var(--muted-2)}
-.apt-chip.is-active{border-color:#9fe3c7;background:var(--emerald-soft);box-shadow:0 0 0 1px #9fe3c7 inset}
-.empty-note{font-size:12px;color:var(--muted);padding:14px 4px;text-align:center}
-
-/* ---------- 리포트 ---------- */
-#report:empty{display:none}
+/* report */
 .rep-card{padding:18px 16px 16px}
 .rep-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.rep-name{font-size:17.5px;font-weight:800;letter-spacing:-.6px;line-height:1.3}
-.rep-size{font-size:11.8px;color:var(--muted);margin-top:4px;line-height:1.5}
-.rep-date{font-size:10.3px;color:var(--muted-2);white-space:nowrap;padding-top:3px}
-.reg-badge{
-  display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;
-  color:#1d4ed8;background:var(--blue-soft);border:1px solid #dbe6ff;
-  padding:2px 7px;border-radius:6px;margin-right:5px;vertical-align:middle;
-}
-.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
-.meta-box{background:#f8fafc;border:1px solid var(--line-2);border-radius:11px;padding:8px 9px}
-.meta-box .k{font-size:9.8px;font-weight:700;color:var(--muted-2);letter-spacing:.1px}
-.meta-box .v{font-size:12.4px;font-weight:800;color:var(--ink);margin-top:2px;letter-spacing:-.3px}
-.meta-box .v small{font-size:9.5px;font-weight:600;color:var(--muted-2);margin-left:1px}
-.exnote{font-size:9.8px;color:var(--muted-2);margin:7px 2px 0;line-height:1.5}
+.rep-name{font-size:19px;font-weight:800;letter-spacing:-.6px;line-height:1.25}
+.rep-size{margin-top:4px;font-size:10.8px;color:var(--muted);display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.reg-badge{display:inline-block;background:var(--blue-soft);color:#1e4fc0;border-radius:6px;padding:2px 6px;font-weight:700;font-size:10px}
+.rep-date{font-size:10px;color:var(--muted-2);white-space:nowrap;padding-top:4px}
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px}
+.meta-box{background:#f8fafd;border:1px solid var(--line-2);border-radius:11px;padding:8px 9px}
+.meta-box .k{font-size:9.6px;color:var(--muted-2);font-weight:700}
+.meta-box .v{font-size:14px;font-weight:800;letter-spacing:-.3px;margin-top:2px}
+.meta-box .v small{font-size:9.6px;font-weight:700;color:var(--muted);margin-left:1px}
+.exnote{margin:7px 0 0;font-size:9.6px;color:var(--muted-2);line-height:1.55}
 
-.ring-wrap{position:relative;width:158px;height:158px;margin:10px auto 2px}
-.ring-wrap svg{display:block;width:158px;height:158px}
+/* score ring */
+.ring-wrap{position:relative;width:172px;height:172px;margin:14px auto 4px}
+.ring-wrap svg{width:100%;height:100%}
 .ring-track{stroke:#eef1f7}
-.ring-fill{
-  stroke:url(#ringGrad);
-  stroke-dasharray:364.42;
-  stroke-dashoffset:364.42;
-  transition:stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1);
-}
-.ring-center{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding-bottom:4px;
-}
-.score-num{font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums}
-.score-unit{font-size:11px;color:var(--muted-2);margin-top:4px;font-weight:600;letter-spacing:.4px}
+.ring-fill{transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-num{font-size:46px;font-weight:800;letter-spacing:-2.4px;line-height:1}
+.score-unit{font-size:10.5px;color:var(--muted);font-weight:700;margin-top:3px}
 .grade-line{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:2px}
-.grade-badge{
-  color:#fff;font-size:13px;font-weight:800;letter-spacing:.4px;
-  padding:6px 15px;border-radius:999px;
-  background:linear-gradient(135deg,#0ea472,#0b8f66);
-  box-shadow:0 6px 14px rgba(14,164,114,.25);
-}
-.grade-title{font-size:12.5px;font-weight:700;color:var(--muted)}
-.rank-line{
-  display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;
-  font-size:11.6px;font-weight:700;color:#0b6b4c;background:var(--emerald-soft);
-  border:1px solid #cdeee0;border-radius:10px;padding:8px 10px;text-align:center;line-height:1.5;
-}
-.confidence{
-  margin:12px 0 0;font-size:10.6px;line-height:1.6;color:var(--muted-2);text-align:center;
-  background:#f8fafc;border-radius:10px;padding:8px 10px;
-}
+.grade-badge{display:inline-grid;place-items:center;min-width:38px;height:26px;padding:0 9px;border-radius:9px;color:#fff;font-size:13px;font-weight:800;letter-spacing:.2px}
+.grade-title{font-size:12px;font-weight:700;color:var(--ink-2)}
+.rank-line{margin-top:10px;text-align:center;font-size:11.4px;color:var(--ink-2);background:#f8fafd;border:1px solid var(--line-2);border-radius:10px;padding:7px 8px}
+.confidence{margin:9px 0 0;text-align:center;font-size:9.6px;color:var(--muted-2);line-height:1.55}
 
-.block{margin-top:20px}
-.block-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
-.block-head h3{margin:0;font-size:13.5px;font-weight:800;letter-spacing:-.2px}
-.block-head span{font-size:10.5px;color:var(--muted-2)}
-.radar-box{background:#fcfdff;border:1px solid var(--line-2);border-radius:16px;padding:4px 0 0}
-.radar-box svg{display:block;width:100%;height:auto}
-.rl-name{font-size:10.2px;font-weight:700;fill:#344054;font-family:inherit}
-.rl-score{font-size:9.6px;font-weight:600;fill:#98a2b3;font-family:inherit}
-.radar-data{transform-box:view-box;transform-origin:160px 150px;animation:radarPop .65s cubic-bezier(.2,.8,.2,1) both}
-.radar-b{transform-origin:160px 150px;animation:radarPop .8s cubic-bezier(.2,.8,.2,1) both}
-@keyframes radarPop{from{transform:scale(.62);opacity:0}to{transform:scale(1);opacity:1}}
-@media (prefers-reduced-motion:reduce){
-  .radar-data,.radar-b{animation:none}
-  .ring-fill{transition:none}
-  .bar-fill{transition:none}
-}
+/* facts */
+.fact-box{margin-top:14px;background:#f8fafd;border:1px solid var(--line-2);border-radius:12px;padding:11px 12px}
+.fact-box h4{margin:0 0 7px;font-size:11px;font-weight:800;color:var(--ink-2);letter-spacing:-.1px}
+.fact-row{display:flex;gap:7px;font-size:10.8px;line-height:1.55;color:var(--ink-2);padding:3px 0}
+.fact-row b{flex:0 0 46px;font-weight:800;color:var(--muted);font-size:10px;padding-top:1px}
+.fact-row span{flex:1}
 
-.bars{display:flex;flex-direction:column;gap:11px}
-.bar-row .bar-top{display:flex;align-items:center;gap:7px;font-size:12.2px;margin-bottom:5px}
-.bar-row .bar-ico{font-size:13px}
-.bar-row .bar-name{font-weight:700;color:var(--ink-2)}
-.bar-row .bar-val{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--ink)}
-.bar-row .bar-val small{font-weight:600;color:var(--muted-2)}
-.bar-track{height:7px;border-radius:999px;background:#f0f3f8;overflow:hidden}
-.bar-fill{display:block;height:100%;width:0;border-radius:999px;transition:width .9s cubic-bezier(.2,.8,.2,1)}
-.bar-fill.lv-hi{background:linear-gradient(90deg,#0ea472,#34d399)}
-.bar-fill.lv-mid{background:linear-gradient(90deg,#2f6bff,#6ea0ff)}
-.bar-fill.lv-low{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.block{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-2)}
+.block-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.block-head h3{margin:0;font-size:13px;letter-spacing:-.2px}
+.block-head span{font-size:9.8px;color:var(--muted-2);font-weight:600}
 
-.verdict{background:#f8fafc;border:1px solid var(--line-2);border-radius:16px;padding:14px}
-.verdict h4{margin:0 0 8px;font-size:12px;font-weight:800;color:var(--ink)}
-.verdict p:not(.v-close){margin:0;font-size:12.6px;line-height:1.72;color:#344054}
+/* radar */
+.radar-box{display:flex;justify-content:center}
+.radar-box svg{width:100%;max-width:320px;height:auto}
+.rl-name{font-size:8.6px;fill:#667085;font-weight:700}
+.rl-score{font-size:8.4px;fill:#98a2b3;font-weight:700}
+
+/* bars */
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar-row .bar-top{display:flex;align-items:center;gap:5px;font-size:10.8px;color:var(--ink-2);margin-bottom:4px}
+.bar-ico{font-size:11px}
+.bar-name{font-weight:700}
+.bar-val{margin-left:auto;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.bar-val small{font-weight:600;color:var(--muted-2)}
+.bar-track{height:7px;background:#f1f4f9;border-radius:999px;overflow:hidden}
+.bar-fill{display:block;height:100%;width:0;border-radius:999px;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.lv-hi{background:linear-gradient(90deg,#10a97a,#34d399)}
+.lv-mid{background:linear-gradient(90deg,#2f6bff,#6aa1ff)}
+.lv-low{background:linear-gradient(90deg,#f79009,#fdb022)}
+
+/* verdict */
+.verdict{background:#fbfcfe;border:1px solid var(--line-2);border-radius:12px;padding:12px}
+.verdict h4{margin:0 0 6px;font-size:10.4px;color:var(--muted);font-weight:800}
+.verdict p{margin:0;font-size:11.6px;line-height:1.72;color:var(--ink-2)}
 .verdict p b{color:var(--ink)}
 .v-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
-.v-list li{display:flex;gap:7px;font-size:12px;line-height:1.55;color:#475467}
-.v-list li .k{
-  flex:0 0 auto;font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;height:fit-content;margin-top:1px;
-}
-.v-list li .k.good{color:#0b7a58;background:#e7f8f0}
-.v-list li .k.fix{color:#b54708;background:#fff4e5}
-.v-list li b{color:var(--ink-2)}
-.v-close{margin:11px 0 0;padding-top:9px;border-top:1px dashed #e3e8f0;font-size:11px;line-height:1.6;color:#98a2b3}
+.v-list li{display:flex;gap:7px;font-size:10.9px;line-height:1.6;color:var(--ink-2)}
+.v-list .k{flex:0 0 auto;height:17px;padding:0 6px;border-radius:5px;font-size:9.2px;font-weight:800;display:inline-grid;place-items:center}
+.k.good{background:var(--emerald-soft);color:var(--emerald-2);border:1px solid #d5f2e6}
+.k.fix{background:var(--amber-bg);color:var(--amber);border:1px solid #fdebc8}
+.v-close{margin:10px 0 0 !important;font-size:10px !important;color:var(--muted-2) !important}
 
-.btn-copy{
-  width:100%;margin-top:14px;padding:13px 16px;cursor:pointer;
-  border:1.5px solid var(--emerald);border-radius:14px;background:#fff;
-  color:#0b7a58;font-size:14px;font-weight:800;letter-spacing:-.2px;
-  display:flex;align-items:center;justify-content:center;gap:7px;transition:.14s;
-}
-.btn-copy:hover{background:var(--emerald-soft)}
-.btn-copy:active{transform:scale(.993)}
-.copy-fallback{
-  display:none;width:100%;margin-top:10px;min-height:120px;padding:10px;resize:vertical;
-  border:1px solid var(--line);border-radius:10px;font:inherit;font-size:11.5px;color:var(--ink-2);line-height:1.6;background:#fcfdfe;
-}
+/* buttons */
+.btn-copy{width:100%;margin-top:11px;border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:11px;padding:10px;font-size:11.8px;font-weight:700;cursor:pointer}
+.btn-copy:hover{background:#f8fafd}
+.btn-primary{width:100%;border:0;border-radius:12px;padding:13px;background:linear-gradient(135deg,#0e2246,#16306b);color:#fff;font-size:13.5px;font-weight:800;cursor:pointer;margin-top:14px;box-shadow:0 8px 20px rgba(13,24,54,.18)}
+.copy-fallback{display:none;width:100%;margin-top:9px;border:1px solid var(--line);border-radius:10px;padding:9px;font-size:11px;height:120px}
 .copy-fallback.show{display:block}
 
-/* ---------- 직접 진단 ---------- */
-.custom-toggle{
-  width:100%;display:flex;align-items:center;gap:8px;cursor:pointer;
-  border:1.5px dashed #c9d4e6;background:#fbfcff;border-radius:14px;
-  padding:13px 14px;text-align:left;transition:.14s;
-}
-.custom-toggle:hover{border-color:#9fe3c7;background:var(--emerald-soft)}
-.custom-toggle .ct-ico{font-size:17px}
-.custom-toggle .ct-main{font-size:13.2px;font-weight:800;color:var(--ink);letter-spacing:-.3px}
-.custom-toggle .ct-sub{display:block;font-size:10.8px;font-weight:600;color:var(--muted-2);margin-top:2px}
-.custom-toggle .ct-arrow{margin-left:auto;font-size:12px;color:var(--muted-2);font-weight:700}
+/* custom form */
+.custom-toggle{width:100%;display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:0;text-align:left;cursor:pointer}
+.ct-ico{width:34px;height:34px;border-radius:10px;background:var(--blue-soft);display:grid;place-items:center;font-size:15px;flex:0 0 auto}
+.ct-main{display:block;font-size:13px;font-weight:800;color:var(--ink)}
+.ct-sub{display:block;font-size:10px;color:var(--muted);margin-top:1px}
+.ct-arrow{margin-left:auto;font-size:10px;color:var(--muted-2);transition:.2s}
 .custom-toggle.is-open .ct-arrow{transform:rotate(180deg)}
-#customBody{margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
-
-.field{margin-bottom:12px}
-.field label{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
-.field input{
-  width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;
-  font:inherit;font-size:14px;color:var(--ink);background:#fcfdfe;transition:border-color .15s,box-shadow .15s;
-}
-.field input::placeholder{color:#b6bfcd}
-.field input:focus{outline:none;border-color:#8fd8bd;box-shadow:0 0 0 3px rgba(14,164,114,.12);background:#fff}
-.field-row{display:flex;gap:9px}
-.field-row .field{flex:1}
-
-.area{border:1px solid var(--line-2);border-radius:15px;padding:12px;margin-top:10px;background:#fdfefe;transition:border-color .15s,background .15s}
-.area.is-error{border-color:#fda29b;background:#fff8f7}
-.area-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-.area-ico{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:#f2f5fb;font-size:15px;flex:0 0 auto}
-.area-name{font-size:13.3px;font-weight:800;letter-spacing:-.2px;line-height:1.3}
-.area-sub{font-size:10.3px;color:var(--muted-2);margin-top:1px}
-.area-max{margin-left:auto;flex:0 0 auto;font-size:10.3px;font-weight:700;color:#475467;background:#f2f5fb;padding:3px 8px;border-radius:999px}
-.opts{display:flex;flex-direction:column;gap:6px}
-.opt{
-  display:flex;align-items:center;gap:9px;width:100%;text-align:left;cursor:pointer;
-  padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#fff;
-  font-size:12.6px;color:var(--ink-2);line-height:1.4;transition:.14s;
-}
-.opt .dot{width:16px;height:16px;border-radius:50%;border:1.6px solid #cbd5e1;flex:0 0 auto;display:grid;place-items:center;background:#fff;transition:.14s}
-.opt .dot i{width:7px;height:7px;border-radius:50%;background:transparent;display:block}
-.opt:hover{border-color:#cfd8e6}
-.opt.is-sel{border-color:#0ea472;background:var(--emerald-soft);color:#065f46;font-weight:700}
+.field-row{display:flex;gap:8px;margin-top:14px}
+.field{flex:1}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.field input{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.4px;background:#fbfcfe}
+.area{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2)}
+.area.is-error{background:#fff6f5;border-radius:10px;padding:10px;border-top-color:#fbd5d2}
+.area-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.area-ico{font-size:14px}
+.area-name{font-size:11.6px;font-weight:800}
+.area-sub{font-size:9.4px;color:var(--muted-2)}
+.area-max{margin-left:auto;font-size:9.6px;font-weight:800;color:var(--emerald-2);background:var(--emerald-soft);border-radius:6px;padding:2px 6px}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opt{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-size:10.9px;color:var(--ink-2);text-align:left;cursor:pointer}
+.opt:hover{border-color:#cdd8ec}
+.opt.is-sel{border-color:var(--emerald);background:var(--emerald-soft);color:#075c43;font-weight:700}
+.opt .dot{width:14px;height:14px;border-radius:50%;border:1.5px solid #d0d5dd;flex:0 0 auto;display:grid;place-items:center}
 .opt.is-sel .dot{border-color:var(--emerald);background:var(--emerald)}
-.opt.is-sel .dot i{background:#fff}
-.btn-primary{
-  width:100%;margin-top:16px;padding:15px 16px;border:0;border-radius:14px;cursor:pointer;
-  background:linear-gradient(135deg,#0ea472 0%,#0c9e8a 100%);
-  color:#fff;font-size:15px;font-weight:800;letter-spacing:-.2px;
-  box-shadow:0 10px 22px rgba(14,164,114,.26);transition:transform .12s,box-shadow .15s;
-}
-.btn-primary:active{transform:translateY(1px) scale(.995);box-shadow:0 6px 14px rgba(14,164,114,.22)}
-.err-msg{display:none;margin:10px 2px 0;font-size:12px;font-weight:600;color:var(--red)}
+.opt.is-sel .dot i{width:5px;height:5px;border-radius:50%;background:#fff}
+.err-msg{display:none;margin:9px 0 0;font-size:10.8px;color:var(--red);font-weight:700}
 .err-msg.show{display:block}
-details.rules{margin-top:14px;border-top:1px dashed var(--line);padding-top:11px}
-details.rules summary{cursor:pointer;font-size:11.5px;font-weight:700;color:var(--muted);list-style:none}
-details.rules summary::-webkit-details-marker{display:none}
-details.rules summary::before{content:"＋ ";color:var(--muted-2)}
-details.rules[open] summary::before{content:"－ "}
-details.rules ul{margin:9px 0 0;padding:0 0 0 2px;list-style:none}
-details.rules li{font-size:11.2px;color:var(--muted);line-height:1.7}
-details.rules li + li{margin-top:5px}
-details.rules li b{color:var(--ink-2)}
+.rules{margin-top:12px;font-size:10.4px;color:var(--muted)}
+.rules summary{cursor:pointer;font-weight:700;color:var(--ink-2)}
+.rules ul{margin:8px 0 0;padding-left:16px;line-height:1.7}
 
-/* ---------- 배틀 ---------- */
+/* battle */
 .pick-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pick{border:1px solid var(--line);border-radius:13px;padding:9px 10px;background:#fcfdff}
-.pick .plabel{font-size:9.8px;font-weight:800;letter-spacing:.3px;color:var(--muted-2)}
-.pick.a .plabel{color:#0b8f66}
-.pick.b .plabel{color:#1f5fd0}
-.pick select{
-  width:100%;margin-top:4px;border:0;background:transparent;padding:2px 0;
-  font:inherit;font-size:12.2px;font-weight:800;color:var(--ink);letter-spacing:-.5px;
-  text-overflow:ellipsis;cursor:pointer;
-}
-.pick select:focus{outline:2px solid #8fd8bd;outline-offset:2px;border-radius:6px}
+.pick label{display:block;font-size:10px;font-weight:800;color:var(--muted);margin-bottom:4px}
+.pick.a label{color:var(--emerald-2)}
+.pick.b label{color:#1e4fc0}
+.pick select{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 8px;font-size:11px;background:#fbfcfe;color:var(--ink)}
+.pick.a select{border-color:#cdebdf}
+.pick.b select{border-color:#d5e0fb}
 .swap-row{display:flex;justify-content:center;margin-top:9px}
-.swap-btn{
-  border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;
-  padding:6px 12px;font-size:11px;font-weight:700;color:var(--muted);
-}
-.swap-btn:hover{border-color:#cfd8e6;color:var(--ink-2)}
-
-.vs-summary{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;margin-top:14px}
-.vs-side{text-align:center;border-radius:14px;padding:10px 6px;border:1px solid var(--line-2);background:#fbfcfe}
-.vs-side.a.is-win{border-color:#9fe3c7;background:var(--emerald-soft)}
-.vs-side.b.is-win{border-color:#c9dbff;background:var(--blue-soft)}
-.vs-side .vs-nm{font-size:11.4px;font-weight:800;letter-spacing:-.3px;line-height:1.3;min-height:30px;display:flex;align-items:center;justify-content:center}
-.vs-side .vs-sc{font-size:24px;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:2px}
-.vs-side.a .vs-sc{color:#0b8f66}
-.vs-side.b .vs-sc{color:#1f5fd0}
-.vs-side .vs-gd{font-size:10.5px;font-weight:800;color:var(--muted);margin-top:2px}
-.vs-mid{font-size:12px;font-weight:900;color:var(--muted-2);letter-spacing:.5px;padding:0 2px}
-.vs-diff{
-  margin-top:10px;text-align:center;font-size:11.8px;font-weight:700;line-height:1.6;
-  background:#f8fafc;border:1px solid var(--line-2);border-radius:11px;padding:9px 10px;color:#344054;
-}
-.vs-diff b{color:var(--ink);font-size:12.6px}
-
-.legend{display:flex;align-items:center;justify-content:center;gap:14px;margin:2px 0 6px;font-size:10.8px;font-weight:700;color:var(--muted)}
-.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
-
-.dtable{margin-top:4px}
-.dhead,.drow{display:grid;grid-template-columns:1fr 44px 44px 52px;align-items:center;gap:4px;padding:7px 2px}
-.dhead{font-size:9.8px;font-weight:800;color:var(--muted-2);border-bottom:1px solid var(--line-2);letter-spacing:.2px}
+.swap-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:10.6px;font-weight:700;color:var(--ink-2);cursor:pointer}
+.vs-summary{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center}
+.vs-side{text-align:center;padding:11px 6px;border-radius:12px;background:#f8fafd;border:1px solid var(--line-2)}
+.vs-side.is-win{background:var(--emerald-soft);border-color:#cdebdf}
+.vs-side.b.is-win{background:var(--blue-soft);border-color:#d5e0fb}
+.vs-nm{font-size:10.4px;font-weight:800;line-height:1.3;min-height:27px}
+.vs-sc{font-size:30px;font-weight:800;letter-spacing:-1.4px;line-height:1.1;margin-top:3px}
+.vs-gd{font-size:9.6px;color:var(--muted);font-weight:700}
+.vs-mid{font-size:10px;font-weight:800;color:var(--muted-2)}
+.vs-diff{margin-top:10px;text-align:center;font-size:10.8px;color:var(--ink-2);background:#f8fafd;border:1px solid var(--line-2);border-radius:10px;padding:7px}
+.legend{display:flex;gap:12px;justify-content:center;font-size:9.6px;color:var(--muted);margin-bottom:4px;flex-wrap:wrap}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+.dtable{display:flex;flex-direction:column;gap:1px}
+.dhead,.drow{display:grid;grid-template-columns:1fr 34px 34px 50px;gap:2px;align-items:center;font-size:11px}
+.dhead{font-size:9.4px;color:var(--muted-2);font-weight:800;padding:0 4px 5px}
 .dhead span:nth-child(n+2){text-align:center}
-.drow{border-bottom:1px dashed #f0f3f8}
-.drow:last-child{border-bottom:0}
-.dname{font-size:12.1px;font-weight:700;color:var(--ink-2);letter-spacing:-.2px}
-.dname small{display:block;font-size:9.6px;font-weight:600;color:var(--muted-2);letter-spacing:0}
-.dv{text-align:center;font-size:12.4px;font-weight:800;color:var(--muted-2)}
-.dv.a.win{color:#0b8f66}
-.dv.b.win{color:#1f5fd0}
-.dtag{text-align:center;font-size:10px;font-weight:800;border-radius:6px;padding:3px 0}
-.dtag.a{color:#0b7a58;background:#e7f8f0}
-.dtag.b{color:#1d4ed8;background:var(--blue-soft)}
-.dtag.eq{color:var(--muted);background:#f2f4f7}
+.drow{padding:7px 4px;border-top:1px solid var(--line-2)}
+.drow .dname{font-size:10.6px;font-weight:700;color:var(--ink-2)}
+.drow .dname small{display:block;font-size:8.6px;color:var(--muted-2);font-weight:600}
+.dv{text-align:center;font-weight:800;font-size:12px;color:var(--muted)}
+.dv.win{color:var(--ink)}
+.dv.a.win{color:var(--emerald-2)}
+.dv.b.win{color:#1e4fc0}
+.dtag{text-align:center;font-size:9.2px;font-weight:800;border-radius:5px;padding:2px 0}
+.dtag.a{background:var(--emerald-soft);color:var(--emerald-2)}
+.dtag.b{background:var(--blue-soft);color:#1e4fc0}
+.dtag.eq{background:#f2f4f7;color:var(--muted)}
+.money-swap h4{margin:0 0 8px;font-size:11px;color:var(--muted);font-weight:800}
+.mline{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--ink-2);padding:5px 0;border-bottom:1px dashed var(--line-2)}
+.mline b{font-weight:800}
+.mline.total{border-bottom:0;margin-top:4px;padding-top:9px;border-top:1px solid var(--line);font-size:12px}
+.mline.total b{color:var(--emerald-2);font-size:14px}
+.mnote{margin:9px 0 0;font-size:9.4px;color:var(--muted-2);line-height:1.6}
 
-.money-swap{margin-top:14px;border:1px solid var(--line);border-radius:15px;padding:13px;background:#fcfdff}
-.money-swap h4{margin:0 0 9px;font-size:12px;font-weight:800;color:var(--ink)}
-.mline{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:12px;color:var(--ink-2);padding:4px 0}
-.mline span{color:var(--muted)}
-.mline b{font-size:12.6px;color:var(--ink)}
-.mline.total{border-top:1px dashed #e3e8f0;margin-top:6px;padding-top:9px}
-.mline.total b{font-size:14.6px;color:#0b6b4c;letter-spacing:-.4px}
-.mnote{margin:8px 0 0;font-size:10px;line-height:1.55;color:var(--muted-2)}
+/* rank */
+.rank-head{display:grid;grid-template-columns:26px 1fr 42px 40px;gap:4px;font-size:9.4px;color:var(--muted-2);font-weight:800;padding:0 6px 6px;border-bottom:1px solid var(--line-2)}
+.rank-head span:nth-child(n+3){text-align:right}
+#rankList{display:flex;flex-direction:column}
+.rank-row{display:grid;grid-template-columns:26px 1fr 42px 40px;gap:4px;align-items:center;border:0;border-bottom:1px solid var(--line-2);background:transparent;padding:8px 6px;text-align:left;cursor:pointer}
+.rank-row:hover{background:#fbfcff}
+.rank-row .rk{font-size:11px;font-weight:800;color:var(--muted-2)}
+.rank-row:nth-child(1) .rk,.rank-row:nth-child(2) .rk,.rank-row:nth-child(3) .rk{color:var(--emerald-2)}
+.rkmid{min-width:0}
+.rkname{display:block;font-size:11.4px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rkmeta{display:flex;align-items:center;gap:4px;font-size:8.8px;color:var(--muted-2);margin-top:1px;flex-wrap:wrap}
+.rbadge{background:#f2f4f7;border-radius:4px;padding:1px 4px;font-weight:700;color:var(--muted)}
+.rksc{text-align:right;font-size:13px;font-weight:800;letter-spacing:-.4px}
+.rkgd{text-align:center;font-size:9.6px;font-weight:800;color:#fff;border-radius:6px;padding:3px 0}
 
-/* ---------- 랭킹 ---------- */
-.rank-head,.rank-row{display:grid;grid-template-columns:28px 1fr 40px 34px;align-items:center;gap:7px}
-.rank-head{padding:4px 6px 7px;font-size:9.8px;font-weight:800;color:var(--muted-2);letter-spacing:.2px;border-bottom:1px solid var(--line-2)}
-.rank-head span:nth-child(n+3){text-align:center}
-.rank-row{padding:8px 6px;border-radius:10px;cursor:pointer;border:0;background:transparent;width:100%;text-align:left;transition:background .12s}
-.rank-row:hover{background:#f8fafc}
-.rank-row:focus-visible{outline:2px solid #8fd8bd;outline-offset:-2px}
-.rk{font-size:12px;font-weight:800;color:var(--muted-2);text-align:center}
-.rank-row:nth-child(-n+3) .rk{color:#0b7a58}
-.rkmid{min-width:0;display:block}
-.rkname{display:block;font-size:12.6px;font-weight:800;letter-spacing:-.35px;color:var(--ink);line-height:1.3}
-.rkmeta{display:block;font-size:9.8px;color:var(--muted-2);font-weight:600;margin-top:3px;line-height:1.5}
-.rbadge{display:inline-block;font-size:8.8px;font-weight:800;color:#1d4ed8;background:var(--blue-soft);border:1px solid #dbe6ff;border-radius:5px;padding:1px 5px;margin-right:4px;letter-spacing:.1px}
-.rksc{text-align:center;font-size:12.8px;font-weight:800;color:var(--ink)}
-.rkgd{text-align:center;font-size:10px;font-weight:800;color:#fff;border-radius:6px;padding:3px 0;letter-spacing:.2px}
 
-/* ---------- 수익화 ---------- */
-.money{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line)}
-.money-head{display:flex;align-items:center;gap:6px;margin-bottom:10px}
-.money-head span{font-size:10.5px;color:var(--muted-2);font-weight:700;letter-spacing:.2px}
-.blog-banner{
-  position:relative;overflow:hidden;border-radius:16px;padding:16px 15px 15px;color:#fff;
-  background:
-    radial-gradient(120% 100% at 100% 0%, rgba(47,107,255,.5) 0%, rgba(47,107,255,0) 60%),
-    linear-gradient(140deg,#0d1836 0%,#16306b 100%);
-}
-.blog-banner::after{
-  content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;
-  background:radial-gradient(circle,rgba(126,240,194,.22),rgba(126,240,194,0) 70%);
-}
-.blog-banner .bb-row{display:flex;align-items:center;gap:7px}
-.bb-chip{font-size:10px;font-weight:800;color:#0b3b2e;background:var(--mint);padding:3px 8px;border-radius:6px;letter-spacing:.2px}
-.bb-tag{font-size:9.5px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.2);padding:2px 6px;border-radius:5px}
-.blog-banner .bb-title{margin-top:9px;font-size:15px;font-weight:800;letter-spacing:-.4px}
-.blog-banner .bb-desc{margin:5px 0 0;font-size:11.5px;line-height:1.6;color:rgba(255,255,255,.68);max-width:270px}
-.blog-banner .bb-btn{
-  display:inline-flex;align-items:center;gap:5px;margin-top:12px;
-  padding:9px 13px;border-radius:10px;background:#fff;color:#0d1836;
-  font-size:12px;font-weight:800;text-decoration:none;
-}
-.ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
-.ad-card{position:relative;border:1px solid var(--line);border-radius:14px;padding:12px 11px;background:#fff}
-.ad-card .ad-badge{position:absolute;right:8px;top:8px;font-size:8.5px;font-weight:800;color:#98a2b3;border:1px solid #e4e7ec;border-radius:4px;padding:1px 4px;letter-spacing:.4px}
-.ad-card .ad-ico{font-size:18px;line-height:1}
-.ad-card .ad-t{margin-top:7px;font-size:12.2px;font-weight:800;letter-spacing:-.2px}
-.ad-card .ad-d{margin-top:3px;font-size:10.4px;line-height:1.5;color:var(--muted)}
-.ad-card .ad-cta{display:inline-block;margin-top:8px;font-size:10.4px;font-weight:800;color:var(--blue)}
-.adsense{margin-top:9px;border:1.5px dashed #cfd8e6;border-radius:14px;background:#fafbfd;padding:9px}
-.adsense .as-label{display:flex;align-items:center;justify-content:space-between;font-size:9.5px;font-weight:700;color:#98a2b3;letter-spacing:.2px;margin-bottom:7px}
-.adsense .as-box{
-  min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  border-radius:10px;background:repeating-linear-gradient(135deg,#f4f6fa 0 8px,#f7f9fc 8px 16px);
-  color:#98a2b3;font-size:11px;font-weight:600;text-align:center;
-}
-.adsense .as-box small{font-size:9.5px;color:#b6bfcd;font-weight:500}
+/* budget */
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg{display:flex;gap:4px;background:#f2f4f8;border-radius:10px;padding:3px}
+.seg button{flex:1;border:0;background:transparent;border-radius:8px;padding:7px 2px;font-size:10.4px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap}
+.seg button.is-active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(16,24,40,.12)}
+.bresult-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--line-2)}
+.bresult-top span{font-size:11px;font-weight:700;color:var(--muted)}
+.bresult-top b{font-size:23px;font-weight:800;letter-spacing:-1px;color:var(--emerald-2)}
+.bresult-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.bresult-grid > div{background:#f8fafd;border:1px solid var(--line-2);border-radius:10px;padding:8px}
+.bresult-grid span{display:block;font-size:9.2px;color:var(--muted-2);font-weight:700;line-height:1.35}
+.bresult-grid b{display:block;font-size:11.4px;font-weight:800;margin-top:3px;letter-spacing:-.3px}
+.bresult-note{margin:10px 0 0;font-size:10.4px;color:var(--ink-2);background:var(--emerald-soft);border:1px solid #d5f2e6;border-radius:9px;padding:8px 10px;line-height:1.55}
+.bresult-note b{color:var(--emerald-2)}
+.bcard{display:flex;align-items:center;gap:9px;width:100%;border:0;border-bottom:1px solid var(--line-2);background:transparent;padding:9px 2px;text-align:left;cursor:pointer}
+.bcard:hover{background:#fbfcff}
+.bc-score{flex:0 0 34px;text-align:center;font-size:15px;font-weight:800;letter-spacing:-.5px}
+.bc-mid{flex:1;min-width:0}
+.bc-mid b{display:block;font-size:11.6px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc-sub{display:block;font-size:9.4px;color:var(--muted-2);marginTop:1px}
+.bc-tag{display:inline-block;margin-top:3px;font-size:9.2px;font-weight:800;border-radius:5px;padding:1px 5px}
+.bc-tag.ok{background:var(--emerald-soft);color:var(--emerald-2)}
+.bc-tag.ch{background:var(--amber-bg);color:var(--amber)}
+.bc-arrow{flex:0 0 auto;color:var(--muted-2);font-size:14px}
+#budgetList{max-height:560px;overflow-y:auto}
 
-/* ---------- footer / toast ---------- */
-.foot{margin:22px 20px 0;text-align:center}
-.foot p{margin:0 0 5px;font-size:10.4px;line-height:1.65;color:var(--muted-2)}
-.foot .copyline{font-size:10px;color:#b6bfcd;margin-top:9px}
-.toast{
-  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
-  background:#101828;color:#fff;font-size:12.5px;font-weight:600;
-  padding:11px 16px;border-radius:12px;box-shadow:0 12px 30px rgba(16,24,40,.28);
-  opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;z-index:50;max-width:88vw;text-align:center;
+/* map */
+.map-wrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#eaf0f7}
+#map{width:100%;height:420px}
+@media (max-height:700px){#map{height:340px}}
+.map-note{margin:9px 0 0;font-size:9.6px;color:var(--muted-2);line-height:1.6}
+.map-legend{display:flex;gap:10px;flex-wrap:wrap;font-size:9.4px;color:var(--muted);margin-top:8px}
+.map-legend span{display:inline-flex;align-items:center;gap:4px}
+.map-legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.map-fallback{display:none;padding:26px 16px;text-align:center;font-size:11.4px;color:var(--muted);line-height:1.7;background:#f8fafd}
+.map-fallback.show{display:block}
+.map-fallback b{color:var(--ink)}
+.pin{background:transparent;border:0}
+.pin-b{
+  display:grid;place-items:center;min-width:30px;height:23px;padding:0 5px;border-radius:7px;
+  background:#fff;color:#101828;font-size:11px;font-weight:800;letter-spacing:-.3px;
+  border:2px solid var(--c,#0ea472);box-shadow:0 2px 6px rgba(16,24,40,.22);white-space:nowrap;
 }
+.pin-b.sel{background:var(--c,#0ea472);color:#fff}
+.pin-d{display:block;width:11px;height:11px;border-radius:50%;background:var(--c,#0ea472);border:1.5px solid #fff;box-shadow:0 1px 4px rgba(16,24,40,.35)}
+.leaflet-popup-content-wrapper{border-radius:13px;box-shadow:0 10px 26px rgba(16,24,40,.2);padding:0}
+.leaflet-popup-content{margin:0;width:206px !important}
+.mp-card{padding:11px 12px 12px}
+.mp-top{display:flex;align-items:flex-start;gap:6px}
+.mp-name{font-size:12.4px;font-weight:800;letter-spacing:-.3px;line-height:1.3;flex:1}
+.mp-grade{flex:0 0 auto;color:#fff;border-radius:6px;padding:2px 6px;font-size:9.6px;font-weight:800}
+.mp-meta{font-size:9.4px;color:#667085;margin-top:3px}
+.mp-score{display:flex;align-items:baseline;gap:4px;margin-top:6px}
+.mp-score b{font-size:22px;font-weight:800;letter-spacing:-1px;line-height:1}
+.mp-score span{font-size:9.6px;color:#98a2b3;font-weight:700}
+.mp-score em{margin-left:auto;font-style:normal;font-size:9.6px;color:#344054;font-weight:700}
+.mp-btn{width:100%;margin-top:9px;border:0;border-radius:8px;padding:7px;background:#0d1836;color:#fff;font-size:10.4px;font-weight:800;cursor:pointer}
+.mp-btn:hover{background:#16306b}
+
+/* footer */
+.foot{margin:22px 16px 0;text-align:center}
+.foot p{margin:0 0 5px;font-size:10.2px;line-height:1.65;color:var(--muted-2)}
+.foot .copyline{font-size:9.8px;color:#b6bfcd;margin-top:9px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#101828;color:#fff;font-size:12.5px;font-weight:600;padding:11px 16px;border-radius:12px;box-shadow:0 12px 30px rgba(16,24,40,.28);opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;z-index:9999;max-width:88vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+[hidden]{display:none !important}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header class="hero">
-    <div class="brand"><span class="logo">🏢</span><span>하보카 <b>인천 아파트 성적표</b></span></div>
+    <div class="brand"><span class="logo">🏢</span><span><b>집스코어</b></span><span class="en">ZIPSCORE</span></div>
     <h1>우리 단지, 인천에서<br><em>몇 점</em>짜리일까?</h1>
-    <p class="lead">송도·청라·검단·영종·부평·남동·미추홀·서구 대표 32단지를 교통·학군·단지·인프라·가격·미래가치 6개 영역, 100점으로 채점했습니다.</p>
+    <p class="lead">인천 120개 아파트를 6개 영역 100점으로 채점했습니다. <b>내 소득·현금으로 대출 한도까지 계산</b>해 살 수 있는 단지를 추려 드립니다.</p>
     <div class="hero-meta">
-      <span class="pill">32개 단지</span>
+      <span class="pill" id="heroAptCount">120개 단지</span>
       <span class="pill">8개 권역</span>
       <span class="pill">6개 영역 · 100점</span>
+      <span class="pill">💰 예산 맞춤</span>
+      <span class="pill">🗺️ 무료 지도</span>
     </div>
   </header>
 
-  <nav class="tabs" role="tablist" aria-label="아파트 성적표 메뉴">
-    <button class="tab is-active" id="tab-diag" data-tab="diag" role="tab" aria-selected="true" aria-controls="panel-diag" type="button"><span>📊</span>성적표 진단</button>
-    <button class="tab" id="tab-battle" data-tab="battle" role="tab" aria-selected="false" aria-controls="panel-battle" type="button"><span>⚔️</span>1:1 배틀</button>
-    <button class="tab" id="tab-rank" data-tab="rank" role="tab" aria-selected="false" aria-controls="panel-rank" type="button"><span>🏆</span>인천 랭킹</button>
+  <nav class="tabs" role="tablist" aria-label="집스코어 메뉴">
+    <button class="tab is-active" id="tab-diag" data-tab="diag" role="tab" aria-selected="true" aria-controls="panel-diag" type="button"><span>📊</span>성적표</button>
+    <button class="tab" id="tab-budget" data-tab="budget" role="tab" aria-selected="false" aria-controls="panel-budget" type="button"><span>💰</span>예산찾기</button>
+    <button class="tab" id="tab-battle" data-tab="battle" role="tab" aria-selected="false" aria-controls="panel-battle" type="button"><span>⚔️</span>배틀</button>
+    <button class="tab" id="tab-rank" data-tab="rank" role="tab" aria-selected="false" aria-controls="panel-rank" type="button"><span>🏆</span>랭킹</button>
+    <button class="tab" id="tab-map" data-tab="map" role="tab" aria-selected="false" aria-controls="panel-map" type="button"><span>🗺️</span>지도</button>
   </nav>
 
-  <!-- ================= 1. 성적표 진단 ================= -->
+  <!-- ================= 1. 성적표 ================= -->
   <section class="panel" id="panel-diag" role="tabpanel" aria-labelledby="tab-diag">
-
     <section class="card" id="picker">
       <div class="sec-head">
         <h2>단지 고르기</h2>
-        <span class="tag-soft">예시 참고값</span>
+        <span class="tag-soft">사실 기반 보정 v2.1</span>
       </div>
       <div class="chips" id="regionChips" role="group" aria-label="권역 필터"></div>
       <div class="search-row">
         <input id="searchInput" type="search" placeholder="단지명 검색 (예: 퍼스트파크)" autocomplete="off" aria-label="단지명 검색">
-        <span class="search-count" id="searchCount">32곳</span>
+        <span class="search-count" id="searchCount">120곳</span>
       </div>
       <div class="apt-grid" id="aptGrid"></div>
-      <p class="hint">단지를 누르면 100점 성적표가 바로 나옵니다. 점수와 시세는 시안용 예시 값입니다.</p>
+      <p class="hint">목록은 권역별로 묶여 있고, 칸 안에서 스크롤됩니다. 단지를 누르면 100점 성적표가 바로 나옵니다. 세대수·준공·거래건수는 국토부 공동주택 자료(2026.09), 역 도보시간은 카카오맵 좌표 기준 추정입니다.</p>
     </section>
 
     <div id="report" aria-live="polite"></div>
@@ -552,7 +389,7 @@ details.rules li b{color:var(--ink-2)}
     <section class="card" id="customCard">
       <button class="custom-toggle" id="customToggle" type="button" aria-expanded="false" aria-controls="customBody">
         <span class="ct-ico">✏️</span>
-        <span><span class="ct-main">직접 내 아파트 진단하기</span><span class="ct-sub">인천 외 단지도 6문항으로 1분 체크</span></span>
+        <span><span class="ct-main">목록에 없는 단지 직접 진단</span><span class="ct-sub">6문항으로 1분 체크 (인천 외 지역도 가능)</span></span>
         <span class="ct-arrow">▼</span>
       </button>
       <div id="customBody" hidden>
@@ -572,19 +409,67 @@ details.rules li b{color:var(--ink-2)}
         <details class="rules">
           <summary>채점 기준 보기</summary>
           <ul>
-            <li><b>교통·역세권 20점</b> — 역 도보 거리, 광역버스·GTX 접근성, 업무지구 이동성</li>
-            <li><b>학군·교육환경 20점</b> — 초품아 여부, 중·고교 선호도, 학원가 규모</li>
-            <li><b>단지 스펙·상품성 15점</b> — 세대수, 연식·관리 상태, 세대당 주차 대수</li>
-            <li><b>생활 인프라·환경 15점</b> — 대형마트·병원, 공원·수변, 유해시설 배제</li>
-            <li><b>가격·환금성 15점</b> — 거래 회전율, 전세가율, 지역 대장주 대비 방어력</li>
-            <li><b>미래 가치·호재 15점</b> — 교통망 신설, 주변 개발·일자리, 정비사업 여력</li>
+            <li><b>교통·역세권 20점</b> — 역 도보 거리, 광역버스·GTX 접근성</li>
+            <li><b>학군·교육환경 20점</b> — 초품아 여부, 학원가 규모·도보 접근</li>
+            <li><b>단지 스펙·상품성 15점</b> — 세대수, 연식, 세대당 주차</li>
+            <li><b>생활 인프라·환경 15점</b> — 대형마트·병원, 공원·수변</li>
+            <li><b>가격·환금성 15점</b> — 거래 회전율, 전세가율, 방어력</li>
+            <li><b>미래 가치·호재 15점</b> — 교통망 신설, 개발·정비사업</li>
           </ul>
         </details>
       </div>
     </section>
   </section>
 
-  <!-- ================= 2. 1:1 배틀 ================= -->
+
+  <!-- ================= 2. 예산·대출 맞춤 ================= -->
+  <section class="panel" id="panel-budget" role="tabpanel" aria-labelledby="tab-budget" hidden>
+    <section class="card">
+      <div class="sec-head">
+        <h2>내 예산으로 살 수 있는 단지</h2>
+        <span class="tag-soft">DSR · LTV 시뮬레이션</span>
+      </div>
+      <div class="bgrid">
+        <div class="field"><label for="bIncome">연 소득 (만원)</label>
+          <input id="bIncome" type="number" inputmode="numeric" min="0" step="100" value="7000" autocomplete="off"></div>
+        <div class="field"><label for="bCash">보유 현금 (만원)</label>
+          <input id="bCash" type="number" inputmode="numeric" min="0" step="500" value="25000" autocomplete="off"></div>
+      </div>
+      <p class="hint" style="margin-top:5px">부부합산 소득도 됩니다. 현금 2억 5,000만원은 <b>25000</b>으로 입력하세요.</p>
+      <div class="bgrid" style="margin-top:10px">
+        <div class="field"><label for="bDebt">기존 대출 월 상환액 (만원)</label>
+          <input id="bDebt" type="number" inputmode="numeric" min="0" step="10" value="0" autocomplete="off"></div>
+        <div class="field"><label>LTV</label>
+          <div class="seg" id="ltvSeg" role="group" aria-label="LTV 선택">
+            <button type="button" data-ltv="70" class="is-active">일반 70%</button>
+            <button type="button" data-ltv="80">생애최초 80%</button>
+          </div>
+        </div>
+      </div>
+      <div class="field" style="margin-top:10px"><label>금리 프리셋 (30년 원리금균등)</label>
+        <div class="seg" id="rateSeg" role="group" aria-label="금리 선택">
+          <button type="button" data-rate="4.0">4.0%</button>
+          <button type="button" data-rate="4.3" class="is-active">4.3%</button>
+          <button type="button" data-rate="4.6">4.6%</button>
+        </div>
+      </div>
+      <button class="btn-primary" id="calcBtn" type="button">내 예산으로 단지 찾기</button>
+      <p class="hint">DSR 40%·30년 만기·예시 금리 기준의 단순 시뮬레이션입니다. 실제 한도는 신용점수·스트레스 DSR·기존 부채에 따라 달라지고, 취득세·이사비는 예산에서 빼지 않았습니다.</p>
+    </section>
+
+    <section class="card" id="budgetResult" aria-live="polite"></section>
+
+    <section class="card" id="budgetListCard">
+      <div class="sec-head">
+        <h2>추천 단지</h2>
+        <span class="tag-soft" id="budgetCount">-</span>
+      </div>
+      <div id="budgetList"></div>
+      <p class="hint">84㎡ 추정 시세 기준입니다. <b>도전</b>은 예산보다 5% 이내로 초과하는 단지입니다. 카드를 누르면 성적표로 이동합니다.</p>
+    </section>
+  </section>
+
+  <!-- ================= 3. 1:1 배틀 ================= -->
   <section class="panel" id="panel-battle" role="tabpanel" aria-labelledby="tab-battle" hidden>
     <section class="card">
       <div class="sec-head">
@@ -592,14 +477,8 @@ details.rules li b{color:var(--ink-2)}
         <span class="tag-step">A vs B</span>
       </div>
       <div class="pick-row">
-        <div class="pick a">
-          <label class="plabel" for="selA">A 단지</label>
-          <select id="selA" aria-label="A 단지 선택"></select>
-        </div>
-        <div class="pick b">
-          <label class="plabel" for="selB">B 단지</label>
-          <select id="selB" aria-label="B 단지 선택"></select>
-        </div>
+        <div class="pick a"><label class="plabel" for="selA">A 단지</label><select id="selA" aria-label="A 단지 선택"></select></div>
+        <div class="pick b"><label class="plabel" for="selB">B 단지</label><select id="selB" aria-label="B 단지 선택"></select></div>
       </div>
       <div class="swap-row"><button class="swap-btn" id="swapBtn" type="button">⇄ A · B 자리 바꾸기</button></div>
       <p class="hint">총점·등급, 6개 영역 우위, 84㎡ 참고 시세 기준 갈아타기 자금까지 한 번에 비교합니다.</p>
@@ -612,98 +491,100 @@ details.rules li b{color:var(--ink-2)}
     <section class="card">
       <div class="sec-head">
         <h2>인천 TOP 랭킹</h2>
-        <span class="tag-soft">32곳 전체</span>
+        <span class="tag-soft" id="rankTotal">120곳 전체</span>
       </div>
       <div class="chips" id="rankChips" role="group" aria-label="랭킹 권역 필터"></div>
-      <div class="rank-head" style="margin-top:12px">
-        <span>#</span><span>단지</span><span>점수</span><span>등급</span>
-      </div>
+      <div class="rank-head" style="margin-top:12px"><span>#</span><span>단지</span><span>점수</span><span>등급</span></div>
       <div id="rankList"></div>
-      <p class="hint">행을 누르면 그 단지의 성적표로 바로 이동합니다. 점수는 6개 영역 합산(100점 만점)입니다.</p>
+      <p class="hint">행을 누르면 그 단지의 성적표로 이동합니다. 점수는 6개 영역 합산(100점 만점)입니다.</p>
+    </section>
+  </section>
+
+  <!-- ================= 4. 인천 지도 ================= -->
+  <section class="panel" id="panel-map" role="tabpanel" aria-labelledby="tab-map" hidden>
+    <section class="card">
+      <div class="sec-head">
+        <h2>인천 단지 지도</h2>
+        <span class="tag-soft">점수 = 핀</span>
+      </div>
+      <div class="chips" id="mapChips" role="group" aria-label="권역 이동"></div>
+      <div class="map-wrap" style="margin-top:11px">
+        <div id="map" role="application" aria-label="인천 아파트 단지 지도"></div>
+        <div class="map-fallback" id="mapFallback">
+          <b>지도를 불러오지 못했습니다.</b><br>
+          네트워크(OpenStreetMap 타일) 또는 지도 스크립트가 차단된 환경입니다.<br>
+          아래 <b>인천 랭킹</b> 탭에서 같은 137개 단지의 점수와 위치(권역)를 확인할 수 있습니다.
+        </div>
+      </div>
+      <div class="map-legend">
+        <span><i style="background:#0b7a58"></i>S 92↑</span>
+        <span><i style="background:#0ea472"></i>A+ 86~91</span>
+        <span><i style="background:#1f5fd0"></i>A 80~85</span>
+        <span><i style="background:#f79009"></i>B+ 72~79</span>
+        <span><i style="background:#7c8899"></i>B 71↓</span>
+      </div>
+      <p class="map-note">핀의 숫자가 그 단지의 100점 성적입니다. 핀을 누르면 요약 카드가 뜨고, <b>성적표 자세히 보기</b>로 바로 이동합니다. 배경지도 © OpenStreetMap contributors.</p>
     </section>
   </section>
 
   <footer class="foot">
-    <p>본 성적표는 공개된 단지 정보와 실거래 흐름을 바탕으로 만든 참고용 분석이며, 공인 감정평가가 아닙니다.<br>단지 점수·84㎡ 참고 시세는 시안용 예시 값입니다. 계약 전 실거래가 공개시스템과 중개사무소에서 확인하세요.</p>
-    <p class="copyline">© 2026 하보카 · 인천 아파트 성적표 v2.0</p>
+    <p>집스코어 ZIPSCORE는 공개된 단지 정보와 실거래 흐름을 바탕으로 만든 <b>참고용 입지 분석</b>이며 공인 감정평가가 아닙니다.<br>세대수·준공·거래건수는 국토교통부 공동주택 기본정보 집계(2026.09 기준), 역 도보시간은 좌표 직선거리 환산 추정치, 84㎡ 시세는 추정 참고값입니다.</p>
+    <p class="copyline">© 2026 ZIPSCORE · inje8451.github.io/Zipscore</p>
   </footer>
 </div>
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="window.__leafletFailed=true"></script>
 <script>
 (function(){
   "use strict";
 
-  /* ============================== 공통 데이터 ============================== */
+  /* ============================== 데이터 ============================== */
   var AREAS = [
-    {
-      key:"transport", icon:"🚇", name:"교통·역세권", short:"교통", max:20,
-      sub:"역 도보 거리 · 광역버스 · GTX/7호선",
-      options:[
-        {t:"도보 5분 내 역 (초역세권)", p:20, n:"도보 5분 내 역이 있어 출퇴근 시간이 짧고 임차 수요가 꾸준합니다."},
-        {t:"도보 6~10분 (역세권)", p:16, n:"도보 10분 이내 역세권으로 통근 여건이 무난한 편입니다."},
-        {t:"도보 11~15분", p:12, n:"역까지 도보 11~15분으로 걸어서 통근하기에는 다소 먼 거리입니다."},
-        {t:"버스 환승 필요·15분 이상", p:8, n:"역까지 버스 환승이 필요해 차량·버스 의존도가 높습니다."},
-        {t:"역 없음, 차량 중심", p:4, n:"역 접근이 어려워 차량 중심 생활이 불가피합니다."}
-      ],
-      weak:"실제 출퇴근 시간과 GTX·광역버스 노선 일정을 함께 확인해 보세요."
-    },
-    {
-      key:"school", icon:"🏫", name:"학군·교육환경", short:"학군", max:20,
-      sub:"초품아 · 중·고교 · 학원가",
-      options:[
-        {t:"초등학교 도보 5분 내 + 학원가", p:20, n:"초등학교 도보 5분 내 초품아에 학원가까지 갖춰 학부모 실수요가 두텁습니다."},
-        {t:"초등학교 도보 10분 내", p:15, n:"초등학교가 도보 10분 내로 통학 여건은 무난합니다."},
-        {t:"초등학교 차량 5분·통학버스", p:11, n:"초등학교가 차량·통학버스 거리로 학군 프리미엄은 제한적입니다."},
-        {t:"초등학교 원거리", p:6, n:"초등학교가 원거리라 학군 수요는 크지 않습니다."}
-      ],
-      weak:"통학버스·차량 통학 동선과 배차 시간을 확인해 두세요."
-    },
-    {
-      key:"complex", icon:"🏢", name:"단지 스펙·상품성", short:"단지", max:15,
-      sub:"세대수 · 연식 · 주차",
-      options:[
-        {t:"1,000세대↑ + 주차 1.5대↑", p:15, n:"1,000세대 이상 대단지에 주차 여력까지 갖춰 관리·커뮤니티가 안정적입니다."},
-        {t:"500~1,000세대 + 주차 1.2대↑", p:12, n:"500세대 이상 중대단지로 관리와 주차가 무난한 수준입니다."},
-        {t:"300~500세대 또는 10년 이상", p:9, n:"300~500세대 규모이거나 연식이 있어 관리·주차가 변수로 남습니다."},
-        {t:"300세대 미만 또는 15년↑ 노후", p:5, n:"세대수가 적거나 연식이 오래돼 관리·주차 여건이 아쉽습니다."}
-      ],
-      weak:"관리비 내역과 실제 주차 여유(저녁 시간대)를 확인해 보세요."
-    },
-    {
-      key:"infra", icon:"🌳", name:"생활 인프라·환경", short:"인프라", max:15,
-      sub:"마트·병원 · 공원·수변 · 쾌적성",
-      options:[
-        {t:"대형마트·병원 10분 내 + 공원 도보권", p:15, n:"대형마트·병원이 10분 내이고 공원·수변이 도보권이라 생활 동선이 짧습니다."},
-        {t:"마트·병원 차량 10분 내 + 근린공원", p:12, n:"마트·병원은 차량 10분 내, 근린공원을 갖춘 무난한 환경입니다."},
-        {t:"편의점·소형마트 중심", p:8, n:"편의점·소형마트 위주로 대형 편의시설은 차량 이동이 필요합니다."},
-        {t:"유해시설 인접·편의 부족", p:5, n:"유해시설이 가깝거나 생활 편의가 부족해 쾌적성이 아쉽습니다."}
-      ],
-      weak:"주말 장보기·병원 방문 동선과 유해시설(고압선·소음원) 위치를 확인해 보세요."
-    },
-    {
-      key:"price", icon:"💰", name:"가격·환금성", short:"가격", max:15,
-      sub:"거래 회전 · 전세가율 · 방어력",
-      options:[
-        {t:"월 3건↑ 거래 + 전세가율 60%↓", p:15, n:"월 3건 이상 거래되고 전세가율이 60% 아래로 환금성이 좋습니다."},
-        {t:"월 1~2건 거래 + 전세가율 60~65%", p:12, n:"월 1~2건 거래에 전세가율 60~65%로 환금성은 평균 수준입니다."},
-        {t:"거래 드묾 또는 전세가율 65~70%", p:9, n:"거래가 드물거나 전세가율이 65~70%로 급매 시 협상력이 약해질 수 있습니다."},
-        {t:"급매 위주 + 전세가율 70%↑", p:6, n:"급매 위주로 거래되고 전세가율이 70%를 넘어 가격 방어력이 약합니다."}
-      ],
-      weak:"최근 3개월 실거래와 전세가율 추이를 확인해 두세요."
-    },
-    {
-      key:"future", icon:"🚀", name:"미래 가치·호재", short:"호재", max:15,
-      sub:"교통망 신설 · 개발 · 정비사업",
-      options:[
-        {t:"확정 호재 2건↑ (교통·개발)", p:15, n:"확정된 교통·개발 호재가 2건 이상으로 중장기 상승 여지가 있습니다."},
-        {t:"예정 호재 1건 (GTX·7호선 등)", p:12, n:"GTX·7호선 등 예정 호재가 1건 있어 개통 시점의 가치 변화를 지켜볼 만합니다."},
-        {t:"계획 단계 호재", p:9, n:"호재가 계획 단계에 머물러 있어 실현 시점까지 변동성이 있습니다."},
-        {t:"특별한 호재 없음", p:6, n:"특별한 호재가 없어 가치 상승 재료는 제한적입니다."}
-      ],
-      weak:"호재의 사업 단계(계획·착공·개통)와 일정을 확인해 두세요."
-    }
+    {key:"transport", icon:"🚇", name:"교통·역세권", short:"교통", max:20, sub:"역 도보 거리 · 광역버스 · GTX",
+     options:[
+      {t:"도보 5분 내 역 (초역세권)", p:20, n:"도보 5분 내 역이 있어 출퇴근 시간이 짧고 임차 수요가 꾸준합니다."},
+      {t:"도보 6~10분 (역세권)", p:16, n:"도보 10분 이내 역세권으로 통근 여건이 무난한 편입니다."},
+      {t:"도보 11~15분", p:12, n:"역까지 도보 11~15분으로 걸어서 통근하기에는 다소 먼 거리입니다."},
+      {t:"버스 환승 필요·15분 이상", p:8, n:"역까지 버스 환승이 필요해 차량·버스 의존도가 높습니다."},
+      {t:"역 없음, 차량 중심", p:4, n:"역 접근이 어려워 차량 중심 생활이 불가피합니다."}],
+     weak:"실제 출퇴근 시간과 GTX·광역버스 노선 일정을 함께 확인해 보세요."},
+    {key:"school", icon:"🏫", name:"학군·교육환경", short:"학군", max:20, sub:"초품아 · 학원가 밀집도",
+     options:[
+      {t:"초등학교 도보 5분 내 + 대형 학원가", p:20, n:"초품아에 대형 학원가까지 도보권이라 학부모 실수요가 두텁습니다."},
+      {t:"초등학교 도보 10분 내", p:15, n:"초등학교가 도보 10분 내로 통학 여건은 무난합니다."},
+      {t:"초등학교 차량 5분·통학버스", p:11, n:"초등학교가 차량·통학버스 거리로 학군 프리미엄은 제한적입니다."},
+      {t:"초등학교 원거리", p:6, n:"초등학교가 원거리라 학군 수요는 크지 않습니다."}],
+     weak:"통학버스·차량 통학 동선과 배차 시간을 확인해 두세요."},
+    {key:"complex", icon:"🏢", name:"단지 스펙·상품성", short:"단지", max:15, sub:"세대수 · 연식 · 주차",
+     options:[
+      {t:"1,000세대↑ + 주차 1.5대↑", p:15, n:"1,000세대 이상 대단지에 주차 여력까지 갖춰 관리·커뮤니티가 안정적입니다."},
+      {t:"500~1,000세대 + 주차 1.2대↑", p:12, n:"500세대 이상 중대단지로 관리와 주차가 무난한 수준입니다."},
+      {t:"300~500세대 또는 10년 이상", p:9, n:"300~500세대 규모이거나 연식이 있어 관리·주차가 변수로 남습니다."},
+      {t:"300세대 미만 또는 15년↑ 노후", p:5, n:"세대수가 적거나 연식이 오래돼 관리·주차 여건이 아쉽습니다."}],
+     weak:"관리비 내역과 실제 주차 여유(저녁 시간대)를 확인해 보세요."},
+    {key:"infra", icon:"🌳", name:"생활 인프라·환경", short:"인프라", max:15, sub:"마트·병원 · 공원·수변",
+     options:[
+      {t:"대형마트·병원 10분 내 + 공원 도보권", p:15, n:"대형마트·병원이 10분 내이고 공원·수변이 도보권이라 생활 동선이 짧습니다."},
+      {t:"마트·병원 차량 10분 내 + 근린공원", p:12, n:"마트·병원은 차량 10분 내, 근린공원을 갖춘 무난한 환경입니다."},
+      {t:"편의점·소형마트 중심", p:8, n:"편의점·소형마트 위주로 대형 편의시설은 차량 이동이 필요합니다."},
+      {t:"유해시설 인접·편의 부족", p:5, n:"유해시설이 가깝거나 생활 편의가 부족해 쾌적성이 아쉽습니다."}],
+     weak:"주말 장보기·병원 방문 동선과 유해시설 위치를 확인해 보세요."},
+    {key:"price", icon:"💰", name:"가격·환금성", short:"가격", max:15, sub:"거래 회전 · 전세가율",
+     options:[
+      {t:"월 3건↑ 거래 + 전세가율 60%↓", p:15, n:"월 3건 이상 거래되고 전세가율이 60% 아래로 환금성이 좋습니다."},
+      {t:"월 1~2건 거래 + 전세가율 60~65%", p:12, n:"월 1~2건 거래에 전세가율 60~65%로 환금성은 평균 수준입니다."},
+      {t:"거래 드묾 또는 전세가율 65~70%", p:9, n:"거래가 드물거나 전세가율이 65~70%로 급매 시 협상력이 약해질 수 있습니다."},
+      {t:"급매 위주 + 전세가율 70%↑", p:6, n:"급매 위주로 거래되고 전세가율이 70%를 넘어 가격 방어력이 약합니다."}],
+     weak:"최근 3개월 실거래와 전세가율 추이를 확인해 두세요."},
+    {key:"future", icon:"🚀", name:"미래 가치·호재", short:"호재", max:15, sub:"교통망 신설 · 개발",
+     options:[
+      {t:"확정 호재 2건↑ (교통·개발)", p:15, n:"확정된 교통·개발 호재가 2건 이상으로 중장기 상승 여지가 있습니다."},
+      {t:"예정 호재 1건 (GTX·7호선 등)", p:12, n:"GTX·7호선 등 예정 호재가 1건 있어 개통 시점의 가치 변화를 지켜볼 만합니다."},
+      {t:"계획 단계 호재", p:9, n:"호재가 계획 단계에 머물러 있어 실현 시점까지 변동성이 있습니다."},
+      {t:"특별한 호재 없음", p:6, n:"특별한 호재가 없어 가치 상승 재료는 제한적입니다."}],
+     weak:"호재의 사업 단계(계획·착공·개통)와 일정을 확인해 두세요."}
   ];
 
   var GRADES = [
@@ -723,906 +604,922 @@ details.rules li b{color:var(--ink-2)}
   };
 
   var REGIONS = [
-    {key:"songdo",   label:"송도",   emoji:"🌊", full:"연수구 송도"},
-    {key:"cheongna", label:"청라",   emoji:"🏞", full:"서해구 청라"},
-    {key:"geumdan",  label:"검단",   emoji:"🏗", full:"검단구"},
-    {key:"yeongjong",label:"영종",   emoji:"✈️", full:"영종구"},
-    {key:"bupyeong", label:"부평",   emoji:"🚉", full:"부평구"},
-    {key:"namdong",  label:"남동",   emoji:"🏟", full:"남동구"},
-    {key:"michuhol", label:"미추홀", emoji:"⚓", full:"미추홀구"},
-    {key:"seogu",    label:"서구",   emoji:"🛤", full:"서해구 루원·가정"}
+    {key:"songdo",   label:"송도",   emoji:"🌊", full:"연수구 송도국제도시", center:[37.398,126.638], zoom:13},
+    {key:"cheongna", label:"청라",   emoji:"🏞", full:"서해구 청라국제도시", center:[37.534,126.640], zoom:13},
+    {key:"geomdan",  label:"검단",   emoji:"🏗", full:"검단구 검단신도시", center:[37.594,126.694], zoom:13},
+    {key:"yeongjong",label:"영종",   emoji:"✈️", full:"영종구 영종하늘도시", center:[37.492,126.545], zoom:12},
+    {key:"bupyeong", label:"부평",   emoji:"🚉", full:"부평구", center:[37.498,126.722], zoom:13},
+    {key:"namdong",  label:"남동",   emoji:"🏟", full:"남동구", center:[37.447,126.718], zoom:13},
+    {key:"michuhol", label:"미추홀", emoji:"⚓", full:"미추홀구", center:[37.455,126.665], zoom:13},
+    {key:"seogu",    label:"서구",   emoji:"🛤", full:"서해구 루원·가정·검암", center:[37.520,126.676], zoom:13}
   ];
 
-  /* 6영역 점수 순서 = 교통, 학군, 단지, 인프라, 가격, 호재 (최대 20·20·15·15·15·15) */
+  /* 6영역 = 교통·학군·단지·인프라·가격·호재 (최대 20·20·15·15·15·15) */
   var COMPLEXES = [
-    {id:"ep-sondo", name:"e편한세상송도", region:"songdo", year:2018, hh:2708, price:6.6,
-     tags:"6·8공구 수변공원 · 2,700세대 · GTX-B 예정", scores:[12,20,12,15,15,12]},
-    {id:"firstpark", name:"송도더샵퍼스트파크", region:"songdo", year:2017, hh:2597, price:10.8,
-     tags:"센트럴파크 초품아 · 더블역세권 · 44층", scores:[16,20,15,15,15,12]},
-    {id:"crystal", name:"송도자이크리스탈오션", region:"songdo", year:2024, hh:1503, price:10.8,
-     tags:"11공구 오션뷰 신축 · 1,503세대 · GTX-B", scores:[12,15,15,15,12,15]},
-    {id:"centralpark", name:"송도더샵센트럴파크", region:"songdo", year:2011, hh:3200, price:7.4,
-     tags:"센트럴파크 바로 앞 · 초품아 · 대단지", scores:[16,20,15,15,12,9]},
-    {id:"americantown", name:"송도아메리칸타운아이파크", region:"songdo", year:2018, hh:830, price:8.6,
-     tags:"송도과학로 · 49층 랜드마크 · 830세대", scores:[12,12,12,15,15,12]},
-    {id:"thesky", name:"힐스테이트송도더스카이", region:"songdo", year:2024, hh:1205, price:12.7,
-     tags:"59층 랜드마크 · 인천타워대로 · 2024년", scores:[16,12,15,12,12,15]},
-
-    {id:"lakeblue", name:"청라한양수자인레이크블루", region:"cheongna", year:2019, hh:1534, price:8.0,
-     tags:"국제금융단지 · 7호선 연장 · 호수공원", scores:[12,15,15,15,15,15]},
-    {id:"lakeppark", name:"청라더샵레이크파크", region:"cheongna", year:2013, hh:1590, price:7.3,
-     tags:"레이크파크 호수 조망 · 대단지 · 7호선", scores:[12,15,12,15,12,12]},
-    {id:"poongkyung", name:"청라제일풍경채2차", region:"cheongna", year:2017, hh:1180, price:7.2,
-     tags:"에듀앤파크 · 초품아 · 7호선 예정", scores:[12,12,12,12,15,12]},
-    {id:"cheongna-prugio", name:"청라푸르지오", region:"cheongna", year:2013, hh:1730, price:7.6,
-     tags:"청라 중심 생활권 · 호수공원 · 대단지", scores:[12,12,12,15,12,12]},
-
-    {id:"woomi", name:"검단우미린더시그니처", region:"geumdan", year:2022, hh:1030, price:7.9,
-     tags:"검단신도시 중심 · 신검단중앙역 · 신축", scores:[12,12,15,12,15,12]},
-    {id:"hoban1", name:"검단호반써밋1차", region:"geumdan", year:2021, hh:1540, price:7.2,
-     tags:"아라역 인접 · 초품아 · 1,540세대", scores:[12,12,12,12,15,12]},
-    {id:"kumho", name:"검단금호어울림센트럴", region:"geumdan", year:2021, hh:970, price:7.6,
-     tags:"중앙공원 인접 · 신축 · 학원가", scores:[12,12,15,12,15,12]},
-    {id:"prugio-bevenue", name:"검단푸르지오더베뉴", region:"geumdan", year:2021, hh:1540, price:7.2,
-     tags:"아라역 도보 15분 · 한별초 271m · 대단지", scores:[12,15,15,12,15,12]},
-
-    {id:"hanshin", name:"영종한신더휴스카이파크", region:"yeongjong", year:2019, hh:1700, price:5.2,
-     tags:"운서역 생활권 · 바다 조망 · 대단지", scores:[12,12,15,12,12,12]},
-    {id:"centumvenue", name:"영종e편한세상센텀베뉴", region:"yeongjong", year:2023, hh:1409, price:5.1,
-     tags:"영종국제도시 중심 · 신축 · 1,409세대", scores:[12,12,15,12,9,12]},
-    {id:"skycentral", name:"영종호반써밋스카이센트럴", region:"yeongjong", year:2021, hh:950, price:5.0,
-     tags:"영종 중심상업지구 · 신축 · 950세대", scores:[12,12,12,12,12,12]},
-
-    {id:"raemian-bp", name:"부평래미안아이파크", region:"bupyeong", year:2014, hh:1145, price:6.3,
-     tags:"부평역 생활권 · 초품아 · 1,145세대", scores:[16,15,12,15,12,9]},
-    {id:"granghills", name:"e편한세상부평그랑힐스", region:"bupyeong", year:2023, hh:1150, price:6.0,
-     tags:"부평역 도보권 신축 · 커뮤니티 · 1,150세대", scores:[16,12,15,15,12,12]},
-    {id:"skview", name:"부평SK뷰해모로", region:"bupyeong", year:2022, hh:1559, price:5.8,
-     tags:"부평역 인접 · 1,559세대 · 신축", scores:[16,12,15,12,12,12]},
-    {id:"samsan", name:"삼산타운주공", region:"bupyeong", year:2005, hh:2600, price:5.4,
-     tags:"삼산 대단지 · 7호선 도보권 · 학원가", scores:[12,12,12,15,6,9]},
-
-    {id:"guwol", name:"구월힐스테이트롯데캐슬", region:"namdong", year:2007, hh:2500, price:5.0,
-     tags:"구월동 중심 · 시청·예술회관역 · 학원가", scores:[16,15,15,15,6,9]},
-    {id:"ecometro", name:"에코메트로3차더타워", region:"namdong", year:2015, hh:1200, price:4.0,
-     tags:"논현 생활권 · 인천논현역 · 공원 배후", scores:[12,12,12,12,6,9]},
-    {id:"asiad", name:"구월아시아드선수촌", region:"namdong", year:2015, hh:2000, price:5.2,
-     tags:"선수촌 공원 · 아시아드 경기장 · 초품아", scores:[12,15,12,15,6,9]},
-    {id:"ganseok", name:"간석래미안자이", region:"namdong", year:2016, hh:900, price:4.6,
-     tags:"간석역 도보권 · 재건축 신축 · 학군", scores:[12,12,12,12,9,9]},
-
-    {id:"skyview", name:"인천SK스카이뷰", region:"michuhol", year:2016, hh:3600, price:5.8,
-     tags:"용현동 대단지 · 인하대 인접 · 학원가", scores:[12,12,15,12,6,12]},
-    {id:"cityoc", name:"시티오씨엘3단지", region:"michuhol", year:2024, hh:977, price:6.4,
-     tags:"학익동 신축 주상복합 · 46층 · 개발 호재", scores:[12,12,15,12,12,15]},
-    {id:"juan", name:"주안캐슬앤더샵에듀포레", region:"michuhol", year:2018, hh:1300, price:4.5,
-     tags:"주안역 도보권 · 초품아 · 학원가", scores:[16,15,12,12,9,12]},
-
-    {id:"leaders", name:"루원시티SK리더스뷰", region:"seogu", year:2022, hh:1300, price:7.2,
-     tags:"루원시티 중심 · 인천2호선 · 신축", scores:[12,12,15,15,15,12]},
-    {id:"forena", name:"포레나루원시티", region:"seogu", year:2022, hh:1000, price:6.4,
-     tags:"루원시티 생활권 · 신축 · 공원 배후", scores:[12,12,15,12,12,12]},
-    {id:"gajeong-hoban", name:"가정호반써밋", region:"seogu", year:2017, hh:800, price:5.6,
-     tags:"가정동 생활권 · 초품아 · 800세대", scores:[12,12,12,12,12,9]},
-    {id:"sinhyeon", name:"신현e편한세상하늘채", region:"seogu", year:2018, hh:700, price:5.5,
-     tags:"신현동 주거지 · 초품아 · 700세대", scores:[8,12,12,12,9,9]}
+    {id:"so01",name:"송도아트윈푸르지오",region:"songdo",year:2015,hh:1236,price:8.2,deals:34,lat:37.392495,lng:126.631873,station:"센트럴파크",dist:286,walkMin:5,scores:[20, 19, 12, 15, 13, 14],school:"1공구 학원가 도보권, 초품아",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2015년 · 1,236세대"},
+    {id:"so02",name:"송도더샵퍼스트파크",region:"songdo",year:2017,hh:2597,price:10.8,deals:114,lat:37.387333,lng:126.633576,station:"인천대입구",dist:530,walkMin:8,scores:[17, 19, 14, 14, 15, 13],school:"송일초·예송초 초품아, 1공구 학원가·센트럴파크 도보권",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"F13·14·15 3개 블록 합계 2,597세대",tags:"송도 3공구 · 2017년 · 2,597세대"},
+    {id:"so03",name:"힐스테이트송도더스카이",region:"songdo",year:2024,hh:1525,price:11.5,deals:30,lat:37.401120,lng:126.628385,station:"국제업무지구",dist:171,walkMin:3,scores:[20, 18, 14, 14, 13, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2024년 · 1,525세대"},
+    {id:"so04",name:"송도더샵파크애비뉴",region:"songdo",year:2018,hh:668,price:9.4,deals:20,lat:37.385203,lng:126.636665,station:"인천대입구",dist:266,walkMin:4,scores:[20, 18, 10, 14, 12, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2018년 · 668세대"},
+    {id:"so05",name:"송도더샵마스터뷰",region:"songdo",year:2015,hh:1861,price:8.6,deals:61,lat:37.384102,lng:126.629997,station:"인천대입구",dist:863,walkMin:14,scores:[13, 18, 14, 14, 15, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"21·22·23-1BL 3개 블록 합계 1,861세대",tags:"송도 3공구 · 2015년 · 1,861세대"},
+    {id:"so06",name:"송도더샵센트럴시티",region:"songdo",year:2018,hh:2848,price:8.2,deals:95,lat:37.373871,lng:126.651207,station:"지식정보단지",dist:688,walkMin:11,scores:[15, 16, 14, 14, 15, 13],school:"초품아, 학원가는 차량·셔틀",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2018년 · 2,848세대"},
+    {id:"so07",name:"호반써밋송도",region:"songdo",year:2023,hh:2671,price:7.0,deals:57,lat:37.415682,lng:126.625060,station:"송도달빛축제공원",dist:952,walkMin:15,scores:[13, 17, 15, 12, 14, 15],school:"초품아(예송·해송초), 학원가는 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2023년 · 2,671세대"},
+    {id:"so08",name:"더샵송도아크베이",region:"songdo",year:2025,hh:1030,price:9.0,deals:5,lat:37.398310,lng:126.629140,station:"국제업무지구",dist:250,walkMin:4,scores:[20, 18, 13, 14, 8, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2025년 · 1,030세대"},
+    {id:"so09",name:"글로벌캠퍼스푸르지오",region:"songdo",year:2013,hh:2309,price:7.6,deals:52,lat:37.376523,lng:126.654280,station:"테크노파크",dist:668,walkMin:11,scores:[15, 17, 14, 14, 13, 13],school:"글로벌캠퍼스·초품아, 학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2013년 · 2,309세대"},
+    {id:"so10",name:"송도더샵센트럴파크1차",region:"songdo",year:2010,hh:729,price:9.5,deals:4,lat:37.396734,lng:126.637692,station:"센트럴파크",dist:439,walkMin:7,scores:[19, 20, 11, 15, 7, 14],school:"연송초·신정중 도보권, 1공구 학원가(250곳+)·채드윅 인접",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2010년 · 729세대"},
+    {id:"so11",name:"송도SK뷰",region:"songdo",year:2019,hh:2100,price:8.4,deals:67,lat:37.413551,lng:126.626396,station:"송도달빛축제공원",dist:714,walkMin:11,scores:[15, 14, 14, 12, 15, 15],school:"초품아, 학원가는 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2019년 · 2,100세대"},
+    {id:"so12",name:"송도더샵그린워크1차",region:"songdo",year:2014,hh:736,price:8.8,deals:27,lat:37.398927,lng:126.641496,station:"센트럴파크",dist:842,walkMin:13,scores:[13, 20, 11, 15, 12, 14],school:"신정초 도보권, 학원가 바로 옆(1공구 핵심)",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2014년 · 736세대"},
+    {id:"so13",name:"송도글로벌파크베르디움",region:"songdo",year:2017,hh:1153,price:7.6,deals:47,lat:37.375504,lng:126.656311,station:"테크노파크",dist:755,walkMin:12,scores:[15, 16, 12, 14, 14, 13],school:"초품아 다수, 대학가 중심·학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2017년 · 1,153세대"},
+    {id:"so14",name:"e편한세상송도",region:"songdo",year:2018,hh:2708,price:6.6,deals:98,lat:37.411463,lng:126.617440,station:"송도달빛축제공원",dist:886,walkMin:14,scores:[13, 15, 14, 11, 15, 15],school:"송담초 도보 6분(369m) 초품아·단지 내 유치원. 단 대형 학원가는 1·2공구 신송로로 차량 10분",infra:"달빛축제공원·수변 조망 우수, 대형마트·병원·약국은 차량 필요",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2018년 · 2,708세대"},
+    {id:"so15",name:"송도더샵그린스퀘어",region:"songdo",year:2014,hh:1516,price:7.5,deals:46,lat:37.371824,lng:126.653208,station:"지식정보단지",dist:973,walkMin:16,scores:[13, 16, 13, 14, 14, 13],school:"초품아, 학원가는 1공구 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2014년 · 1,516세대"},
+    {id:"so16",name:"송도에듀포레푸르지오",region:"songdo",year:2016,hh:1406,price:7.4,deals:60,lat:37.373951,lng:126.658981,station:"테크노파크",dist:955,walkMin:15,scores:[13, 16, 12, 14, 15, 13],school:"초품아 다수, 대학가 중심·학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2016년 · 1,406세대"},
+    {id:"so17",name:"랜드마크시티센트럴더샵",region:"songdo",year:2020,hh:3472,price:7.4,deals:84,lat:37.415728,lng:126.620297,station:"송도달빛축제공원",dist:1074,walkMin:17,scores:[11, 15, 14, 12, 15, 15],school:"초품아, 대형 학원가는 1공구 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"아파트 2,230 + 오피스텔 1,242세대",tags:"송도 6·8공구 · 2020년 · 3,472세대"},
+    {id:"so18",name:"디에트르송도시그니처뷰",region:"songdo",year:2023,hh:578,price:9.6,deals:1,lat:37.403624,lng:126.627080,station:"송도달빛축제공원",dist:405,walkMin:6,scores:[19, 18, 11, 14, 7, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2023년 · 578세대"},
+    {id:"so19",name:"송도더샵퍼스트월드",region:"songdo",year:2009,hh:2654,price:7.8,deals:34,lat:37.391076,lng:126.648241,station:"인천대입구",dist:951,walkMin:15,scores:[13, 18, 13, 14, 11, 13],school:"신정·먼우금초 초품아, 2공구 학원가 도보권",infra:"현대아울렛·트리플스트리트 차량 5분",future:"GTX-B 간접·송도 개발 지속",extra:"",tags:"송도 2공구 · 2009년 · 2,654세대"},
+    {id:"so20",name:"더샵송도마리나베이",region:"songdo",year:2020,hh:3100,price:6.9,deals:71,lat:37.412557,lng:126.611628,station:"송도달빛축제공원",dist:1395,walkMin:22,scores:[9, 14, 14, 12, 15, 15],school:"배정 초등 원거리(통학버스), 학원가는 1공구 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2020년 · 3,100세대"},
+    {id:"so21",name:"송도자이크리스탈오션",region:"songdo",year:2024,hh:1504,price:10.8,deals:11,lat:37.388037,lng:126.611828,station:"국제업무지구",dist:2122,walkMin:34,scores:[8, 13, 14, 12, 10, 15],school:"초품아 미확인, 학원가는 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2024년 · 1,504세대"},
+    {id:"so22",name:"송도자이더스타",region:"songdo",year:2024,hh:1533,price:7.8,deals:8,lat:37.384453,lng:126.615200,station:"센트럴파크",dist:2007,walkMin:32,scores:[8, 15, 14, 12, 9, 12],school:"초품아, 학원가는 차량",infra:"공원·수변 위주, 대형 편의시설 차량",future:"힐스테이트 레이크 개발·GTX-B 간접",extra:"",tags:"송도 11공구 · 2024년 · 1,533세대"},
+    {id:"so23",name:"송도럭스오션SK뷰",region:"songdo",year:2025,hh:1114,price:9.5,deals:3,lat:37.392321,lng:126.611660,station:"국제업무지구",dist:1862,walkMin:30,scores:[8, 13, 13, 12, 8, 15],school:"초품아 미확인, 학원가는 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2025년 · 1,114세대"},
+    {id:"ch24",name:"청라센트럴에일린의뜰",region:"cheongna",year:2018,hh:2029,price:7.6,deals:63,lat:37.535248,lng:126.646751,station:"가정",dist:2694,walkMin:43,scores:[8, 14, 14, 13, 15, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2018년 · 2,029세대"},
+    {id:"ch25",name:"청라한양수자인레이크블루",region:"cheongna",year:2019,hh:1534,price:8.0,deals:27,lat:37.537666,lng:126.629841,station:"청라국제도시",dist:2140,walkMin:34,scores:[8, 14, 14, 14, 12, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2019년 · 1,534세대"},
+    {id:"ch26",name:"청라제일풍경채2차",region:"cheongna",year:2017,hh:1581,price:7.2,deals:44,lat:37.537401,lng:126.646925,station:"서구청",dist:2752,walkMin:44,scores:[8, 14, 14, 13, 13, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2017년 · 1,581세대"},
+    {id:"ch27",name:"청라29블럭호반베르디움",region:"cheongna",year:2012,hh:2134,price:6.9,deals:50,lat:37.532012,lng:126.631379,station:"청라국제도시",dist:2783,walkMin:45,scores:[8, 14, 14, 13, 13, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2012년 · 2,134세대"},
+    {id:"ch28",name:"청라롯데캐슬",region:"cheongna",year:2013,hh:1326,price:6.8,deals:23,lat:37.530918,lng:126.646936,station:"가정",dist:2507,walkMin:40,scores:[8, 14, 12, 14, 11, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2013년 · 1,326세대"},
+    {id:"ch29",name:"청라힐데스하임",region:"cheongna",year:2011,hh:1284,price:7.2,deals:37,lat:37.529772,lng:126.652168,station:"가정",dist:2028,walkMin:33,scores:[8, 14, 12, 13, 12, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 1,284세대"},
+    {id:"ch30",name:"청라호수공원한신더휴",region:"cheongna",year:2020,hh:907,price:7.5,deals:18,lat:37.528800,lng:126.629816,station:"청라국제도시",dist:3109,walkMin:50,scores:[8, 14, 12, 14, 11, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2020년 · 907세대"},
+    {id:"ch31",name:"청라한화꿈에그린",region:"cheongna",year:2012,hh:1172,price:7.0,deals:17,lat:37.537782,lng:126.638655,station:"청라국제도시",dist:2418,walkMin:39,scores:[8, 14, 12, 14, 10, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2012년 · 1,172세대"},
+    {id:"ch32",name:"청라린스트라우스",region:"cheongna",year:2013,hh:1040,price:7.1,deals:20,lat:37.535287,lng:126.651883,station:"가정",dist:2296,walkMin:37,scores:[8, 14, 12, 13, 11, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 1,040세대"},
+    {id:"ch33",name:"청라엑슬루타워",region:"cheongna",year:2011,hh:996,price:7.4,deals:23,lat:37.531119,lng:126.651426,station:"가정",dist:2136,walkMin:34,scores:[8, 14, 11, 13, 11, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 996세대"},
+    {id:"ch34",name:"청라자이",region:"cheongna",year:2010,hh:884,price:6.9,deals:14,lat:37.528460,lng:126.658951,station:"가정",dist:1413,walkMin:23,scores:[9, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2010년 · 884세대"},
+    {id:"ch35",name:"청라한라비발디",region:"cheongna",year:2011,hh:992,price:6.9,deals:15,lat:37.539313,lng:126.638359,station:"청라국제도시",dist:2260,walkMin:36,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 992세대"},
+    {id:"ch36",name:"청라SKVIEW",region:"cheongna",year:2011,hh:879,price:6.8,deals:14,lat:37.527032,lng:126.630448,station:"청라국제도시",dist:3312,walkMin:53,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 879세대"},
+    {id:"ch37",name:"청라더샵레이크파크",region:"cheongna",year:2013,hh:766,price:7.3,deals:16,lat:37.530945,lng:126.638507,station:"청라국제도시",dist:3090,walkMin:50,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 766세대"},
+    {id:"ch38",name:"청라푸르지오",region:"cheongna",year:2013,hh:751,price:7.0,deals:14,lat:37.535008,lng:126.638487,station:"청라국제도시",dist:2681,walkMin:43,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 751세대"},
+    {id:"ge39",name:"우미린더시그니처",region:"geomdan",year:2022,hh:1268,price:6.9,deals:46,lat:37.595400,lng:126.711401,station:"아라",dist:395,walkMin:6,scores:[19, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,268세대"},
+    {id:"ge40",name:"검단신도시푸르지오더베뉴",region:"geomdan",year:2021,hh:1540,price:6.8,deals:67,lat:37.598323,lng:126.709442,station:"아라",dist:763,walkMin:12,scores:[15, 15, 14, 12, 15, 12],school:"한별초 271m 초품아, 학원가는 차량",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,540세대"},
+    {id:"ge41",name:"힐스테이트신검단센트럴",region:"geomdan",year:2025,hh:1535,price:7.3,deals:9,lat:37.606786,lng:126.697502,station:"신검단중앙",dist:435,walkMin:7,scores:[19, 15, 14, 12, 10, 12],school:"신검단중앙역 도보권, 학원가 형성 중",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2025년 · 1,535세대"},
+    {id:"ge42",name:"호반써밋1차",region:"geomdan",year:2021,hh:1168,price:6.6,deals:63,lat:37.595475,lng:126.709163,station:"아라",dist:519,walkMin:8,scores:[17, 14, 12, 12, 15, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,168세대"},
+    {id:"ge43",name:"검단금호어울림센트럴",region:"geomdan",year:2021,hh:1452,price:6.7,deals:52,lat:37.596195,lng:126.714279,station:"아라",dist:452,walkMin:7,scores:[17, 14, 12, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,452세대"},
+    {id:"ge44",name:"원당풍림아이원",region:"geomdan",year:2004,hh:1739,price:5.4,deals:53,lat:37.591054,lng:126.677498,station:"완정",dist:442,walkMin:7,scores:[19, 14, 12, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2004년 · 1,739세대"},
+    {id:"ge45",name:"파라곤센트럴파크",region:"geomdan",year:2022,hh:1122,price:6.5,deals:53,lat:37.586488,lng:126.710994,station:"아라",dist:669,walkMin:11,scores:[15, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,122세대"},
+    {id:"ge46",name:"신검단중앙역풍경채어바니티",region:"geomdan",year:2024,hh:1425,price:7.0,deals:7,lat:37.605466,lng:126.700301,station:"신검단중앙",dist:386,walkMin:6,scores:[19, 14, 13, 12, 9, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2024년 · 1,425세대"},
+    {id:"ge47",name:"검단신도시예미지트리플에듀",region:"geomdan",year:2022,hh:1249,price:6.8,deals:57,lat:37.600563,lng:126.713634,station:"아라",dist:930,walkMin:15,scores:[13, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,249세대"},
+    {id:"ge48",name:"검단신도시디에트르더펠리체",region:"geomdan",year:2022,hh:1279,price:6.7,deals:30,lat:37.584127,lng:126.710028,station:"아라",dist:945,walkMin:15,scores:[13, 14, 13, 12, 13, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,279세대"},
+    {id:"ge49",name:"검단신도시디에트르더힐",region:"geomdan",year:2022,hh:1417,price:7.2,deals:50,lat:37.602292,lng:126.709421,station:"신검단중앙",dist:1063,walkMin:17,scores:[11, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,417세대"},
+    {id:"ge50",name:"당하KCC스위첸",region:"geomdan",year:2005,hh:1015,price:5.2,deals:29,lat:37.588862,lng:126.678119,station:"독정",dist:478,walkMin:8,scores:[17, 14, 11, 12, 10, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2005년 · 1,015세대"},
+    {id:"ge51",name:"검단신도시신안인스빌어반퍼스트",region:"geomdan",year:2022,hh:1073,price:6.4,deals:41,lat:37.581624,lng:126.712750,station:"아라",dist:1177,walkMin:19,scores:[11, 14, 13, 12, 13, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,073세대"},
+    {id:"ge52",name:"검단오류역우방아이유쉘",region:"geomdan",year:2021,hh:420,price:5.3,deals:7,lat:37.595333,lng:126.633622,station:"검단오류",dist:420,walkMin:7,scores:[19, 14, 8, 12, 9, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 420세대"},
+    {id:"ge53",name:"검단신도시모아미래도엘리트파크",region:"geomdan",year:2022,hh:658,price:6.4,deals:24,lat:37.583664,lng:126.707609,station:"아라",dist:1076,walkMin:17,scores:[11, 14, 11, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 658세대"},
+    {id:"ye54",name:"운서SKVIEWSKYCITY",region:"yeongjong",year:2022,hh:1153,price:5.2,deals:40,lat:37.482670,lng:126.501120,station:"운서",dist:1293,walkMin:21,scores:[11, 13, 13, 12, 13, 12],school:"운서역 학군, 학원가 소규모",infra:"운서역 상권·공항철도",future:"제3연륙교·공항 배후수요",extra:"",tags:"2022년 · 1,153세대"},
+    {id:"ye55",name:"운서역반도유보라퍼스티지",region:"yeongjong",year:2022,hh:450,price:5.0,deals:16,lat:37.488967,lng:126.498857,station:"운서",dist:611,walkMin:10,scores:[15, 13, 9, 12, 11, 12],school:"운서역 학군, 학원가 소규모",infra:"운서역 상권·공항철도",future:"제3연륙교·공항 배후수요",extra:"",tags:"2022년 · 450세대"},
+    {id:"ye56",name:"하늘도시우미린1단지",region:"yeongjong",year:2012,hh:1680,price:4.7,deals:52,lat:37.492830,lng:126.556381,station:"영종",dist:3493,walkMin:56,scores:[8, 14, 13, 11, 13, 12],school:"초품아, 하늘도시 학원가 도보권",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,680세대"},
+    {id:"ye57",name:"영종센트럴푸르지오자이",region:"yeongjong",year:2019,hh:1604,price:5.3,deals:37,lat:37.489644,lng:126.548695,station:"영종",dist:3250,walkMin:52,scores:[8, 13, 14, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2019년 · 1,604세대"},
+    {id:"ye58",name:"E편한세상영종국제도시센텀베뉴",region:"yeongjong",year:2023,hh:1409,price:5.1,deals:34,lat:37.487688,lng:126.551697,station:"영종",dist:3587,walkMin:57,scores:[8, 13, 13, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2023년 · 1,409세대"},
+    {id:"ye59",name:"E편한세상영종국제도시오션하임",region:"yeongjong",year:2018,hh:1520,price:5.4,deals:43,lat:37.493192,lng:126.567780,station:"영종",dist:4312,walkMin:69,scores:[6, 13, 14, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2018년 · 1,520세대"},
+    {id:"ye60",name:"인천영종한양수자인",region:"yeongjong",year:2012,hh:1304,price:5.0,deals:37,lat:37.491498,lng:126.553516,station:"영종",dist:3395,walkMin:54,scores:[8, 13, 12, 11, 12, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,304세대"},
+    {id:"ye61",name:"영종힐스테이트",region:"yeongjong",year:2012,hh:1628,price:4.9,deals:31,lat:37.490634,lng:126.565732,station:"영종",dist:4306,walkMin:69,scores:[6, 13, 13, 11, 12, 12],school:"하늘도시 초품아, 학원가 소규모",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,628세대"},
+    {id:"ye62",name:"스카이시티자이",region:"yeongjong",year:2018,hh:1034,price:5.0,deals:15,lat:37.491188,lng:126.558853,station:"영종",dist:3778,walkMin:61,scores:[8, 13, 12, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2018년 · 1,034세대"},
+    {id:"ye63",name:"영종국제도시한신더휴스카이파크",region:"yeongjong",year:2019,hh:562,price:5.2,deals:19,lat:37.501044,lng:126.563287,station:"영종",dist:3586,walkMin:57,scores:[8, 13, 10, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2019년 · 562세대"},
+    {id:"ye64",name:"인천영종하늘도시한라비발디",region:"yeongjong",year:2012,hh:1365,price:4.8,deals:18,lat:37.491998,lng:126.563687,station:"영종",dist:4072,walkMin:65,scores:[6, 13, 12, 11, 10, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,365세대"},
+    {id:"ye65",name:"호반써밋스카이센트럴",region:"yeongjong",year:2022,hh:534,price:5.1,deals:19,lat:37.495449,lng:126.567125,station:"영종",dist:4144,walkMin:66,scores:[6, 13, 11, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2022년 · 534세대"},
+    {id:"bu66",name:"더샵부평센트럴시티",region:"bupyeong",year:2022,hh:5678,price:6.0,deals:65,lat:37.477148,lng:126.698465,station:"동암",dist:800,walkMin:13,scores:[15, 17, 15, 14, 15, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2022년 · 5,678세대"},
+    {id:"bu67",name:"부평역해링턴플레이스",region:"bupyeong",year:2024,hh:2413,price:6.6,deals:18,lat:37.483989,lng:126.721995,station:"동수",dist:355,walkMin:6,scores:[19, 17, 15, 14, 11, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2024년 · 2,413세대"},
+    {id:"bu68",name:"힐스테이트부평",region:"bupyeong",year:2023,hh:1409,price:6.1,deals:58,lat:37.484527,lng:126.705939,station:"백운",dist:175,walkMin:3,scores:[20, 16, 13, 13, 14, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2023년 · 1,409세대"},
+    {id:"bu69",name:"부평SKVIEW-해모로",region:"bupyeong",year:2023,hh:1559,price:6.0,deals:67,lat:37.492022,lng:126.733680,station:"부평",dist:904,walkMin:14,scores:[13, 17, 14, 14, 15, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2023년 · 1,559세대"},
+    {id:"bu70",name:"부평동아1단지",region:"bupyeong",year:1989,hh:2497,price:4.8,deals:46,lat:37.495508,lng:126.719032,station:"부평시장",dist:433,walkMin:7,scores:[19, 17, 10, 14, 12, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"1989년 · 2,497세대"},
+    {id:"bu71",name:"래미안부평1단지",region:"bupyeong",year:2014,hh:1145,price:6.2,deals:28,lat:37.503361,lng:126.724018,station:"부평시장",dist:568,walkMin:9,scores:[17, 16, 12, 13, 12, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2014년 · 1,145세대"},
+    {id:"bu72",name:"부개주공3단지",region:"bupyeong",year:1996,hh:1724,price:4.6,deals:80,lat:37.501894,lng:126.738494,station:"삼산체육관",dist:598,walkMin:10,scores:[17, 16, 11, 13, 13, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"1996년 · 1,724세대"},
+    {id:"bu73",name:"삼산타운1단지",region:"bupyeong",year:2005,hh:1873,price:5.6,deals:74,lat:37.512987,lng:126.733628,station:"굴포천",dist:709,walkMin:11,scores:[15, 16, 12, 13, 13, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2005년 · 1,873세대"},
+    {id:"bu74",name:"E편한세상부평그랑힐스",region:"bupyeong",year:2024,hh:5050,price:6.3,deals:129,lat:37.515849,lng:126.699633,station:"갈산",dist:1937,walkMin:31,scores:[8, 16, 15, 13, 15, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2024년 · 5,050세대"},
+    {id:"bu75",name:"부평캐슬앤더샵퍼스트",region:"bupyeong",year:2024,hh:1623,price:6.4,deals:61,lat:37.514847,lng:126.702608,station:"갈산",dist:1688,walkMin:27,scores:[8, 16, 14, 13, 15, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2024년 · 1,623세대"},
+    {id:"bu76",name:"부개역푸르지오",region:"bupyeong",year:2010,hh:1054,price:5.4,deals:24,lat:37.490182,lng:126.737814,station:"부평",dist:1251,walkMin:20,scores:[11, 16, 12, 13, 11, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2010년 · 1,054세대"},
+    {id:"bu77",name:"청천푸르지오",region:"bupyeong",year:1998,hh:2270,price:4.7,deals:42,lat:37.514257,lng:126.708057,station:"갈산",dist:1230,walkMin:20,scores:[11, 16, 12, 13, 11, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"1998년 · 2,270세대"},
+    {id:"bu78",name:"삼산타운2단지",region:"bupyeong",year:2005,hh:1622,price:5.5,deals:43,lat:37.515287,lng:126.737411,station:"삼산체육관",dist:1060,walkMin:17,scores:[11, 16, 12, 13, 11, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2005년 · 1,622세대"},
+    {id:"bu79",name:"금호이수마운트밸리",region:"bupyeong",year:2007,hh:1365,price:4.5,deals:16,lat:37.503847,lng:126.704475,station:"부평구청",dist:1524,walkMin:24,scores:[9, 16, 11, 13, 9, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2007년 · 1,365세대"},
+    {id:"bu80",name:"삼산주공미래타운4차",region:"bupyeong",year:2000,hh:968,price:4.6,deals:26,lat:37.520647,lng:126.744057,station:"삼산체육관",dist:1585,walkMin:25,scores:[9, 16, 10, 13, 10, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2000년 · 968세대"},
+    {id:"na81",name:"구월힐스테이트1단지",region:"namdong",year:2007,hh:5076,price:5.2,deals:119,lat:37.454334,lng:126.712032,station:"석천사거리",dist:305,walkMin:5,scores:[19, 20, 13, 14, 13, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2007년 · 5,076세대"},
+    {id:"na82",name:"구월롯데캐슬골드2단지",region:"namdong",year:2007,hh:3384,price:5.4,deals:63,lat:37.453951,lng:126.716877,station:"모래내시장",dist:323,walkMin:5,scores:[19, 20, 13, 14, 13, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2007년 · 3,384세대"},
+    {id:"na83",name:"한화포레나인천구월",region:"namdong",year:2023,hh:1115,price:6.2,deals:25,lat:37.459098,lng:126.713719,station:"석천사거리",dist:382,walkMin:6,scores:[19, 20, 13, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2023년 · 1,115세대"},
+    {id:"na84",name:"간석래미안자이",region:"namdong",year:2008,hh:2432,price:4.9,deals:62,lat:37.458858,lng:126.710600,station:"석천사거리",dist:230,walkMin:4,scores:[20, 16, 13, 13, 13, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2008년 · 2,432세대"},
+    {id:"na85",name:"인천시청역힐스테이트",region:"namdong",year:2024,hh:746,price:5.8,deals:29,lat:37.458302,lng:126.695344,station:"석바위시장",dist:286,walkMin:5,scores:[20, 16, 12, 13, 12, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2024년 · 746세대"},
+    {id:"na86",name:"어울림마을",region:"namdong",year:2005,hh:1733,price:4.5,deals:34,lat:37.459255,lng:126.707357,station:"석천사거리",dist:390,walkMin:6,scores:[19, 16, 12, 13, 11, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2005년 · 1,733세대"},
+    {id:"na87",name:"포레시안",region:"namdong",year:2011,hh:3208,price:4.7,deals:67,lat:37.461979,lng:126.732299,station:"만수",dist:797,walkMin:13,scores:[15, 15, 14, 13, 14, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2011년 · 3,208세대"},
+    {id:"na88",name:"구월아시아드선수촌센트럴자이",region:"namdong",year:2015,hh:850,price:5.0,deals:18,lat:37.444195,lng:126.713250,station:"인천터미널",dist:1197,walkMin:19,scores:[11, 20, 12, 14, 11, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2015년 · 850세대"},
+    {id:"na89",name:"구월아시아드선수촌5단지",region:"namdong",year:2015,hh:782,price:4.9,deals:25,lat:37.444301,lng:126.716003,station:"모래내시장",dist:1326,walkMin:21,scores:[9, 20, 12, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2015년 · 782세대"},
+    {id:"na90",name:"에코메트로12단지한화꿈에그린",region:"namdong",year:2009,hh:1298,price:4.5,deals:22,lat:37.396414,lng:126.733576,station:"소래포구",dist:506,walkMin:8,scores:[17, 15, 11, 13, 10, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2009년 · 1,298세대"},
+    {id:"na91",name:"소래마을풍림",region:"namdong",year:2000,hh:1517,price:4.4,deals:30,lat:37.406381,lng:126.738575,station:"소래포구",dist:749,walkMin:12,scores:[15, 15, 12, 13, 11, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2000년 · 1,517세대"},
+    {id:"na92",name:"에코메트로11단지한화꿈에그린",region:"namdong",year:2009,hh:1622,price:4.6,deals:43,lat:37.393552,lng:126.730193,station:"소래포구",dist:875,walkMin:14,scores:[13, 15, 12, 13, 11, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2009년 · 1,622세대"},
+    {id:"na93",name:"서창센트럴푸르지오",region:"namdong",year:2018,hh:1160,price:5.0,deals:23,lat:37.428976,lng:126.750577,station:"운연",dist:1313,walkMin:21,scores:[9, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2018년 · 1,160세대"},
+    {id:"na94",name:"e편한세상서창",region:"namdong",year:2017,hh:835,price:5.0,deals:26,lat:37.426060,lng:126.750203,station:"운연",dist:1600,walkMin:26,scores:[8, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2017년 · 835세대"},
+    {id:"na95",name:"더포레스트",region:"namdong",year:2017,hh:1228,price:5.1,deals:18,lat:37.427814,lng:126.743699,station:"운연",dist:1830,walkMin:29,scores:[8, 14, 12, 12, 11, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2017년 · 1,228세대"},
+    {id:"mi96",name:"인천SK스카이뷰",region:"michuhol",year:2016,hh:3971,price:5.8,deals:75,lat:37.449545,lng:126.645480,station:"인하대",dist:423,walkMin:7,scores:[19, 15, 14, 12, 15, 12],school:"용현초·인하대 인접, 학원가는 차량",infra:"용현 상권·인하대",future:"시티오씨엘 개발·수인선",extra:"",tags:"2016년 · 3,971세대"},
+    {id:"mi97",name:"힐스테이트푸르지오주안",region:"michuhol",year:2023,hh:2958,price:6.4,deals:115,lat:37.452735,lng:126.676508,station:"시민공원",dist:712,walkMin:11,scores:[15, 16, 15, 13, 15, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2023년 · 2,958세대"},
+    {id:"mi98",name:"더샵아르테",region:"michuhol",year:2024,hh:1146,price:6.2,deals:27,lat:37.456057,lng:126.690970,station:"석바위시장",dist:212,walkMin:3,scores:[20, 16, 13, 13, 12, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2024년 · 1,146세대"},
+    {id:"mi99",name:"주안더월드스테이트",region:"michuhol",year:2008,hh:3161,price:5.2,deals:67,lat:37.467490,lng:126.685781,station:"주안",dist:524,walkMin:8,scores:[17, 16, 13, 13, 13, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2008년 · 3,161세대"},
+    {id:"mi100",name:"주안역센트레빌",region:"michuhol",year:2021,hh:1458,price:4.8,deals:47,lat:37.466516,lng:126.685638,station:"주안",dist:465,walkMin:7,scores:[17, 16, 12, 13, 14, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2021년 · 1,458세대"},
+    {id:"mi101",name:"서희스타힐스스타디움센트럴시티",region:"michuhol",year:2022,hh:1232,price:5.6,deals:27,lat:37.466682,lng:126.645020,station:"도원",dist:310,walkMin:5,scores:[19, 13, 13, 12, 12, 13],school:"학원가 차량·초품아",infra:"숭의 상권·수인분당선",future:"숭의 재개발·수인선",extra:"",tags:"2022년 · 1,232세대"},
+    {id:"mi102",name:"힐스테이트숭의역",region:"michuhol",year:2025,hh:1012,price:6.0,deals:6,lat:37.461275,lng:126.639233,station:"숭의",dist:110,walkMin:2,scores:[20, 13, 13, 12, 9, 13],school:"숭의역 도보권, 학원가는 차량",infra:"숭의 상권·수인분당선",future:"숭의 재개발·수인선",extra:"",tags:"2025년 · 1,012세대"},
+    {id:"mi103",name:"주안파크자이더플래티넘",region:"michuhol",year:2023,hh:2054,price:5.8,deals:59,lat:37.447132,lng:126.672568,station:"시민공원",dist:1425,walkMin:23,scores:[9, 16, 15, 13, 14, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2023년 · 2,054세대"},
+    {id:"mi104",name:"더샵인천스카이타워1단지",region:"michuhol",year:2020,hh:1309,price:6.6,deals:43,lat:37.470048,lng:126.665159,station:"도화",dist:527,walkMin:8,scores:[17, 13, 12, 12, 13, 12],school:"숭의·도화 학군, 학원가는 차량",infra:"도화역 상권·숭의체육관",future:"도화·숭의 정비사업",extra:"",tags:"2020년 · 1,309세대"},
+    {id:"mi105",name:"용현자이크레스트",region:"michuhol",year:2023,hh:2277,price:6.0,deals:13,lat:37.455723,lng:126.646976,station:"인하대",dist:873,walkMin:14,scores:[13, 15, 15, 12, 10, 12],school:"초품아, 인하대 학원가 차량",infra:"용현 상권·인하대",future:"시티오씨엘 개발·수인선",extra:"",tags:"2023년 · 2,277세대"},
+    {id:"mi106",name:"학익풍림아이원",region:"michuhol",year:2007,hh:2093,price:4.9,deals:40,lat:37.440880,lng:126.660213,station:"인하대",dist:1219,walkMin:20,scores:[11, 14, 13, 12, 11, 13],school:"초품아, 학원가 차량",infra:"학익 상권·문학경기장",future:"시티오씨엘 4단계·학익 개발",extra:"",tags:"2007년 · 2,093세대"},
+    {id:"mi107",name:"시티오씨엘1단지",region:"michuhol",year:2024,hh:1131,price:6.2,deals:6,lat:37.441882,lng:126.643078,station:"인하대",dist:934,walkMin:15,scores:[13, 14, 13, 12, 9, 13],school:"초품아, 학원가 차량",infra:"학익 상권·문학경기장",future:"시티오씨엘 4단계·학익 개발",extra:"",tags:"2024년 · 1,131세대"},
+    {id:"se108",name:"루원E편한세상하늘채",region:"seogu",year:2010,hh:3331,price:5.5,deals:43,lat:37.521091,lng:126.672501,station:"가정",dist:435,walkMin:7,scores:[19, 13, 14, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2010년 · 3,331세대"},
+    {id:"se109",name:"루원시티프라디움",region:"seogu",year:2018,hh:1598,price:6.4,deals:21,lat:37.523550,lng:126.678009,station:"가정",dist:355,walkMin:6,scores:[19, 13, 14, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 1,598세대"},
+    {id:"se110",name:"가재울역트루엘에코시티",region:"seogu",year:2024,hh:1218,price:5.4,deals:34,lat:37.484976,lng:126.686665,station:"가재울",dist:268,walkMin:4,scores:[20, 12, 13, 10, 13, 11],school:"학원가 차량 10분",infra:"가좌 상권·근린공원",future:"가재울역·정비사업",extra:"",tags:"2024년 · 1,218세대"},
+    {id:"se111",name:"가좌두산위브트레지움",region:"seogu",year:2017,hh:1757,price:5.2,deals:51,lat:37.488907,lng:126.685329,station:"가재울",dist:550,walkMin:9,scores:[17, 12, 14, 10, 14, 11],school:"학원가 차량 10분",infra:"가좌 상권·근린공원",future:"가재울역·정비사업",extra:"",tags:"2017년 · 1,757세대"},
+    {id:"se112",name:"루원시티SK리더스뷰",region:"seogu",year:2022,hh:1300,price:6.2,deals:0,lat:37.523840,lng:126.671242,station:"가정",dist:286,walkMin:5,scores:[20, 13, 13, 12, 7, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2022년 · 1,300세대"},
+    {id:"se113",name:"루원시티대성베르힐더센트로",region:"seogu",year:2023,hh:1179,price:6.2,deals:1,lat:37.523550,lng:126.678009,station:"가정",dist:355,walkMin:6,scores:[19, 13, 13, 12, 7, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2023년 · 1,179세대"},
+    {id:"se114",name:"포레나루원시티",region:"seogu",year:2022,hh:1000,price:6.0,deals:0,lat:37.527763,lng:126.677562,station:"가정",dist:444,walkMin:7,scores:[19, 13, 13, 12, 7, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2022년 · 1,000세대"},
+    {id:"se115",name:"루원호반베르디움더센트럴",region:"seogu",year:2018,hh:980,price:5.9,deals:18,lat:37.527906,lng:126.668131,station:"가정",dist:646,walkMin:10,scores:[15, 13, 12, 12, 11, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 980세대"},
+    {id:"se116",name:"루원시티대성베르힐",region:"seogu",year:2017,hh:1147,price:6.1,deals:42,lat:37.522787,lng:126.664124,station:"가정",dist:921,walkMin:15,scores:[13, 13, 12, 12, 13, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2017년 · 1,147세대"},
+    {id:"se117",name:"검암서해그랑블",region:"seogu",year:2003,hh:950,price:4.7,deals:27,lat:37.566594,lng:126.674306,station:"검암",dist:300,walkMin:5,scores:[20, 13, 10, 11, 10, 11],school:"학원가 차량·초품아",infra:"검암역 상권·공항철도",future:"검암역 환승·검단 연장",extra:"",tags:"2003년 · 950세대"},
+    {id:"se118",name:"루원제일풍경채",region:"seogu",year:2018,hh:900,price:5.8,deals:24,lat:37.531375,lng:126.666993,station:"가정",dist:978,walkMin:16,scores:[13, 13, 12, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 900세대"},
+    {id:"se119",name:"석남금호어울림",region:"seogu",year:2007,hh:769,price:4.8,deals:23,lat:37.503704,lng:126.668557,station:"석남",dist:356,walkMin:6,scores:[19, 12, 10, 11, 10, 11],school:"학원가는 차량",infra:"석남역 상권",future:"7호선 석남·청라 연장",extra:"",tags:"2007년 · 769세대"},
+    {id:"se120",name:"루원시티어울림",region:"seogu",year:2015,hh:1243,price:6.0,deals:21,lat:37.534122,lng:126.667987,station:"가정",dist:1181,walkMin:19,scores:[11, 13, 12, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2015년 · 1,243세대"}
   ];
 
   /* ============================== 유틸 ============================== */
-  function $(sel){ return document.querySelector(sel); }
-  function el(tag, cls, html){
-    var n = document.createElement(tag);
-    if(cls) n.className = cls;
-    if(html != null) n.innerHTML = html;
-    return n;
-  }
-  function esc(s){
-    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-  }
-  function totalOf(scores){ return scores.reduce(function(a,b){ return a+b; }, 0); }
-  function gradeOf(total){
-    for(var i=0;i<GRADES.length;i++){ if(total >= GRADES[i].min) return GRADES[i]; }
-    return GRADES[GRADES.length-1];
-  }
-  function regionOf(key){
-    for(var i=0;i<REGIONS.length;i++){ if(REGIONS[i].key === key) return REGIONS[i]; }
-    return REGIONS[0];
-  }
-  function byId(id){
-    for(var i=0;i<COMPLEXES.length;i++){ if(COMPLEXES[i].id === id) return COMPLEXES[i]; }
-    return null;
+  function $(s){ return document.querySelector(s); }
+  function el(tag, cls, html){ var n=document.createElement(tag); if(cls) n.className=cls; if(html!=null) n.innerHTML=html; return n; }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function totalOf(sc){ return sc.reduce(function(a,b){ return a+b; },0); }
+  function gradeOf(t){ for(var i=0;i<GRADES.length;i++){ if(t>=GRADES[i].min) return GRADES[i]; } return GRADES[GRADES.length-1]; }
+  function regionOf(k){ for(var i=0;i<REGIONS.length;i++){ if(REGIONS[i].key===k) return REGIONS[i]; } return REGIONS[0]; }
+  function byId(id){ for(var i=0;i<COMPLEXES.length;i++){ if(COMPLEXES[i].id===id) return COMPLEXES[i]; } return null; }
+  function comma(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,","); }
+  function money(eok){
+    var sign = eok<0?"-":"";
+    var man = Math.round(Math.abs(eok)*10000), e=Math.floor(man/10000), m=man%10000;
+    if(e===0) return sign+comma(m)+"만원";
+    return sign+e+"억"+(m?" "+comma(m)+"만원":"");
   }
   function josa(word, withB, withoutB){
-    var s = String(word == null ? "" : word).replace(/\s+$/, "");
+    var s = String(word==null?"":word).replace(/\s+$/,"");
     if(!s) return withoutB;
-    var ch = s.charAt(s.length-1);
-    var code = ch.charCodeAt(0);
-    if(code >= 0xAC00 && code <= 0xD7A3){ return ((code - 0xAC00) % 28) ? withB : withoutB; }
-    if(ch >= "0" && ch <= "9"){ return "013678".indexOf(ch) >= 0 ? withB : withoutB; }
+    var ch = s.charAt(s.length-1), code = ch.charCodeAt(0);
+    if(code>=0xAC00 && code<=0xD7A3) return ((code-0xAC00)%28)?withB:withoutB;
+    if(ch>="0" && ch<="9") return "013678".indexOf(ch)>=0?withB:withoutB;
     return withoutB;
   }
-  function comma(n){
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-  /* 억 단위 실수 → '4억 2,000만원' */
-  function money(eok){
-    var sign = eok < 0 ? "-" : "";
-    var man = Math.round(Math.abs(eok) * 10000);
-    var e = Math.floor(man / 10000), m = man % 10000;
-    if(e === 0) return sign + comma(m) + "만원";
-    return sign + e + "억" + (m ? " " + comma(m) + "만원" : "");
-  }
+  function pctClass(p){ return p>=0.8?"lv-hi":(p>=0.6?"lv-mid":"lv-low"); }
   function todayLabel(){
-    var d = new Date();
-    return d.getFullYear() + "." + ("0"+(d.getMonth()+1)).slice(-2) + "." + ("0"+d.getDate()).slice(-2) + " 기준";
+    var d=new Date();
+    return d.getFullYear()+"."+("0"+(d.getMonth()+1)).slice(-2)+"."+("0"+d.getDate()).slice(-2)+" 기준";
   }
   function toast(msg){
-    var t = $("#toast");
-    t.textContent = msg;
-    t.classList.add("show");
-    clearTimeout(toast._t);
-    toast._t = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+    var t=$("#toast"); t.textContent=msg; t.classList.add("show");
+    clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove("show"); },2200);
   }
-  function pctClass(p){ return p >= 0.8 ? "lv-hi" : (p >= 0.6 ? "lv-mid" : "lv-low"); }
 
-  /* 랭킹 순위(동점이면 이름순) */
   var RANKED = COMPLEXES.slice().sort(function(a,b){
-    var d = totalOf(b.scores) - totalOf(a.scores);
-    return d !== 0 ? d : a.name.localeCompare(b.name, "ko");
+    var d=totalOf(b.scores)-totalOf(a.scores);
+    return d!==0?d:a.name.localeCompare(b.name,"ko");
   });
-  var RANK_MAP = {};
+  var RANK_MAP={};
   (function(){
-    var prev = null, prevRank = 0;
-    RANKED.forEach(function(c, i){
-      var t = totalOf(c.scores);
-      var rk = (prev !== null && t === prev) ? prevRank : i + 1;
-      RANK_MAP[c.id] = rk;
-      prev = t; prevRank = rk;
+    var prev=null, prevRank=0;
+    RANKED.forEach(function(c,i){
+      var t=totalOf(c.scores);
+      var rk=(prev!==null && t===prev)?prevRank:i+1;
+      RANK_MAP[c.id]=rk; prev=t; prevRank=rk;
     });
   })();
   function regionRank(c){
-    var list = COMPLEXES.filter(function(x){ return x.region === c.region; })
-                        .sort(function(a,b){ return totalOf(b.scores) - totalOf(a.scores); });
-    var prev = null, prevRank = 0;
+    var list=COMPLEXES.filter(function(x){ return x.region===c.region; })
+      .sort(function(a,b){ return totalOf(b.scores)-totalOf(a.scores); });
+    var prev=null, prevRank=0;
     for(var i=0;i<list.length;i++){
-      var t = totalOf(list[i].scores);
-      var rk = (prev !== null && t === prev) ? prevRank : i + 1;
-      if(list[i].id === c.id) return {rank:rk, total:list.length};
-      prev = t; prevRank = rk;
+      var t=totalOf(list[i].scores);
+      var rk=(prev!==null && t===prev)?prevRank:i+1;
+      if(list[i].id===c.id) return {rank:rk,total:list.length};
+      prev=t; prevRank=rk;
     }
-    return {rank:1, total:list.length};
+    return {rank:1,total:list.length};
   }
 
   /* ============================== 레이더 ============================== */
-  var CX = 160, CY = 150, R = 94;
-  function ang(i){ return -Math.PI/2 + i*Math.PI/3; }
-  function pt(i, r){
-    return [ (CX + Math.cos(ang(i))*R*r).toFixed(1), (CY + Math.sin(ang(i))*R*r).toFixed(1) ];
-  }
+  var CX=160, CY=150, R=94;
+  function ang(i){ return -Math.PI/2+i*Math.PI/3; }
+  function pt(i,r){ return [(CX+Math.cos(ang(i))*R*r).toFixed(1),(CY+Math.sin(ang(i))*R*r).toFixed(1)]; }
   function radarGrid(){
-    var out = "";
-    out += '<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="#fbfcfe" stroke="#eef1f7"/>';
+    var out='<circle cx="'+CX+'" cy="'+CY+'" r="'+R+'" fill="#fbfcfe" stroke="#eef1f7"/>';
     [0.25,0.5,0.75].forEach(function(lv){
-      var pts = AREAS.map(function(_,i){ return pt(i,lv).join(","); }).join(" ");
-      out += '<polygon points="'+pts+'" fill="none" stroke="#e7ebf3" stroke-width="1"/>';
+      var pts=AREAS.map(function(_,i){ return pt(i,lv).join(","); }).join(" ");
+      out+='<polygon points="'+pts+'" fill="none" stroke="#e7ebf3" stroke-width="1"/>';
     });
     AREAS.forEach(function(_,i){
-      var p = pt(i,1);
-      out += '<line x1="'+CX+'" y1="'+CY+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="#e7ebf3" stroke-width="1"/>';
+      var p=pt(i,1);
+      out+='<line x1="'+CX+'" y1="'+CY+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="#e7ebf3" stroke-width="1"/>';
     });
     return out;
   }
   function radarLabels(scores){
-    var out = "";
+    var out="";
     AREAS.forEach(function(a,i){
-      var p = pt(i,1.155);
-      var cos = Math.cos(ang(i));
-      var anchor = Math.abs(cos) < 0.2 ? "middle" : (cos > 0 ? "start" : "end");
-      out += '<text x="'+p[0]+'" y="'+p[1]+'" text-anchor="'+anchor+'">' +
-             '<tspan class="rl-name" x="'+p[0]+'">'+a.icon+' '+a.short+'</tspan>' +
-             (scores ? '<tspan class="rl-score" x="'+p[0]+'" dy="12.5">'+scores[i]+'/'+a.max+'</tspan>' : '') +
-             '</text>';
+      var p=pt(i,1.16), cos=Math.cos(ang(i));
+      var anchor=Math.abs(cos)<0.2?"middle":(cos>0?"start":"end");
+      out+='<text x="'+p[0]+'" y="'+p[1]+'" text-anchor="'+anchor+'">'+
+        '<tspan class="rl-name" x="'+p[0]+'">'+a.icon+' '+a.short+'</tspan>'+
+        (scores?'<tspan class="rl-score" x="'+p[0]+'" dy="12">'+scores[i]+'/'+a.max+'</tspan>':'')+
+        '</text>';
     });
     return out;
   }
-  function polygonPoints(scores){
-    return AREAS.map(function(a,i){ return pt(i, Math.max(0.04, scores[i]/a.max)).join(","); }).join(" ");
-  }
-
-  /* 단일 레이더 */
-  function radarSVG(scores){
-    var out = '<svg viewBox="0 0 320 300" role="img" aria-label="6개 영역 달성률을 나타낸 육각 레이더 차트">';
-    out += '<defs><linearGradient id="radarFill" x1="0" y1="0" x2="0" y2="1">' +
-           '<stop offset="0%" stop-color="#34d399" stop-opacity=".3"/>' +
-           '<stop offset="100%" stop-color="#0ea472" stop-opacity=".1"/></linearGradient></defs>';
-    out += radarGrid();
-    out += '<g class="radar-data">';
-    out += '<polygon points="'+polygonPoints(scores)+'" fill="url(#radarFill)" stroke="#0ea472" stroke-width="2" stroke-linejoin="round"/>';
+  function polygonPoints(sc){ return AREAS.map(function(a,i){ return pt(i,Math.max(0.04,sc[i]/a.max)).join(","); }).join(" "); }
+  function radarSVG(sc){
+    var out='<svg viewBox="0 0 320 300" role="img" aria-label="6개 영역 달성률 육각 레이더 차트">';
+    out+='<defs><linearGradient id="radarFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity=".3"/><stop offset="100%" stop-color="#0ea472" stop-opacity=".1"/></linearGradient></defs>';
+    out+=radarGrid();
+    out+='<polygon points="'+polygonPoints(sc)+'" fill="url(#radarFill)" stroke="#0ea472" stroke-width="2" stroke-linejoin="round"/>';
     AREAS.forEach(function(a,i){
-      var p = pt(i, Math.max(0.04, scores[i]/a.max));
-      out += '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.6" fill="#fff" stroke="#0ea472" stroke-width="2"/>';
+      var p=pt(i,Math.max(0.04,sc[i]/a.max));
+      out+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.6" fill="#fff" stroke="#0ea472" stroke-width="2"/>';
     });
-    out += '</g>';
-    out += radarLabels(scores);
-    out += '</svg>';
+    out+=radarLabels(sc)+'</svg>';
+    return out;
+  }
+  function radarDualSVG(sa,sb){
+    var out='<svg viewBox="0 0 320 300" role="img" aria-label="두 단지 6개 영역 점수를 겹친 듀얼 레이더 차트">';
+    out+=radarGrid();
+    out+='<polygon points="'+polygonPoints(sb)+'" fill="rgba(47,107,255,.14)" stroke="#2f6bff" stroke-width="2" stroke-linejoin="round"/>';
+    out+='<polygon points="'+polygonPoints(sa)+'" fill="rgba(14,164,114,.16)" stroke="#0ea472" stroke-width="2" stroke-linejoin="round"/>';
+    out+=radarLabels(null)+'</svg>';
     return out;
   }
 
-  /* 듀얼 레이더 (두 단지 겹치기) */
-  function radarDualSVG(sa, sb){
-    var out = '<svg viewBox="0 0 320 300" role="img" aria-label="두 단지의 6개 영역 점수를 겹쳐 그린 듀얼 레이더 차트">';
-    out += radarGrid();
-    out += '<g class="radar-b">';
-    out += '<polygon points="'+polygonPoints(sb)+'" fill="rgba(47,107,255,.14)" stroke="#2f6bff" stroke-width="2" stroke-dasharray="0" stroke-linejoin="round"/>';
-    AREAS.forEach(function(a,i){
-      var p = pt(i, Math.max(0.04, sb[i]/a.max));
-      out += '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.2" fill="#fff" stroke="#2f6bff" stroke-width="2"/>';
-    });
-    out += '</g>';
-    out += '<g class="radar-data">';
-    out += '<polygon points="'+polygonPoints(sa)+'" fill="rgba(14,164,114,.16)" stroke="#0ea472" stroke-width="2" stroke-linejoin="round"/>';
-    AREAS.forEach(function(a,i){
-      var p = pt(i, Math.max(0.04, sa[i]/a.max));
-      out += '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.2" fill="#fff" stroke="#0ea472" stroke-width="2"/>';
-    });
-    out += '</g>';
-    out += radarLabels(null);
-    out += '</svg>';
-    return out;
-  }
-
-  /* ============================== 수익화 블록 ============================== */
-  function moneyBlockHTML(){
-    return '' +
-      '<div class="money">' +
-        '<div class="money-head"><span>함께 보면 좋은 콘텐츠 · 배치 시안</span></div>' +
-        '<div class="blog-banner">' +
-          '<div class="bb-row"><span class="bb-chip">하보카</span><span class="bb-tag">예시 배치</span></div>' +
-          '<div class="bb-title">하보카 부동산 리포트 더 보기</div>' +
-          '<p class="bb-desc">송도·청라 실거래가와 대출·재건축 이슈를 매주 정리해 올립니다.</p>' +
-          '<a class="bb-btn" href="https://blog.naver.com/havoka" target="_blank" rel="noopener">리포트 보러 가기 →</a>' +
-        '</div>' +
-        '<div class="ad-grid">' +
-          '<div class="ad-card"><span class="ad-badge">AD</span>' +
-            '<div class="ad-ico">🏦</div><div class="ad-t">대출 금리 비교</div>' +
-            '<div class="ad-d">내 조건으로 최저 금리 조회</div><span class="ad-cta">비교하기 →</span></div>' +
-          '<div class="ad-card"><span class="ad-badge">AD</span>' +
-            '<div class="ad-ico">🛠</div><div class="ad-t">인테리어 견적</div>' +
-            '<div class="ad-d">3곳 무료 비교 견적 받기</div><span class="ad-cta">견적 받기 →</span></div>' +
-        '</div>' +
-        '<div class="adsense">' +
-          '<div class="as-label"><span>Google AdSense</span><span>예시</span></div>' +
-          '<div class="as-box"><span>광고 노출 영역</span><small>반응형 / 300×250 · 320×100</small></div>' +
-        '</div>' +
-      '</div>';
-  }
-
-  /* ============================== 1) 성적표 ============================== */
-  var state = { answers:[null,null,null,null,null,null], selected:null, filterRegion:"all", query:"", mode:"complex" };
-  var lastReport = null;
+  /* ============================== 성적표 ============================== */
+  var state={ selected:null, filterRegion:"all", query:"", answers:[null,null,null,null,null,null], mode:"complex" };
+  var lastReport=null;
 
   function renderRegionChips(box, active, onPick){
-    box.innerHTML = "";
-    var all = el("button","chip");
-    all.type = "button";
-    all.setAttribute("data-region","all");
-    all.innerHTML = '전체 <small>'+COMPLEXES.length+'</small>';
-    if(active === "all") all.classList.add("is-active");
-    all.addEventListener("click", function(){ onPick("all"); });
+    box.innerHTML="";
+    var all=el("button","chip","전체 <small>"+COMPLEXES.length+"</small>");
+    all.type="button"; all.setAttribute("data-region","all");
+    if(active==="all") all.classList.add("is-active");
+    all.addEventListener("click",function(){ onPick("all"); });
     box.appendChild(all);
     REGIONS.forEach(function(r){
-      var n = COMPLEXES.filter(function(c){ return c.region === r.key; }).length;
-      var b = el("button","chip");
-      b.type = "button";
-      b.setAttribute("data-region", r.key);
-      b.innerHTML = r.emoji + " " + r.label + ' <small>'+n+'</small>';
-      if(active === r.key) b.classList.add("is-active");
-      b.addEventListener("click", function(){ onPick(r.key); });
+      var n=COMPLEXES.filter(function(c){ return c.region===r.key; }).length;
+      var b=el("button","chip",r.emoji+" "+r.label+" <small>"+n+"</small>");
+      b.type="button"; b.setAttribute("data-region",r.key);
+      if(active===r.key) b.classList.add("is-active");
+      b.addEventListener("click",function(){ onPick(r.key); });
       box.appendChild(b);
     });
   }
 
   function renderAptGrid(){
-    var box = $("#aptGrid");
-    var q = state.query.trim().toLowerCase();
-    var list = COMPLEXES.filter(function(c){
-      if(state.filterRegion !== "all" && c.region !== state.filterRegion) return false;
+    var box=$("#aptGrid"), q=state.query.trim().toLowerCase();
+    var list=COMPLEXES.filter(function(c){
+      if(state.filterRegion!=="all" && c.region!==state.filterRegion) return false;
       if(!q) return true;
-      return (c.name.toLowerCase().indexOf(q) >= 0) || (c.tags.toLowerCase().indexOf(q) >= 0);
+      return (c.name.toLowerCase().indexOf(q)>=0)||(c.tags&&c.tags.toLowerCase().indexOf(q)>=0);
     });
-    box.innerHTML = "";
-    $("#searchCount").textContent = list.length + "곳";
-    if(!list.length){
-      box.appendChild(el("p","empty-note","검색 결과가 없습니다. 다른 단지명이나 권역으로 찾아보세요."));
-      return;
-    }
-    list.forEach(function(c){
-      var total = totalOf(c.scores);
-      var g = gradeOf(total);
-      var r = regionOf(c.region);
-      var b = el("button","apt-chip");
-      b.type = "button";
-      b.setAttribute("data-apt", c.id);
-      b.setAttribute("aria-pressed", state.selected === c.id ? "true" : "false");
-      b.innerHTML = '<span class="sc" style="color:'+g.color+'">'+total+'</span>' +
-                    '<span class="nm">'+esc(c.name)+'</span>' +
-                    '<span class="rg">'+r.emoji+' '+r.label+' · '+c.year+'년 · '+g.label+'</span>';
-      if(state.selected === c.id) b.classList.add("is-active");
-      b.addEventListener("click", function(){ selectComplex(c.id, true); });
+    box.innerHTML="";
+    $("#searchCount").textContent=list.length+"곳";
+    if(!list.length){ box.appendChild(el("p","empty-note","검색 결과가 없습니다. 다른 단지명이나 권역으로 찾아보세요.")); return; }
+    var grouped=(state.filterRegion==="all" && !q);
+    function addChip(c){
+      var total=totalOf(c.scores), g=gradeOf(total), r=regionOf(c.region);
+      var b=el("button","apt-chip");
+      b.type="button"; b.setAttribute("data-apt",c.id);
+      b.setAttribute("aria-pressed", state.selected===c.id?"true":"false");
+      b.innerHTML='<span class="sc" style="color:'+g.color+'">'+total+'</span>'+
+        '<span class="nm">'+esc(c.name)+'</span>'+
+        '<span class="rg">'+r.emoji+' '+r.label+' · '+c.year+'년 · '+g.label+'</span>';
+      if(state.selected===c.id) b.classList.add("is-active");
+      b.addEventListener("click",function(){ selectComplex(c.id,true); });
       box.appendChild(b);
-    });
+    }
+    if(grouped){
+      REGIONS.forEach(function(r){
+        var sub=list.filter(function(c){ return c.region===r.key; });
+        if(!sub.length) return;
+        var h=el("div","ag-head",r.emoji+" "+r.label+" <small>"+sub.length+"</small>");
+        box.appendChild(h);
+        sub.forEach(addChip);
+      });
+    } else {
+      list.forEach(addChip);
+    }
   }
 
   function selectComplex(id, scroll){
-    var c = byId(id);
-    if(!c) return;
-    state.selected = id;
-    state.mode = "complex";
-    var chips = document.querySelectorAll(".apt-chip");
+    var c=byId(id); if(!c) return;
+    state.selected=id; state.mode="complex";
+    var chips=document.querySelectorAll(".apt-chip");
     for(var i=0;i<chips.length;i++){
-      var on = chips[i].getAttribute("data-apt") === id;
-      chips[i].classList.toggle("is-active", on);
-      chips[i].setAttribute("aria-pressed", on ? "true" : "false");
+      var on=chips[i].getAttribute("data-apt")===id;
+      chips[i].classList.toggle("is-active",on);
+      chips[i].setAttribute("aria-pressed",on?"true":"false");
     }
     renderComplexReport(c);
     if(scroll) scrollToReport();
   }
-
   function scrollToReport(){
-    var r = $("#report");
-    if(!r || !r.firstChild) return;
-    requestAnimationFrame(function(){
-      r.scrollIntoView({behavior:"smooth", block:"start"});
-    });
+    var r=$("#report"); if(!r||!r.firstChild) return;
+    requestAnimationFrame(function(){ r.scrollIntoView({behavior:"smooth",block:"start"}); });
   }
 
   function ringHTML(total){
-    var circ = 2 * Math.PI * 58;
-    return '<div class="ring-wrap">' +
-      '<svg viewBox="0 0 140 140" aria-hidden="true">' +
-        '<defs><linearGradient id="ringGrad" x1="0" y1="1" x2="1" y2="0">' +
-          '<stop offset="0%" stop-color="#2f6bff"/><stop offset="55%" stop-color="#0ea472"/>' +
-          '<stop offset="100%" stop-color="#34d399"/></linearGradient></defs>' +
-        '<circle class="ring-track" cx="70" cy="70" r="58" fill="none" stroke-width="11"/>' +
-        '<circle class="ring-fill" id="ringFill" cx="70" cy="70" r="58" fill="none" stroke-width="11" ' +
-          'stroke-linecap="round" transform="rotate(-90 70 70)" stroke-dasharray="'+circ.toFixed(2)+'" ' +
-          'stroke-dashoffset="'+circ.toFixed(2)+'"/>' +
-      '</svg>' +
-      '<div class="ring-center"><div class="score-num" id="totalScore">'+total+'</div>' +
-        '<div class="score-unit">/ 100점</div></div>' +
-    '</div>';
+    var circ=2*Math.PI*58;
+    return '<div class="ring-wrap"><svg viewBox="0 0 140 140" aria-hidden="true">'+
+      '<defs><linearGradient id="ringGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#2f6bff"/><stop offset="55%" stop-color="#0ea472"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>'+
+      '<circle class="ring-track" cx="70" cy="70" r="58" fill="none" stroke-width="11"/>'+
+      '<circle class="ring-fill" id="ringFill" cx="70" cy="70" r="58" fill="none" stroke-width="11" stroke="url(#ringGrad)" stroke-linecap="round" transform="rotate(-90 70 70)" stroke-dasharray="'+circ.toFixed(2)+'" stroke-dashoffset="'+circ.toFixed(2)+'"/>'+
+      '</svg><div class="ring-center"><div class="score-num" id="totalScore">'+total+'</div><div class="score-unit">/ 100점</div></div></div>';
   }
-
-  function barsHTML(scores){
+  function barsHTML(sc){
     return AREAS.map(function(a,i){
-      var p = scores[i]/a.max;
-      return '<div class="bar-row">' +
-        '<div class="bar-top"><span class="bar-ico">'+a.icon+'</span>' +
-          '<span class="bar-name">'+a.name+'</span>' +
-          '<span class="bar-val">'+scores[i]+'<small> / '+a.max+'</small></span></div>' +
-        '<div class="bar-track"><span class="bar-fill '+pctClass(p)+'" data-w="'+Math.round(p*100)+'"></span></div>' +
-      '</div>';
+      var p=sc[i]/a.max;
+      return '<div class="bar-row"><div class="bar-top"><span class="bar-ico">'+a.icon+'</span><span class="bar-name">'+a.name+'</span><span class="bar-val">'+sc[i]+'<small> / '+a.max+'</small></span></div>'+
+        '<div class="bar-track"><span class="bar-fill '+pctClass(p)+'" data-w="'+Math.round(p*100)+'"></span></div></div>';
     }).join("");
   }
-
-  function orderByScore(scores){
-    return AREAS.map(function(a,i){ return {i:i, p:scores[i]/a.max, s:scores[i], a:a}; })
-                 .sort(function(x,y){ return y.p - x.p || x.i - y.i; });
+  function orderByScore(sc){
+    return AREAS.map(function(a,i){ return {i:i,p:sc[i]/a.max,s:sc[i],a:a}; })
+      .sort(function(x,y){ return (y.p-x.p)||(x.i-y.i); });
   }
 
   function renderComplexReport(c){
-    var total = totalOf(c.scores);
-    var g = gradeOf(total);
-    var rg = regionOf(c.region);
-    var ord = orderByScore(c.scores);
-    var strong = ord.slice(0,2);
-    var weak = ord[ord.length-1];
-    var rr = regionRank(c);
-    var irc = RANK_MAP[c.id];
+    var total=totalOf(c.scores), g=gradeOf(total), rg=regionOf(c.region);
+    var ord=orderByScore(c.scores), strong=ord.slice(0,2), weak=ord[ord.length-1];
+    var rr=regionRank(c), irc=RANK_MAP[c.id];
 
-    var headTxt = esc(c.name);
-    var sentence = "<b>"+headTxt+"</b>"+josa(c.name,"은","는")+" 100점 만점에 <b>"+total+"점</b>, <b>"+g.label+" 등급</b>입니다. " +
-      "인천 "+COMPLEXES.length+"곳 가운데 <b>"+irc+"위</b>, "+rg.label+" "+rr.total+"곳 중 <b>"+rr.rank+"위</b>입니다. " +
-      esc(strong[0].a.name)+"("+strong[0].s+"/"+strong[0].a.max+")"+josa(strong[0].a.name,"과","와")+" " +
-      esc(strong[1].a.name)+"("+strong[1].s+"/"+strong[1].a.max+")"+josa(strong[1].a.name,"이","가")+" 점수를 이끌었습니다. " +
-      BLURBS[g.label];
+    var sentence="<b>"+esc(c.name)+"</b>"+josa(c.name,"은","는")+" 100점 만점에 <b>"+total+"점</b>, <b>"+g.label+" 등급</b>입니다. "+
+      "인천 "+COMPLEXES.length+"곳 가운데 <b>"+irc+"위</b>, "+rg.label+" "+rr.total+"곳 중 <b>"+rr.rank+"위</b>입니다. "+
+      esc(strong[0].a.name)+"("+strong[0].s+"/"+strong[0].a.max+")"+josa(strong[0].a.name,"과","와")+" "+
+      esc(strong[1].a.name)+"("+strong[1].s+"/"+strong[1].a.max+")"+josa(strong[1].a.name,"이","가")+" 점수를 이끌었습니다. "+BLURBS[g.label];
 
-    var strengthItems = strong.map(function(s){
-      return '<li><span class="k good">강점</span><span>'+s.a.icon+' <b>'+s.a.name+' '+s.s+'/'+s.a.max+'</b> · '+esc(s.a.options[0].n.replace("도보 5분 내 역이 있어 ",""))+'</span></li>';
+    function strengthTxt(s){
+      var p=s.s/s.a.max, txt;
+      if(s.a.key==="transport"){ txt=p>=0.9?"역이 도보권이어서 출퇴근·임차 수요가 꾸준합니다.":(p>=0.7?"역 접근이 무난해 통근 여건이 안정적입니다.":"역 접근은 아쉽지만 버스·차량 동선으로 보완됩니다."); }
+      else if(s.a.key==="school"){ txt=p>=0.95?"초품아에 학원가까지 갖춰 학부모 실수요가 두텁습니다.":(p>=0.75?"초등학교가 도보권이라 통학 여건이 좋습니다.":"통학 여건은 평범한 편입니다."); }
+      else if(s.a.key==="complex"){ txt=p>=0.9?"세대수와 신축 프리미엄이 관리·커뮤니티 경쟁력으로 이어집니다.":"단지 규모·연식이 무난한 수준입니다."; }
+      else if(s.a.key==="infra"){ txt=p>=0.9?"마트·병원·공원이 가까워 생활 동선이 짧습니다.":"생활 편의는 차량 10분 내외로 무난합니다."; }
+      else if(s.a.key==="price"){ txt=p>=0.9?"거래가 활발하고 전세가율이 낮아 환금성이 좋습니다.":"거래·전세 흐름이 평균 수준입니다."; }
+      else { txt=p>=0.9?"확정 호재가 겹쳐 중장기 상승 여지가 있습니다.":"호재는 1건 수준으로 개통 시점을 지켜볼 만합니다."; }
+      return txt;
+    }
+    var strengthItems=strong.map(function(s){
+      return '<li><span class="k good">강점</span><span>'+s.a.icon+' <b>'+s.a.name+' '+s.s+'/'+s.a.max+'</b> · '+strengthTxt(s)+'</span></li>';
     }).join("");
-    /* 강점 코멘트는 점수 구간에 맞는 문장을 고른다 */
-    strengthItems = strong.map(function(s){
-      var p = s.s / s.a.max;
-      var txt;
-      if(s.a.key === "transport"){ txt = p >= 0.9 ? "역이 도보권이어서 출퇴근·임차 수요가 꾸준합니다." : (p >= 0.7 ? "역 접근이 무난해 통근 여건이 안정적입니다." : "역 접근은 아쉽지만 버스·차량 동선으로 보완됩니다."); }
-      else if(s.a.key === "school"){ txt = p >= 0.95 ? "초품아에 학원가까지 갖춰 학부모 실수요가 두텁습니다." : (p >= 0.75 ? "초등학교가 도보권이라 통학 여건이 좋습니다." : "통학 여건은 평범한 편입니다."); }
-      else if(s.a.key === "complex"){ txt = p >= 0.9 ? "세대수와 신축 프리미엄이 관리·커뮤니티 경쟁력으로 이어집니다." : "단지 규모·연식이 무난한 수준입니다."; }
-      else if(s.a.key === "infra"){ txt = p >= 0.9 ? "마트·병원·공원이 가까워 생활 동선이 짧습니다." : "생활 편의는 차량 10분 내외로 무난합니다."; }
-      else if(s.a.key === "price"){ txt = p >= 0.9 ? "거래가 활발하고 전세가율이 낮아 환금성이 좋습니다." : "거래·전세 흐름이 평균 수준입니다."; }
-      else { txt = p >= 0.9 ? "확정 호재가 겹쳐 중장기 상승 여지가 있습니다." : "호재는 1건 수준으로 개통 시점을 지켜볼 만합니다."; }
-      return '<li><span class="k good">강점</span><span>'+s.a.icon+' <b>'+s.a.name+' '+s.s+'/'+s.a.max+'</b> · '+txt+'</span></li>';
-    }).join("");
+    var wp=weak.s/weak.a.max, weakTxt;
+    if(weak.a.key==="transport"){ weakTxt=wp>=0.55?"역이 도보 거리지만 초역세권은 아니라 통근 시간을 따져볼 필요가 있습니다.":"역 접근이 약해 차량·버스 의존도가 높습니다."; }
+    else if(weak.a.key==="school"){ weakTxt=wp>=0.55?"초등학교는 도보권이지만 대형 학원가는 차량 이동이 필요합니다.":"학군 프리미엄은 크지 않은 편입니다."; }
+    else if(weak.a.key==="complex"){ weakTxt="세대수·연식에서 상대적 열위가 있습니다."; }
+    else if(weak.a.key==="infra"){ weakTxt="대형 편의시설은 차량 이동이 필요합니다."; }
+    else if(weak.a.key==="price"){ weakTxt="거래가 적거나 전세가율이 높아 급매 시 협상력이 약해질 수 있습니다."; }
+    else { weakTxt="호재가 계획 단계에 머물러 실현 시점까지 변동성이 있습니다."; }
+    var weakItem='<li><span class="k fix">보완</span><span>'+weak.a.icon+' <b>'+weak.a.name+' '+weak.s+'/'+weak.a.max+'</b> · '+weakTxt+' '+esc(weak.a.weak)+'</span></li>';
 
-    var weakTxt;
-    var wp = weak.s / weak.a.max;
-    if(weak.a.key === "transport"){ weakTxt = wp >= 0.55 ? "역이 도보 거리지만 초역세권은 아니라 통근 시간을 따져볼 필요가 있습니다." : "역 접근이 약해 차량·버스 의존도가 높습니다."; }
-    else if(weak.a.key === "school"){ weakTxt = wp >= 0.55 ? "초등학교는 도보권이지만 학원가는 차량 이동이 필요합니다." : "학군 프리미엄은 크지 않은 편입니다."; }
-    else if(weak.a.key === "complex"){ weakTxt = "세대수·연식에서 상대적 열위가 있습니다."; }
-    else if(weak.a.key === "infra"){ weakTxt = "대형 편의시설은 차량 이동이 필요합니다."; }
-    else if(weak.a.key === "price"){ weakTxt = "전세가율이 높아 급매 시 협상력이 약해질 수 있습니다."; }
-    else { weakTxt = "호재가 계획 단계에 머물러 실현 시점까지 변동성이 있습니다."; }
-    var weakItem = '<li><span class="k fix">보완</span><span>'+weak.a.icon+' <b>'+weak.a.name+' '+weak.s+'/'+weak.a.max+'</b> · '+weakTxt+' '+esc(weak.a.weak)+'</span></li>';
+    var factRows=
+      '<div class="fact-row"><b>역 접근</b><span>'+esc(c.station)+'역 '+(c.dist<=1400?"도보 약 "+c.walkMin+"분":"차량·버스 약 "+Math.max(3,Math.round(c.dist/1000*3))+"분")+' (직선 '+comma(c.dist)+'m)</span></div>'+
+      '<div class="fact-row"><b>학군</b><span>'+esc(c.school)+'</span></div>'+
+      '<div class="fact-row"><b>인프라</b><span>'+esc(c.infra)+'</span></div>'+
+      '<div class="fact-row"><b>호재</b><span>'+esc(c.future)+'</span></div>'+
+      '<div class="fact-row"><b>거래</b><span>최근 6개월 매매 '+comma(c.deals)+'건'+(c.extra?' · '+esc(c.extra):'')+'</span></div>';
 
-    var html = '' +
-    '<div class="card rep-card">' +
-      '<div class="rep-top">' +
-        '<div><div class="rep-name" id="repName"></div><div class="rep-size" id="repSize"></div></div>' +
-        '<div class="rep-date">'+todayLabel()+'</div>' +
-      '</div>' +
-      '<div class="meta-grid">' +
-        '<div class="meta-box"><div class="k">준공</div><div class="v">'+c.year+'<small>년</small></div></div>' +
-        '<div class="meta-box"><div class="k">세대수</div><div class="v">'+comma(c.hh)+'<small>세대</small></div></div>' +
-        '<div class="meta-box"><div class="k">84㎡ 참고</div><div class="v">'+c.price.toFixed(1)+'<small>억</small></div></div>' +
-      '</div>' +
-      '<p class="exnote">※ 84㎡ 참고 시세는 예시 참고값입니다. 실제 거래가는 층·향·시점에 따라 달라집니다.</p>' +
-      ringHTML(total) +
-      '<div class="grade-line"><span class="grade-badge" id="gradeBadge" style="background:'+g.grad+';box-shadow:0 6px 16px rgba(16,24,40,.16)">'+g.label+'</span>' +
-        '<span class="grade-title">'+g.title+'</span></div>' +
-      '<div class="rank-line">🏅 인천 '+COMPLEXES.length+'곳 중 <b>'+irc+'위</b> · '+rg.label+' '+rr.total+'곳 중 '+rr.rank+'위</div>' +
-      '<p class="confidence">ⓘ 공개 단지 정보·실거래 흐름을 바탕으로 채점한 참고용 분석입니다 · 시안용 예시 값 포함.</p>' +
-
-      '<div class="block">' +
-        '<div class="block-head"><h3>입지 레이더</h3><span>영역별 배점 대비 달성률</span></div>' +
-        '<div class="radar-box">'+radarSVG(c.scores)+'</div>' +
-      '</div>' +
-
-      '<div class="block">' +
-        '<div class="block-head"><h3>영역별 점수</h3><span>총 100점</span></div>' +
-        '<div class="bars">'+barsHTML(c.scores)+'</div>' +
-      '</div>' +
-
-      '<div class="block">' +
-        '<div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>' +
-        '<div class="verdict">' +
-          '<h4>총평</h4>' +
-          '<p id="verdictText">'+sentence+'</p>' +
-          '<ul class="v-list">'+strengthItems+weakItem+'</ul>' +
-          '<p class="v-close">단지 특징: '+esc(c.tags)+' · 계약 전 최근 3개월 실거래가와 전세가율, 호재 일정을 함께 확인하세요.</p>' +
-        '</div>' +
-        '<button class="btn-copy" id="copyBtn" type="button">📋 성적표 요약 복사</button>' +
-        '<textarea class="copy-fallback" id="copyFallback" readonly aria-label="복사할 성적표 요약"></textarea>' +
-      '</div>' +
-      moneyBlockHTML() +
+    var html=''+
+    '<div class="card rep-card">'+
+      '<div class="rep-top"><div><div class="rep-name" id="repName"></div><div class="rep-size" id="repSize"></div></div><div class="rep-date">'+todayLabel()+'</div></div>'+
+      '<div class="meta-grid">'+
+        '<div class="meta-box"><div class="k">준공</div><div class="v">'+c.year+'<small>년</small></div></div>'+
+        '<div class="meta-box"><div class="k">세대수</div><div class="v">'+comma(c.hh)+'<small>세대</small></div></div>'+
+        '<div class="meta-box"><div class="k">84㎡ 참고</div><div class="v">'+c.price.toFixed(1)+'<small>억</small></div></div>'+
+      '</div>'+
+      '<p class="exnote">※ 84㎡ 시세는 추정 참고값입니다. 실제 거래가는 층·향·시점에 따라 달라집니다.</p>'+
+      ringHTML(total)+
+      '<div class="grade-line"><span class="grade-badge" id="gradeBadge" style="background:'+g.grad+'">'+g.label+'</span><span class="grade-title">'+g.title+'</span></div>'+
+      '<div class="rank-line">🏅 인천 '+COMPLEXES.length+'곳 중 <b>'+irc+'위</b> · '+rg.label+' '+rr.total+'곳 중 '+rr.rank+'위</div>'+
+      '<p class="confidence">ⓘ 공개 단지 정보·실거래 흐름을 바탕으로 채점한 참고용 분석입니다. 점수 근거는 아래 팩트체크에 표기했습니다.</p>'+
+      '<div class="fact-box"><h4>📌 팩트 체크 (v2.1 보정)</h4>'+factRows+'</div>'+
+      '<div class="block"><div class="block-head"><h3>입지 레이더</h3><span>영역별 배점 대비 달성률</span></div><div class="radar-box">'+radarSVG(c.scores)+'</div></div>'+
+      '<div class="block"><div class="block-head"><h3>영역별 점수</h3><span>총 100점</span></div><div class="bars">'+barsHTML(c.scores)+'</div></div>'+
+      '<div class="block"><div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>'+
+        '<div class="verdict"><h4>총평</h4><p id="verdictText">'+sentence+'</p><ul class="v-list">'+strengthItems+weakItem+'</ul>'+
+        '<p class="v-close">단지 특징: '+esc(c.tags)+' · 계약 전 최근 실거래가와 전세가율, 호재 일정을 함께 확인하세요.</p></div>'+
+        '<button class="btn-copy" id="copyBtn" type="button">📋 성적표 요약 복사</button>'+
+        '<textarea class="copy-fallback" id="copyFallback" readonly aria-label="복사할 성적표 요약"></textarea>'+
+      '</div>'+
     '</div>';
 
-    var rep = $("#report");
-    rep.innerHTML = html;
-    $("#repName").textContent = c.name;
-    $("#repSize").innerHTML = '<span class="reg-badge">'+rg.emoji+' '+rg.label+'</span>'+esc(c.tags);
-    animateReport(rep, total);
-
-    lastReport = {
-      mode:"complex", name:c.name, region:rg.label, year:c.year, hh:c.hh, price:c.price,
-      total:total, grade:g, scores:c.scores.slice(), ord:ord, tags:c.tags,
-      irank:irc, rrank:rr.rank, rtotal:rr.total
-    };
-    $("#copyBtn").addEventListener("click", copySummary);
+    var rep=$("#report");
+    rep.innerHTML=html;
+    $("#repName").textContent=c.name;
+    $("#repSize").innerHTML='<span class="reg-badge">'+rg.emoji+' '+rg.label+'</span>'+esc(c.tags);
+    animateReport(rep,total);
+    lastReport={ mode:"complex", c:c, total:total, grade:g, ord:ord, irank:irc, rrank:rr.rank, rtotal:rr.total };
+    $("#copyBtn").addEventListener("click",copySummary);
   }
 
-  function animateReport(rep, total){
-    var circ = 2 * Math.PI * 58;
-    var fill = $("#ringFill");
-    if(fill){ setTimeout(function(){ fill.style.strokeDashoffset = (circ * (1 - total/100)).toFixed(2); }, 60); }
+  function renderCustomReport(name,size,sc){
+    var total=totalOf(sc), g=gradeOf(total), ord=orderByScore(sc);
+    var strong=ord.slice(0,2), weak=ord[ord.length-1];
+    var nameTxt=(name||"").trim()||"우리 아파트", sizeTxt=(size||"").trim();
+    var headTxt=esc(nameTxt)+(sizeTxt?" "+esc(sizeTxt):"");
+    var sentence="<b>"+headTxt+"</b>"+josa(sizeTxt||nameTxt,"은","는")+" 100점 만점에 <b>"+total+"점</b>, <b>"+g.label+" 등급</b>입니다. "+
+      esc(strong[0].a.name)+"("+strong[0].s+"/"+strong[0].a.max+")"+josa(strong[0].a.name,"과","와")+" "+
+      esc(strong[1].a.name)+"("+strong[1].s+"/"+strong[1].a.max+")"+josa(strong[1].a.name,"이","가")+" 점수를 이끌었습니다. "+
+      BLURBS[g.label]+" 가장 낮은 영역은 "+esc(weak.a.name)+"("+weak.s+"/"+weak.a.max+")입니다.";
+    var strengthItems=strong.map(function(s){
+      var opt=s.a.options[state.answers[s.i]];
+      return '<li><span class="k good">강점</span><span>'+s.a.icon+' <b>'+s.a.name+' '+s.s+'/'+s.a.max+'</b> · '+esc(opt?opt.n:"")+'</span></li>';
+    }).join("");
+    var wopt=weak.a.options[state.answers[weak.i]];
+    var weakItem='<li><span class="k fix">보완</span><span>'+weak.a.icon+' <b>'+weak.a.name+' '+weak.s+'/'+weak.a.max+'</b> · '+esc(wopt?wopt.n:"")+' '+esc(weak.a.weak)+'</span></li>';
+
+    var html=''+
+    '<div class="card rep-card">'+
+      '<div class="rep-top"><div><div class="rep-name" id="repName"></div><div class="rep-size" id="repSize"></div></div><div class="rep-date">'+todayLabel()+'</div></div>'+
+      ringHTML(total)+
+      '<div class="grade-line"><span class="grade-badge" id="gradeBadge" style="background:'+g.grad+'">'+g.label+'</span><span class="grade-title">'+g.title+'</span></div>'+
+      '<p class="confidence">ⓘ 입력하신 6개 항목을 기준으로 채점한 참고용 분석입니다.</p>'+
+      '<div class="block"><div class="block-head"><h3>입지 레이더</h3><span>영역별 달성률</span></div><div class="radar-box">'+radarSVG(sc)+'</div></div>'+
+      '<div class="block"><div class="block-head"><h3>영역별 점수</h3><span>총 100점</span></div><div class="bars">'+barsHTML(sc)+'</div></div>'+
+      '<div class="block"><div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>'+
+        '<div class="verdict"><h4>총평</h4><p>'+sentence+'</p><ul class="v-list">'+strengthItems+weakItem+'</ul>'+
+        '<p class="v-close">계약 전에는 최근 실거래가와 전세가율, 교통·개발 일정을 함께 확인해 보세요.</p></div>'+
+        '<button class="btn-copy" id="copyBtn" type="button">📋 성적표 요약 복사</button>'+
+        '<textarea class="copy-fallback" id="copyFallback" readonly aria-label="복사할 성적표 요약"></textarea>'+
+      '</div>'+
+    '</div>';
+    var rep=$("#report");
+    rep.innerHTML=html;
+    $("#repName").textContent=nameTxt;
+    $("#repSize").textContent=sizeTxt||"평형 미입력";
+    animateReport(rep,total);
+    lastReport={ mode:"custom", name:nameTxt, size:sizeTxt, total:total, grade:g, scores:sc.slice(), ord:ord, answers:state.answers.slice() };
+    $("#copyBtn").addEventListener("click",copySummary);
+  }
+
+  function animateReport(rep,total){
+    var circ=2*Math.PI*58, fill=$("#ringFill");
+    if(fill) setTimeout(function(){ fill.style.strokeDashoffset=(circ*(1-total/100)).toFixed(2); },60);
     setTimeout(function(){
-      var fills = rep.querySelectorAll(".bar-fill");
-      for(var i=0;i<fills.length;i++){ fills[i].style.width = fills[i].getAttribute("data-w") + "%"; }
-    }, 120);
+      var fills=rep.querySelectorAll(".bar-fill");
+      for(var i=0;i<fills.length;i++){ fills[i].style.width=fills[i].getAttribute("data-w")+"%"; }
+    },120);
   }
 
-  /* ---- 직접 진단 리포트 ---- */
-  function renderCustomReport(name, size, scores){
-    var total = totalOf(scores);
-    var g = gradeOf(total);
-    var ord = orderByScore(scores);
-    var strong = ord.slice(0,2);
-    var weak = ord[ord.length-1];
-    var nameTxt = (name || "").trim() || "우리 아파트";
-    var sizeTxt = (size || "").trim();
-    var headTxt = esc(nameTxt) + (sizeTxt ? " " + esc(sizeTxt) : "");
-    var sentence = "<b>"+headTxt+"</b>"+josa(sizeTxt || nameTxt,"은","는")+" 100점 만점에 <b>"+total+"점</b>, <b>"+g.label+" 등급</b>입니다. " +
-      esc(strong[0].a.name)+"("+strong[0].s+"/"+strong[0].a.max+")"+josa(strong[0].a.name,"과","와")+" " +
-      esc(strong[1].a.name)+"("+strong[1].s+"/"+strong[1].a.max+")"+josa(strong[1].a.name,"이","가")+" 점수를 이끌었습니다. " +
-      BLURBS[g.label] + " 가장 낮은 영역은 "+esc(weak.a.name)+"("+weak.s+"/"+weak.a.max+")입니다.";
-
-    var strengthItems = strong.map(function(s){
-      var opt = s.a.options[state.answers[s.i]];
-      return '<li><span class="k good">강점</span><span>'+s.a.icon+' <b>'+s.a.name+' '+s.s+'/'+s.a.max+'</b> · '+esc(opt ? opt.n : '')+'</span></li>';
-    }).join("");
-    var wopt = weak.a.options[state.answers[weak.i]];
-    var weakItem = '<li><span class="k fix">보완</span><span>'+weak.a.icon+' <b>'+weak.a.name+' '+weak.s+'/'+weak.a.max+'</b> · '+esc(wopt ? wopt.n : '')+' '+esc(weak.a.weak)+'</span></li>';
-
-    var html = '' +
-    '<div class="card rep-card">' +
-      '<div class="rep-top">' +
-        '<div><div class="rep-name" id="repName"></div><div class="rep-size" id="repSize"></div></div>' +
-        '<div class="rep-date">'+todayLabel()+'</div>' +
-      '</div>' +
-      ringHTML(total) +
-      '<div class="grade-line"><span class="grade-badge" id="gradeBadge" style="background:'+g.grad+';box-shadow:0 6px 16px rgba(16,24,40,.16)">'+g.label+'</span>' +
-        '<span class="grade-title">'+g.title+'</span></div>' +
-      '<p class="confidence">ⓘ 입력하신 6개 항목을 기준으로 채점한 참고용 분석입니다 · 실제 시세·입지 평가와 차이가 있을 수 있습니다.</p>' +
-      '<div class="block">' +
-        '<div class="block-head"><h3>입지 레이더</h3><span>영역별 배점 대비 달성률</span></div>' +
-        '<div class="radar-box">'+radarSVG(scores)+'</div>' +
-      '</div>' +
-      '<div class="block">' +
-        '<div class="block-head"><h3>영역별 점수</h3><span>총 100점</span></div>' +
-        '<div class="bars">'+barsHTML(scores)+'</div>' +
-      '</div>' +
-      '<div class="block">' +
-        '<div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>' +
-        '<div class="verdict">' +
-          '<h4>총평</h4><p id="verdictText">'+sentence+'</p>' +
-          '<ul class="v-list">'+strengthItems+weakItem+'</ul>' +
-          '<p class="v-close">계약 전에는 최근 3개월 실거래가와 전세가율, 교통·개발 호재 일정을 함께 확인해 보세요.</p>' +
-        '</div>' +
-        '<button class="btn-copy" id="copyBtn" type="button">📋 성적표 요약 복사</button>' +
-        '<textarea class="copy-fallback" id="copyFallback" readonly aria-label="복사할 성적표 요약"></textarea>' +
-      '</div>' +
-      moneyBlockHTML() +
-    '</div>';
-
-    var rep = $("#report");
-    rep.innerHTML = html;
-    $("#repName").textContent = nameTxt;
-    $("#repSize").textContent = sizeTxt || "평형 미입력";
-    animateReport(rep, total);
-    lastReport = { mode:"custom", name:nameTxt, size:sizeTxt, total:total, grade:g,
-                   scores:scores.slice(), ord:ord, answers:state.answers.slice() };
-    $("#copyBtn").addEventListener("click", copySummary);
-  }
-
-  /* ============================== 성적표 폼 ============================== */
+  /* ============================== 직접 진단 ============================== */
   function renderForm(){
-    var box = $("#areas");
-    box.innerHTML = "";
-    AREAS.forEach(function(a, ai){
-      var wrap = el("div","area");
-      wrap.setAttribute("data-area", ai);
-      var head = el("div","area-head");
-      head.innerHTML = '<span class="area-ico">'+a.icon+'</span>' +
-        '<div><div class="area-name">'+a.name+'</div><div class="area-sub">'+a.sub+'</div></div>' +
-        '<span class="area-max">'+a.max+'점</span>';
+    var box=$("#areas"); box.innerHTML="";
+    AREAS.forEach(function(a,ai){
+      var wrap=el("div","area"); wrap.setAttribute("data-area",ai);
+      var head=el("div","area-head");
+      head.innerHTML='<span class="area-ico">'+a.icon+'</span><div><div class="area-name">'+a.name+'</div><div class="area-sub">'+a.sub+'</div></div><span class="area-max">'+a.max+'점</span>';
       wrap.appendChild(head);
-      var opts = el("div","opts");
-      opts.setAttribute("role","radiogroup");
-      opts.setAttribute("aria-label", a.name + " " + a.max + "점 만점");
-      a.options.forEach(function(o, oi){
-        var btn = el("button","opt");
-        btn.type = "button";
-        btn.setAttribute("role","radio");
-        btn.setAttribute("aria-checked","false");
-        btn.setAttribute("data-area", ai);
-        btn.setAttribute("data-opt", oi);
-        btn.innerHTML = '<span class="dot"><i></i></span><span>'+esc(o.t)+'</span>';
-        btn.addEventListener("click", function(){ choose(ai, oi); });
+      var opts=el("div","opts"); opts.setAttribute("role","radiogroup"); opts.setAttribute("aria-label",a.name+" "+a.max+"점 만점");
+      a.options.forEach(function(o,oi){
+        var btn=el("button","opt"); btn.type="button"; btn.setAttribute("role","radio"); btn.setAttribute("aria-checked","false");
+        btn.setAttribute("data-area",ai); btn.setAttribute("data-opt",oi);
+        btn.innerHTML='<span class="dot"><i></i></span><span>'+esc(o.t)+'</span>';
+        btn.addEventListener("click",function(){ choose(ai,oi); });
         opts.appendChild(btn);
       });
-      wrap.appendChild(opts);
-      box.appendChild(wrap);
+      wrap.appendChild(opts); box.appendChild(wrap);
     });
   }
-
-  function choose(ai, oi){
-    state.answers[ai] = oi;
-    var area = document.querySelector('.area[data-area="'+ai+'"]');
+  function choose(ai,oi){
+    state.answers[ai]=oi;
+    var area=document.querySelector('.area[data-area="'+ai+'"]');
     area.classList.remove("is-error");
-    var btns = area.querySelectorAll(".opt");
+    var btns=area.querySelectorAll(".opt");
     for(var i=0;i<btns.length;i++){
-      var sel = (Number(btns[i].getAttribute("data-opt")) === oi);
-      btns[i].classList.toggle("is-sel", sel);
-      btns[i].setAttribute("aria-checked", sel ? "true" : "false");
+      var sel=(Number(btns[i].getAttribute("data-opt"))===oi);
+      btns[i].classList.toggle("is-sel",sel); btns[i].setAttribute("aria-checked",sel?"true":"false");
     }
-    if(state.answers.every(function(v){ return v !== null; })){ $("#errMsg").classList.remove("show"); }
+    if(state.answers.every(function(v){ return v!==null; })) $("#errMsg").classList.remove("show");
   }
-
   function collect(){
-    var missing = [];
-    state.answers.forEach(function(oi, ai){ if(oi === null) missing.push(ai); });
+    var missing=[];
+    state.answers.forEach(function(oi,ai){ if(oi===null) missing.push(ai); });
     if(missing.length){
-      missing.forEach(function(ai){
-        document.querySelector('.area[data-area="'+ai+'"]').classList.add("is-error");
-      });
-      document.querySelector('.area[data-area="'+missing[0]+'"]').scrollIntoView({behavior:"smooth", block:"center"});
+      missing.forEach(function(ai){ document.querySelector('.area[data-area="'+ai+'"]').classList.add("is-error"); });
+      document.querySelector('.area[data-area="'+missing[0]+'"]').scrollIntoView({behavior:"smooth",block:"center"});
       $("#errMsg").classList.add("show");
-      toast("선택하지 않은 영역이 " + missing.length + "개 있습니다");
+      toast("선택하지 않은 영역이 "+missing.length+"개 있습니다");
       return null;
     }
-    return state.answers.map(function(oi, ai){ return AREAS[ai].options[oi].p; });
+    return state.answers.map(function(oi,ai){ return AREAS[ai].options[oi].p; });
   }
 
-  /* ============================== 2) 배틀 ============================== */
+  /* ============================== 배틀 ============================== */
   function buildSelects(){
     ["selA","selB"].forEach(function(id){
-      var s = document.getElementById(id);
+      var s=document.getElementById(id);
       REGIONS.forEach(function(r){
-        var grp = document.createElement("optgroup");
-        grp.label = r.emoji + " " + r.label;
-        COMPLEXES.filter(function(c){ return c.region === r.key; }).forEach(function(c){
-          var o = document.createElement("option");
-          o.value = c.id;
-          o.textContent = c.name;
-          grp.appendChild(o);
-        });
+        var grp=document.createElement("optgroup"); grp.label=r.emoji+" "+r.label;
+        COMPLEXES.filter(function(c){ return c.region===r.key; })
+          .sort(function(a,b){ return totalOf(b.scores)-totalOf(a.scores); })
+          .forEach(function(c){
+            var o=document.createElement("option"); o.value=c.id; o.textContent=c.name+" ("+totalOf(c.scores)+")";
+            grp.appendChild(o);
+          });
         s.appendChild(grp);
       });
     });
-    $("#selA").value = "ep-sondo";
-    $("#selB").value = "firstpark";
+    $("#selA").value="so14";
+    $("#selB").value="so02";
   }
-
   function renderBattle(){
-    var a = byId($("#selA").value), b = byId($("#selB").value);
-    if(!a || !b) return;
-    var ta = totalOf(a.scores), tb = totalOf(b.scores);
-    var ga = gradeOf(ta), gb = gradeOf(tb);
-    var ra = regionOf(a.region), rb = regionOf(b.region);
-    var aWin = ta > tb, bWin = tb > ta;
-
-    var rows = AREAS.map(function(ar, i){
-      var sa = a.scores[i], sb = b.scores[i];
-      var cls, tag, tagCls;
-      if(sa > sb){ cls = "a"; tag = "A +" + (sa-sb); tagCls = "a"; }
-      else if(sb > sa){ cls = "b"; tag = "B +" + (sb-sa); tagCls = "b"; }
-      else { cls = ""; tag = "동점"; tagCls = "eq"; }
-      return '<div class="drow">' +
-        '<div class="dname">'+ar.icon+' '+ar.short+'<small>'+ar.name+' / '+ar.max+'점</small></div>' +
-        '<div class="dv a '+(cls==="a"?"win":"")+'">'+sa+'</div>' +
-        '<div class="dv b '+(cls==="b"?"win":"")+'">'+sb+'</div>' +
-        '<div class="dtag '+tagCls+'">'+tag+'</div>' +
-      '</div>';
+    var a=byId($("#selA").value), b=byId($("#selB").value);
+    if(!a||!b) return;
+    var ta=totalOf(a.scores), tb=totalOf(b.scores), ga=gradeOf(ta), gb=gradeOf(tb);
+    var ra=regionOf(a.region), rb=regionOf(b.region), aWin=ta>tb, bWin=tb>ta;
+    var rows=AREAS.map(function(ar,i){
+      var sa=a.scores[i], sb=b.scores[i], cls, tag, tagCls;
+      if(sa>sb){ cls="a"; tag="A +"+(sa-sb); tagCls="a"; }
+      else if(sb>sa){ cls="b"; tag="B +"+(sb-sa); tagCls="b"; }
+      else { cls=""; tag="동점"; tagCls="eq"; }
+      return '<div class="drow"><div class="dname">'+ar.icon+' '+ar.short+'<small>'+ar.name+' / '+ar.max+'점</small></div>'+
+        '<div class="dv a '+(cls==="a"?"win":"")+'">'+sa+'</div><div class="dv b '+(cls==="b"?"win":"")+'">'+sb+'</div>'+
+        '<div class="dtag '+tagCls+'">'+tag+'</div></div>';
     }).join("");
+    var diff=b.price-a.price;
+    var taxRate=b.price<=6?0.011:(b.price<=9?0.022:0.033);
+    var brokRate=b.price<9?0.005:0.009;
+    var tax=b.price*taxRate, broker=b.price*brokRate, moving=0.03;
+    var total=diff+tax+broker+moving, isSaving=total<0;
 
-    /* 갈아타기 자금: A → B */
-    var diff = b.price - a.price;                 /* 억 */
-    var taxRate = b.price <= 6 ? 0.011 : (b.price <= 9 ? 0.022 : 0.033);
-    var brokRate = b.price < 9 ? 0.005 : 0.009;
-    var tax = b.price * taxRate;
-    var broker = b.price * brokRate;
-    var moving = 0.03;                             /* 약 300만원 */
-    var total = diff + tax + broker + moving;
-    var isSaving = total < 0;
-
-    var html = '' +
-      '<div class="vs-summary">' +
-        '<div class="vs-side a '+(aWin?"is-win":"")+'">' +
-          '<div class="vs-nm">'+esc(a.name)+'</div>' +
-          '<div class="vs-sc">'+ta+'</div>' +
-          '<div class="vs-gd">'+ga.label+' · '+ra.label+'</div>' +
-        '</div>' +
-        '<div class="vs-mid">VS</div>' +
-        '<div class="vs-side b '+(bWin?"is-win":"")+'">' +
-          '<div class="vs-nm">'+esc(b.name)+'</div>' +
-          '<div class="vs-sc">'+tb+'</div>' +
-          '<div class="vs-gd">'+gb.label+' · '+rb.label+'</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="vs-diff">' +
-        (aWin || bWin
-          ? '총점 차이는 <b>'+Math.abs(ta-tb)+'점</b> · ' +
-            (aWin ? '<b>A('+esc(a.name)+')</b>가 앞섭니다' : '<b>B('+esc(b.name)+')</b>가 앞섭니다')
-          : '두 단지 <b>총점이 같습니다</b> · 영역별 강약을 보세요') +
-      '</div>' +
-
-      '<div class="block">' +
-        '<div class="block-head"><h3>듀얼 레이더</h3><span>두 단지 겹쳐 보기</span></div>' +
-        '<div class="legend">' +
-          '<span><i style="background:#0ea472"></i>A '+esc(a.name)+'</span>' +
-          '<span><i style="background:#2f6bff"></i>B '+esc(b.name)+'</span>' +
-        '</div>' +
-        '<div class="radar-box">'+radarDualSVG(a.scores, b.scores)+'</div>' +
-      '</div>' +
-
-      '<div class="block">' +
-        '<div class="block-head"><h3>영역별 우위</h3><span>A · B 점수 / 배점</span></div>' +
-        '<div class="dtable">' +
-          '<div class="dhead"><span>영역</span><span>A</span><span>B</span><span>우위</span></div>' +
-          rows +
-        '</div>' +
-      '</div>' +
-
-      '<div class="block">' +
-        '<div class="block-head"><h3>갈아타기 예상 자금</h3><span>84㎡ 참고 시세 기준</span></div>' +
-        '<div class="money-swap">' +
-          '<h4>A → B 기준</h4>' +
-          '<div class="mline"><span>A 참고 시세</span><b>'+a.price.toFixed(1)+'억</b></div>' +
-          '<div class="mline"><span>B 참고 시세</span><b>'+b.price.toFixed(1)+'억</b></div>' +
-          '<div class="mline"><span>시세 차액</span><b>'+(diff>=0?'+':'')+money(diff)+'</b></div>' +
-          '<div class="mline"><span>취득세 (약 '+(taxRate*100).toFixed(1)+'%)</span><b>'+money(tax)+'</b></div>' +
-          '<div class="mline"><span>중개보수 (약 '+(brokRate*100).toFixed(1)+'%)</span><b>'+money(broker)+'</b></div>' +
-          '<div class="mline"><span>이사·부대비용</span><b>약 300만원</b></div>' +
-          '<div class="mline total"><span>'+(isSaving?'갈아타면 회수(추정)':'추가로 필요한 자금(추정)')+'</span><b>'+money(Math.abs(total))+'</b></div>' +
-          '<p class="mnote">※ 예시 참고값으로 계산한 추정치입니다. 실제로는 대출·보유세·기존 주택 처분 시점에 따라 달라지고, B가 더 싼 경우 A 매도 대금에서 비용을 빼고 남는 금액을 회수하게 됩니다. 취득세는 1주택 취득 기준(6억 이하 1.1% · 6~9억 2.2% · 9억 초과 3.3%)입니다.</p>' +
-        '</div>' +
-      '</div>';
-
-    $("#battleBody").innerHTML = html;
+    $("#battleBody").innerHTML=''+
+      '<div class="vs-summary">'+
+        '<div class="vs-side a '+(aWin?"is-win":"")+'"><div class="vs-nm">'+esc(a.name)+'</div><div class="vs-sc">'+ta+'</div><div class="vs-gd">'+ga.label+' · '+ra.label+'</div></div>'+
+        '<div class="vs-mid">VS</div>'+
+        '<div class="vs-side b '+(bWin?"is-win":"")+'"><div class="vs-nm">'+esc(b.name)+'</div><div class="vs-sc">'+tb+'</div><div class="vs-gd">'+gb.label+' · '+rb.label+'</div></div>'+
+      '</div>'+
+      '<div class="vs-diff">'+((aWin||bWin)?('총점 차이는 <b>'+Math.abs(ta-tb)+'점</b> · '+(aWin?'<b>A('+esc(a.name)+')</b>가 앞섭니다':'<b>B('+esc(b.name)+')</b>가 앞섭니다')):'두 단지 <b>총점이 같습니다</b> · 영역별 강약을 보세요')+'</div>'+
+      '<div class="block"><div class="block-head"><h3>듀얼 레이더</h3><span>두 단지 겹쳐 보기</span></div>'+
+        '<div class="legend"><span><i style="background:#0ea472"></i>A '+esc(a.name)+'</span><span><i style="background:#2f6bff"></i>B '+esc(b.name)+'</span></div>'+
+        '<div class="radar-box">'+radarDualSVG(a.scores,b.scores)+'</div></div>'+
+      '<div class="block"><div class="block-head"><h3>영역별 우위</h3><span>A · B 점수 / 배점</span></div>'+
+        '<div class="dtable"><div class="dhead"><span>영역</span><span>A</span><span>B</span><span>우위</span></div>'+rows+'</div></div>'+
+      '<div class="block"><div class="block-head"><h3>갈아타기 예상 자금</h3><span>84㎡ 참고 시세 기준</span></div>'+
+        '<div class="money-swap"><h4>A → B 기준</h4>'+
+          '<div class="mline"><span>A 참고 시세</span><b>'+a.price.toFixed(1)+'억</b></div>'+
+          '<div class="mline"><span>B 참고 시세</span><b>'+b.price.toFixed(1)+'억</b></div>'+
+          '<div class="mline"><span>시세 차액</span><b>'+(diff>=0?'+':'')+money(diff)+'</b></div>'+
+          '<div class="mline"><span>취득세 (약 '+(taxRate*100).toFixed(1)+'%)</span><b>'+money(tax)+'</b></div>'+
+          '<div class="mline"><span>중개보수 (약 '+(brokRate*100).toFixed(1)+'%)</span><b>'+money(broker)+'</b></div>'+
+          '<div class="mline"><span>이사·부대비용</span><b>약 300만원</b></div>'+
+          '<div class="mline total"><span>'+(isSaving?'갈아타면 회수(추정)':'추가로 필요한 자금(추정)')+'</span><b>'+money(Math.abs(total))+'</b></div>'+
+          '<p class="mnote">※ 추정 참고값으로 계산했습니다. 대출·보유세·기존 주택 처분 시점에 따라 달라지고, B가 더 싼 경우 A 매도 대금에서 비용을 빼고 남는 금액을 회수하게 됩니다. 취득세는 1주택 취득 기준(6억 이하 1.1% · 6~9억 2.2% · 9억 초과 3.3%)입니다.</p>'+
+        '</div></div>';
   }
 
-  /* ============================== 3) 랭킹 ============================== */
-  var rankFilter = "all";
+  /* ============================== 랭킹 ============================== */
+  var rankFilter="all";
   function renderRank(){
-    renderRegionChips($("#rankChips"), rankFilter, function(key){
-      rankFilter = key;
-      renderRank();
-    });
-    var list = RANKED.filter(function(c){ return rankFilter === "all" || c.region === rankFilter; });
-    /* 같은 점수는 같은 순위(공동 순위) */
-    var localRank = {};
+    renderRegionChips($("#rankChips"),rankFilter,function(key){ rankFilter=key; renderRank(); });
+    var list=RANKED.filter(function(c){ return rankFilter==="all"||c.region===rankFilter; });
+    $("#rankTotal").textContent=list.length+"곳 전체";
+    var localRank={};
     (function(){
-      var prev = null, prevRank = 0;
-      list.forEach(function(c, i){
-        var t = totalOf(c.scores);
-        var rk = (prev !== null && t === prev) ? prevRank : i + 1;
-        localRank[c.id] = rk;
-        prev = t; prevRank = rk;
+      var prev=null, prevRank=0;
+      list.forEach(function(c,i){
+        var t=totalOf(c.scores);
+        var rk=(prev!==null&&t===prev)?prevRank:i+1;
+        localRank[c.id]=rk; prev=t; prevRank=rk;
       });
     })();
-    var box = $("#rankList");
-    box.innerHTML = "";
+    var box=$("#rankList"); box.innerHTML="";
     list.forEach(function(c){
-      var total = totalOf(c.scores);
-      var g = gradeOf(total);
-      var r = regionOf(c.region);
-      var shown = rankFilter === "all" ? RANK_MAP[c.id] : localRank[c.id];
-      var b = el("button","rank-row");
-      b.type = "button";
-      b.setAttribute("data-rank-apt", c.id);
-      b.innerHTML = '<span class="rk">'+shown+'</span>' +
-        '<span class="rkmid"><span class="rkname">'+esc(c.name)+'</span>' +
-        '<span class="rkmeta"><span class="rbadge">'+r.emoji+' '+r.label+'</span>' +
-        (rankFilter === "all" ? '' : '인천 '+RANK_MAP[c.id]+'위 · ') +
-        c.year+'년 · 84㎡ '+c.price.toFixed(1)+'억</span></span>' +
-        '<span class="rksc">'+total+'</span>' +
-        '<span class="rkgd" style="background:'+g.grad+'">'+g.label+'</span>';
-      b.addEventListener("click", function(){
-        state.filterRegion = c.region;
-        state.query = "";
-        $("#searchInput").value = "";
-        renderRegionChips($("#regionChips"), state.filterRegion, setRegionFilter);
-        renderAptGrid();
-        selectComplex(c.id, true);
-        switchTab("diag");
+      var total=totalOf(c.scores), g=gradeOf(total), r=regionOf(c.region);
+      var shown=rankFilter==="all"?RANK_MAP[c.id]:localRank[c.id];
+      var b=el("button","rank-row"); b.type="button"; b.setAttribute("data-rank-apt",c.id);
+      b.innerHTML='<span class="rk">'+shown+'</span>'+
+        '<span class="rkmid"><span class="rkname">'+esc(c.name)+'</span>'+
+        '<span class="rkmeta"><span class="rbadge">'+r.emoji+" "+r.label+'</span>'+
+        (rankFilter==="all"?"":"인천 "+RANK_MAP[c.id]+"위 · ")+c.year+'년 · 84㎡ '+c.price.toFixed(1)+'억</span></span>'+
+        '<span class="rksc">'+total+'</span><span class="rkgd" style="background:'+g.grad+'">'+g.label+'</span>';
+      b.addEventListener("click",function(){
+        state.filterRegion=c.region; state.query=""; $("#searchInput").value="";
+        renderRegionChips($("#regionChips"),state.filterRegion,setRegionFilter);
+        renderAptGrid(); selectComplex(c.id,true); switchTab("diag");
       });
       box.appendChild(b);
     });
   }
-
   function setRegionFilter(key){
-    state.filterRegion = key;
-    renderRegionChips($("#regionChips"), key, setRegionFilter);
+    state.filterRegion=key;
+    renderRegionChips($("#regionChips"),key,setRegionFilter);
     renderAptGrid();
+  }
+
+  /* ============================== 지도 ============================== */
+  var map=null, markers=[], mapReady=false;
+  function markerHTML(c, big){
+    var total=totalOf(c.scores), g=gradeOf(total);
+    if(!big) return '<span class="pin-d" style="--c:'+g.color+'" data-pin="'+c.id+'" title="'+esc(c.name)+' '+total+'점"></span>';
+    return '<span class="pin-b" style="--c:'+g.color+'" data-pin="'+c.id+'">'+total+'</span>';
+  }
+  function pinIcon(c, big){
+    return L.divIcon({className:"pin",html:markerHTML(c,big),
+      iconSize: big?[32,22]:[13,13], iconAnchor: big?[16,11]:[6.5,6.5], popupAnchor:[0,big?-11:-8]});
+  }
+  function refreshPins(){
+    if(!map) return;
+    var big=map.getZoom()>=13;
+    for(var i=0;i<markers.length;i++){
+      var m=markers[i], c=byId(m.__cid);
+      if(!c) continue;
+      m.setIcon(pinIcon(c,big));
+    }
+  }
+  function popupHTML(c){
+    var total=totalOf(c.scores), g=gradeOf(total), r=regionOf(c.region);
+    return '<div class="mp-card">'+
+      '<div class="mp-top"><span class="mp-name">'+esc(c.name)+'</span><span class="mp-grade" style="background:'+g.grad+'">'+g.label+'</span></div>'+
+      '<div class="mp-meta">'+r.emoji+' '+r.label+' · '+c.year+'년 · '+comma(c.hh)+'세대</div>'+
+      '<div class="mp-score"><b>'+total+'</b><span>/100</span><em>84㎡ 약 '+c.price.toFixed(1)+'억</em></div>'+
+      '<button class="mp-btn" type="button" data-apt="'+c.id+'">성적표 자세히 보기 →</button>'+
+    '</div>';
+  }
+  function initMap(){
+    if(mapReady) return;
+    var box=$("#map");
+    if(typeof window.L==="undefined" || window.__leafletFailed){
+      $("#mapFallback").classList.add("show");
+      box.style.display="none";
+      return;
+    }
+    map=L.map(box,{scrollWheelZoom:true,zoomControl:true}).setView([37.455,126.66],11);
+    window.__zipMap=map;
+    var tiles=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{
+      maxZoom:19, minZoom:10,
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    tiles.on("tileerror",function(){ $("#mapFallback").classList.add("show"); });
+    var bigStart = map.getZoom() >= 13;
+    COMPLEXES.forEach(function(c){
+      var total=totalOf(c.scores);
+      var m=L.marker([c.lat,c.lng],{icon:pinIcon(c,bigStart),title:c.name+" "+total+"점",alt:c.name+" "+total+"점",riseOnHover:true});
+      m.__cid=c.id;
+      m.bindPopup(popupHTML(c),{maxWidth:230,minWidth:206,closeButton:true,autoPanPadding:[18,18]});
+      m.addTo(map);
+      markers.push(m);
+    });
+    map.on("zoomend",refreshPins);
+    L.control.scale({imperial:false,position:"bottomleft"}).addTo(map);
+    mapReady=true;
+    // 팝업 내부 버튼(이벤트 위임)
+    box.addEventListener("click",function(ev){
+      var b=ev.target.closest("[data-apt]");
+      if(!b) return;
+      var id=b.getAttribute("data-apt");
+      var c=byId(id); if(!c) return;
+      state.filterRegion=c.region; state.query=""; $("#searchInput").value="";
+      renderRegionChips($("#regionChips"),state.filterRegion,setRegionFilter);
+      renderAptGrid(); selectComplex(id,false); switchTab("diag"); scrollToReport();
+    });
+    renderMapChips("all");
+  }
+  function renderMapChips(active){
+    var box=$("#mapChips"); if(!box) return;
+    box.innerHTML="";
+    var all=el("button","chip","전체 <small>"+COMPLEXES.length+"</small>");
+    all.type="button"; all.setAttribute("data-map-region","all");
+    if(active==="all") all.classList.add("is-active");
+    all.addEventListener("click",function(){ jumpRegion("all"); });
+    box.appendChild(all);
+    REGIONS.forEach(function(r){
+      var n=COMPLEXES.filter(function(c){ return c.region===r.key; }).length;
+      var b=el("button","chip",r.emoji+" "+r.label+" <small>"+n+"</small>");
+      b.type="button"; b.setAttribute("data-map-region",r.key);
+      if(active===r.key) b.classList.add("is-active");
+      b.addEventListener("click",function(){ jumpRegion(r.key); });
+      box.appendChild(b);
+    });
+  }
+  function jumpRegion(key){
+    if(!mapReady){ toast("지도를 아직 불러오지 못했습니다"); return; }
+    renderMapChips(key);
+    if(key==="all"){ map.flyTo([37.455,126.66],11,{duration:.7}); return; }
+    var r=regionOf(key);
+    var pts=COMPLEXES.filter(function(c){ return c.region===key; });
+    if(!pts.length) return;
+    var bounds=L.latLngBounds(pts.map(function(c){ return [c.lat,c.lng]; })).pad(0.18);
+    var z=Math.max(13.2, Math.min(14, map.getBoundsZoom(bounds)));
+    map.flyTo(bounds.getCenter(), z, {duration:.8});
+  }
+
+
+  /* ============================== 예산 · 대출 맞춤 ============================== */
+  var budget={ income:7000, cash:25000, debt:0, rate:4.3, ltv:70, computed:null };
+
+  function pmtOf(principal, annualRate, years){
+    if(principal<=0) return 0;
+    var r=annualRate/100/12, n=years*12;
+    return principal*r/(1-Math.pow(1+r,-n));
+  }
+  function principalOf(monthly, annualRate, years){
+    if(monthly<=0) return 0;
+    var r=annualRate/100/12, n=years*12;
+    return monthly*(1-Math.pow(1+r,-n))/r;
+  }
+  function wonMan(man){ return money(man/10000); }
+  function readBudgetInputs(){
+    budget.income=Math.max(0, Number($("#bIncome").value)||0);
+    budget.cash=Math.max(0, Number($("#bCash").value)||0);
+    budget.debt=Math.max(0, Number($("#bDebt").value)||0);
+  }
+  function calcBudget(){
+    readBudgetInputs();
+    var income=budget.income, cash=budget.cash, debt=budget.debt, rate=budget.rate, ltv=budget.ltv/100;
+    var monthlyCap=income*0.4/12;                     /* DSR 40% 월 상환 한도(만원) */
+    var avail=Math.max(0, monthlyCap-debt);           /* 신규 대출에 쓸 수 있는 월 상환액 */
+    var dsrLoan=principalOf(avail, rate, 30);
+    var ltvCap=(ltv>=1)?Infinity:ltv*cash/(1-ltv);
+    var maxLoan=Math.max(0, Math.min(dsrLoan, ltvCap));
+    var totalBudget=cash+maxLoan;
+    var monthly=pmtOf(maxLoan, rate, 30);
+    budget.computed={ monthlyCap:monthlyCap, avail:avail, dsrLoan:dsrLoan, ltvCap:ltvCap,
+                      maxLoan:maxLoan, totalBudget:totalBudget, monthly:monthly };
+    renderBudgetResult();
+    renderBudgetList();
+  }
+  function renderBudgetResult(){
+    var b=budget.computed; if(!b) return;
+    var box=$("#budgetResult");
+    if(budget.income<=0){
+      box.innerHTML='<p class="hint" style="margin:0">연 소득을 입력하면 대출 한도와 매수 가능 예산을 계산합니다.</p>';
+      return;
+    }
+    var ltvTxt=(budget.ltv>=100)?'제한 없음':wonMan(b.ltvCap);
+    var warn = (b.avail<=0)
+      ? '<p class="bresult-note" style="background:#fff6f5;border-color:#fbd5d2;color:#b42318">기존 대출 월 상환액이 DSR 40% 한도('+Math.round(b.monthlyCap)+'만원)를 넘어 <b>신규 대출 여력이 없습니다</b>. 기존 부채를 줄이거나 소득을 다시 확인해 주세요.</p>'
+      : '<p class="bresult-note">월 예상 원리금 <b>'+Math.round(b.monthly)+'만원</b> · 대출 <b>'+wonMan(b.maxLoan)+'</b> ('+budget.rate.toFixed(1)+'% · 30년 원리금균등). DSR 한도 '+Math.round(b.monthlyCap)+'만원에서 기존 대출 '+Math.round(budget.debt)+'만원을 뺀 금액입니다.</p>';
+    box.innerHTML=''+
+      '<div class="bresult-top"><span>내 매수 가능 예산</span><b id="bBudget">'+wonMan(b.totalBudget)+'</b></div>'+
+      '<div class="bresult-grid">'+
+        '<div><span>DSR 40%<br>최대 대출</span><b id="bDsr">'+wonMan(b.dsrLoan)+'</b></div>'+
+        '<div><span>LTV '+budget.ltv+'%<br>한도</span><b id="bLtv">'+ltvTxt+'</b></div>'+
+        '<div><span>보유 현금</span><b>'+wonMan(budget.cash)+'</b></div>'+
+      '</div>'+
+      warn+
+      '<p class="hint" style="margin-top:8px">실제 한도는 신용점수·스트레스 DSR·기존 부채·지역 규제에 따라 달라집니다. 취득세·이사비는 제외한 계산입니다.</p>';
+  }
+  function renderBudgetList(){
+    var b=budget.computed; if(!b) return;
+    var box=$("#budgetList"), list;
+    if(budget.income<=0 || b.maxLoan<=0){
+      box.innerHTML='<p class="empty-note">대출 여력이 없어 추천할 단지가 없습니다. 현금만으로 살 수 있는 단지는 아래 목록에 표시됩니다.</p>';
+    }
+    var cap=b.totalBudget*1.05;
+    list=COMPLEXES.filter(function(c){ return c.price*10000 <= cap; })
+      .sort(function(x,y){ return totalOf(y.scores)-totalOf(x.scores); });
+    $("#budgetCount").textContent="예산 이하 "+list.length+"곳";
+    box.innerHTML="";
+    if(!list.length){
+      box.appendChild(el("p","empty-note","예산 안에서 살 수 있는 단지가 없습니다. 소득·현금을 조정해 보세요."));
+      return;
+    }
+    list.forEach(function(c){
+      var priceMan=c.price*10000, total=totalOf(c.scores), g=gradeOf(total), r=regionOf(c.region);
+      var need=Math.max(0, priceMan-budget.cash);
+      var loan=Math.min(need, b.maxLoan);
+      var monthly=pmtOf(loan, budget.rate, 30);
+      var gap=b.totalBudget-priceMan;
+      var tagCls = gap>=0 ? "ok" : "ch";
+      var tagTxt = gap>=0 ? ("예산 여유 "+wonMan(gap)) : ("도전 · 부족 "+wonMan(-gap));
+      var monthlyTxt = loan<=0 ? "현금 매수 가능" : ("월 약 "+Math.round(monthly)+"만원");
+      var btn=el("button","bcard");
+      btn.type="button"; btn.setAttribute("data-apt",c.id);
+      btn.innerHTML='<span class="bc-score" style="color:'+g.color+'">'+total+'</span>'+
+        '<span class="bc-mid"><b>'+esc(c.name)+'</b>'+
+        '<span class="bc-sub">'+r.emoji+' '+r.label+' · '+c.year+'년 · 84㎡ '+c.price.toFixed(1)+'억 · '+monthlyTxt+'</span>'+
+        '<span class="bc-tag '+tagCls+'">'+tagTxt+'</span></span>'+
+        '<span class="bc-arrow">›</span>';
+      box.appendChild(btn);
+    });
   }
 
   /* ============================== 탭 ============================== */
   function switchTab(key){
-    var tabs = document.querySelectorAll(".tab");
+    var tabs=document.querySelectorAll(".tab");
     for(var i=0;i<tabs.length;i++){
-      var on = tabs[i].getAttribute("data-tab") === key;
-      tabs[i].classList.toggle("is-active", on);
-      tabs[i].setAttribute("aria-selected", on ? "true" : "false");
+      var on=tabs[i].getAttribute("data-tab")===key;
+      tabs[i].classList.toggle("is-active",on);
+      tabs[i].setAttribute("aria-selected",on?"true":"false");
     }
-    var panels = { diag:"#panel-diag", battle:"#panel-battle", rank:"#panel-rank" };
+    var panels={diag:"#panel-diag",budget:"#panel-budget",battle:"#panel-battle",rank:"#panel-rank",map:"#panel-map"};
     Object.keys(panels).forEach(function(k){
-      var p = $(panels[k]);
-      if(k === key){ p.removeAttribute("hidden"); } else { p.setAttribute("hidden",""); }
+      var p=$(panels[k]);
+      if(k===key) p.removeAttribute("hidden"); else p.setAttribute("hidden","");
     });
-    if(key === "battle") renderBattle();
-    if(key === "rank") renderRank();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if(key==="budget") calcBudget();
+    if(key==="battle") renderBattle();
+    if(key==="rank") renderRank();
+    if(key==="map"){ initMap(); if(map) setTimeout(function(){ map.invalidateSize(); },120); }
+    window.scrollTo({top:0,behavior:"smooth"});
   }
 
   /* ============================== 복사 ============================== */
   function summaryText(r){
-    var lines = [];
-    lines.push("[하보카 인천 아파트 성적표]");
-    if(r.mode === "complex"){
-      lines.push(r.name + " · " + r.region + " · " + r.year + "년 · " + comma(r.hh) + "세대");
-      lines.push("종합 " + r.total + "점 / 100 · " + r.grade.label + " (" + r.grade.title + ")");
-      lines.push("인천 " + COMPLEXES.length + "곳 중 " + r.irank + "위 · " + r.region + " " + r.rtotal + "곳 중 " + r.rrank + "위");
+    var lines=["[집스코어 ZIPSCORE · 인천 아파트 100점 성적표]"];
+    if(r.mode==="complex"){
+      var c=r.c;
+      lines.push(c.name+" · "+regionOf(c.region).label+" · "+c.year+"년 · "+comma(c.hh)+"세대");
+      lines.push("종합 "+r.total+"점 / 100 · "+r.grade.label+" ("+r.grade.title+")");
+      lines.push("인천 "+COMPLEXES.length+"곳 중 "+r.irank+"위 · "+regionOf(c.region).label+" "+r.rtotal+"곳 중 "+r.rrank+"위");
     } else {
-      lines.push(r.name + (r.size ? " · " + r.size : ""));
-      lines.push("종합 " + r.total + "점 / 100 · " + r.grade.label + " (" + r.grade.title + ")");
+      lines.push(r.name+(r.size?" · "+r.size:""));
+      lines.push("종합 "+r.total+"점 / 100 · "+r.grade.label+" ("+r.grade.title+")");
     }
     lines.push("");
-    AREAS.forEach(function(a,i){ lines.push(a.icon + " " + a.name + " " + r.scores[i] + "/" + a.max); });
+    AREAS.forEach(function(a,i){ lines.push(a.icon+" "+a.name+" "+r.scores[i]+"/"+a.max); });
     lines.push("");
-    if(r.mode === "complex"){
-      lines.push("강점: " + r.ord.slice(0,2).map(function(s){ return s.a.name; }).join(", "));
-      lines.push("보완: " + r.ord[r.ord.length-1].a.name);
-      lines.push("84㎡ 참고 시세: " + r.price.toFixed(1) + "억 (예시 참고값)");
-      lines.push("특징: " + r.tags);
-    } else {
-      lines.push("강점: " + r.ord.slice(0,2).map(function(s){ return s.a.name; }).join(", "));
-      lines.push("보완: " + r.ord[r.ord.length-1].a.name);
+    if(r.mode==="complex"){
+      var c2=r.c;
+      lines.push("역: "+c2.station+" "+(c2.dist<=1400?"도보 약 "+c2.walkMin+"분":"차량 약 "+Math.round(c2.dist/1000*3)+"분"));
+      lines.push("학군: "+c2.school);
+      lines.push("인프라: "+c2.infra);
+      lines.push("호재: "+c2.future);
+      lines.push("84㎡ 참고 시세: "+c2.price.toFixed(1)+"억 (추정)");
+      lines.push("최근 6개월 매매: "+comma(c2.deals)+"건");
     }
     lines.push("");
-    lines.push("하보카 부동산 리포트 · blog.naver.com/havoka");
+    lines.push("강점: "+r.ord.slice(0,2).map(function(s){ return s.a.name; }).join(", "));
+    lines.push("보완: "+r.ord[r.ord.length-1].a.name);
+    lines.push("");
+    lines.push("집스코어 ZIPSCORE · inje8451.github.io/Zipscore");
     return lines.join("\n");
   }
-
   function legacyCopy(text){
-    var ta = $("#copyFallback");
-    ta.value = text;
-    ta.classList.add("show");
-    ta.focus();
-    ta.select();
-    ta.setSelectionRange(0, text.length);
-    var ok = false;
-    try { ok = document.execCommand("copy"); } catch(e) { ok = false; }
+    var ta=$("#copyFallback"); if(!ta) return;
+    ta.value=text; ta.classList.add("show"); ta.focus(); ta.select();
+    var ok=false; try{ ok=document.execCommand("copy"); }catch(e){ ok=false; }
     if(ok){ toast("성적표 요약을 복사했습니다"); ta.classList.remove("show"); }
     else { toast("복사가 차단되었습니다. 아래 내용을 직접 복사해 주세요"); }
   }
-
   function copySummary(){
     if(!lastReport) return;
-    var text = summaryText(lastReport);
-    var ta = $("#copyFallback");
-    if(ta) ta.value = text;
+    var text=summaryText(lastReport), ta=$("#copyFallback");
+    if(ta) ta.value=text;
     if(navigator.clipboard && window.isSecureContext){
-      navigator.clipboard.writeText(text).then(function(){
-        if(ta) ta.classList.remove("show");
-        toast("성적표 요약을 복사했습니다");
-      }).catch(function(){ legacyCopy(text); });
-    } else {
-      legacyCopy(text);
-    }
+      navigator.clipboard.writeText(text).then(function(){ if(ta) ta.classList.remove("show"); toast("성적표 요약을 복사했습니다"); })
+        .catch(function(){ legacyCopy(text); });
+    } else legacyCopy(text);
   }
 
-  /* ============================== 이벤트 ============================== */
+  /* ============================== 이벤트 / 시작 ============================== */
   document.querySelectorAll(".tab").forEach(function(t){
-    t.addEventListener("click", function(){ switchTab(t.getAttribute("data-tab")); });
+    t.addEventListener("click",function(){ switchTab(t.getAttribute("data-tab")); });
   });
-
-  $("#searchInput").addEventListener("input", function(e){
-    state.query = e.target.value;
-    renderAptGrid();
-  });
-
-  $("#customToggle").addEventListener("click", function(){
-    var body = $("#customBody");
-    var open = body.hasAttribute("hidden");
+  $("#searchInput").addEventListener("input",function(e){ state.query=e.target.value; renderAptGrid(); });
+  $("#customToggle").addEventListener("click",function(){
+    var body=$("#customBody"), open=body.hasAttribute("hidden");
     if(open){ body.removeAttribute("hidden"); this.classList.add("is-open"); this.setAttribute("aria-expanded","true"); }
     else { body.setAttribute("hidden",""); this.classList.remove("is-open"); this.setAttribute("aria-expanded","false"); }
   });
-
-  $("#submitBtn").addEventListener("click", function(){
-    var scores = collect();
-    if(!scores) return;
-    state.mode = "custom";
-    renderCustomReport($("#aptName").value, $("#aptSize").value, scores);
+  $("#submitBtn").addEventListener("click",function(){
+    var sc=collect(); if(!sc) return;
+    state.mode="custom";
+    renderCustomReport($("#aptName").value,$("#aptSize").value,sc);
     scrollToReport();
   });
-
-  ["aptName","aptSize"].forEach(function(id){
-    document.getElementById(id).addEventListener("input", function(){ /* 이름 변경 시 자동 재채점은 하지 않음 */ });
+  $("#calcBtn").addEventListener("click",calcBudget);
+  ["bIncome","bCash","bDebt"].forEach(function(id){
+    document.getElementById(id).addEventListener("input",function(){
+      clearTimeout(calcBudget._t);
+      calcBudget._t=setTimeout(function(){ if(!$("#panel-budget").hasAttribute("hidden")) calcBudget(); },350);
+    });
+  });
+  $("#ltvSeg").addEventListener("click",function(ev){
+    var b=ev.target.closest("[data-ltv]"); if(!b) return;
+    budget.ltv=Number(b.getAttribute("data-ltv"));
+    this.querySelectorAll("button").forEach(function(x){ x.classList.toggle("is-active",x===b); });
+    calcBudget();
+  });
+  $("#rateSeg").addEventListener("click",function(ev){
+    var b=ev.target.closest("[data-rate]"); if(!b) return;
+    budget.rate=Number(b.getAttribute("data-rate"));
+    this.querySelectorAll("button").forEach(function(x){ x.classList.toggle("is-active",x===b); });
+    calcBudget();
+  });
+  $("#budgetList").addEventListener("click",function(ev){
+    var b=ev.target.closest("[data-apt]"); if(!b) return;
+    var id=b.getAttribute("data-apt"), c=byId(id); if(!c) return;
+    state.filterRegion=c.region; state.query=""; $("#searchInput").value="";
+    renderRegionChips($("#regionChips"),state.filterRegion,setRegionFilter);
+    renderAptGrid(); selectComplex(id,false); switchTab("diag"); scrollToReport();
   });
 
-  $("#selA").addEventListener("change", renderBattle);
-  $("#selB").addEventListener("change", renderBattle);
-  $("#swapBtn").addEventListener("click", function(){
-    var a = $("#selA").value;
-    $("#selA").value = $("#selB").value;
-    $("#selB").value = a;
-    renderBattle();
+  $("#selA").addEventListener("change",renderBattle);
+  $("#selB").addEventListener("change",renderBattle);
+  $("#swapBtn").addEventListener("click",function(){
+    var a=$("#selA").value; $("#selA").value=$("#selB").value; $("#selB").value=a; renderBattle();
   });
 
-  /* ============================== 시작 ============================== */
-  renderRegionChips($("#regionChips"), state.filterRegion, setRegionFilter);
+  $("#heroAptCount").textContent=COMPLEXES.length+"개 단지";
+  renderRegionChips($("#regionChips"),state.filterRegion,setRegionFilter);
   renderAptGrid();
   renderForm();
   buildSelects();
-  selectComplex("ep-sondo", false);
+  selectComplex("so14",false);
+  // Leaflet 스크립트가 늦게 로드되는 경우를 대비
+  window.addEventListener("load",function(){ if(!mapReady && !$("#panel-map").hasAttribute("hidden")) initMap(); });
 })();
 </script>
 </body>
