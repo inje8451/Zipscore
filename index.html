@@ -593,7 +593,7 @@ button{font-family:inherit}
       </div>
       <button class="share-close" id="shareClose" type="button" aria-label="닫기">✕</button>
     </div>
-    <div class="share-preview"><img id="shareImg" alt="아파트 성적표 카드 미리보기" src=""></div>
+    <div class="share-preview"><img id="shareImg" alt="아파트 성적표 카드 미리보기"></div>
     <p class="share-guide">📱 <b>아이폰·아이패드</b>는 위 이미지를 <b>길게 눌러 '사진 앱에 저장'</b>하면 바로 저장됩니다. PC·안드로이드는 아래 <b>PNG 다운로드</b>를 누르세요. 카톡·블로그·인스타에 그대로 올릴 수 있는 1080×1350 이미지입니다.</p>
     <div class="share-actions">
       <button class="share-primary" id="shareNative" type="button">📤 바로 공유하기</button>
@@ -2485,6 +2485,7 @@ button{font-family:inherit}
     var m=$("#shareModal");
     m.classList.add("is-open"); m.setAttribute("aria-hidden","false");
     document.body.style.overflow="hidden";
+    var sheet=m.querySelector(".share-sheet"); if(sheet) sheet.scrollTop=0;
     $("#shareClose").focus();
   }
   function closeShareCard(){
