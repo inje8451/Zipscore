@@ -349,6 +349,14 @@ button{font-family:inherit}
 .mp-score em{margin-left:auto;font-style:normal;font-size:9.6px;color:#344054;font-weight:700}
 .mp-btn{width:100%;margin-top:9px;border:0;border-radius:8px;padding:7px;background:#0d1836;color:#fff;font-size:10.4px;font-weight:800;cursor:pointer}
 .mp-btn:hover{background:#16306b}
+/* 카카오맵: 요약 카드 오버레이 */
+.kc-wrap{position:relative;padding-bottom:29px}
+.kc-card{position:relative;width:212px;background:#fff;border-radius:13px;box-shadow:0 10px 26px rgba(16,24,40,.24);border:1px solid #e4e9f2}
+.kc-card:after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%) rotate(45deg);width:11px;height:11px;background:#fff;border-right:1px solid #e4e9f2;border-bottom:1px solid #e4e9f2}
+.kc-card .mp-top{padding-right:16px}
+.kc-close{position:absolute;top:3px;right:5px;z-index:2;width:20px;height:20px;border:0;background:transparent;color:#98a2b3;font-size:15px;line-height:1;cursor:pointer;padding:0}
+.kc-close:hover{color:#101828}
+.mp-extra{margin-top:5px;font-size:9.6px;color:#475467;font-weight:700}
 
 /* footer */
 .foot{margin:22px 16px 0;text-align:center}
@@ -388,7 +396,7 @@ button{font-family:inherit}
     <section class="card" id="picker">
       <div class="sec-head">
         <h2>단지 고르기</h2>
-        <span class="tag-soft">v3.1 · 518곳</span>
+        <span class="tag-soft">v3.2 · 카카오맵</span>
       </div>
       <div class="chips" id="regionChips" role="group" aria-label="권역 필터"></div>
       <div class="search-row">
@@ -524,14 +532,14 @@ button{font-family:inherit}
     <section class="card">
       <div class="sec-head">
         <h2>인천 단지 지도</h2>
-        <span class="tag-soft">점수 = 핀</span>
+        <span class="tag-soft" id="mapEngine">지도 로딩</span>
       </div>
       <div class="chips" id="mapChips" role="group" aria-label="권역 이동"></div>
       <div class="map-wrap" style="margin-top:11px">
         <div id="map" role="application" aria-label="인천 아파트 단지 지도"></div>
         <div class="map-fallback" id="mapFallback">
           <b>지도를 불러오지 못했습니다.</b><br>
-          네트워크(OpenStreetMap 타일) 또는 지도 스크립트가 차단된 환경입니다.<br>
+          네트워크(카카오맵 SDK·OpenStreetMap 타일) 또는 지도 스크립트가 차단된 환경입니다.<br>
           아래 <b>인천 랭킹</b> 탭에서 같은 단지의 점수와 위치(권역)를 확인할 수 있습니다.
         </div>
       </div>
@@ -542,7 +550,7 @@ button{font-family:inherit}
         <span><i style="background:#f79009"></i>B+ 72~79</span>
         <span><i style="background:#7c8899"></i>B 71↓</span>
       </div>
-      <p class="map-note">확대 전에는 <b>인접 단지 수</b>로 묶여 보이고, 확대하면 단지별 <b>점수 핀</b>으로 펼쳐집니다(핀의 숫자 = 100점 성적). 핀을 누르면 요약 카드가 뜨고 <b>성적표 자세히 보기</b>로 이동합니다. 배경지도 © OpenStreetMap 기여자 · OSM Korea.</p>
+      <p class="map-note">확대 전에는 <b>인접 단지 수</b>로 묶여 보이고, 확대하면 단지별 <b>점수 핀</b>으로 펼쳐집니다(핀의 숫자 = 100점 성적). 핀을 누르면 요약 카드가 뜨고 <b>성적표 자세히 보기</b>로 이동합니다. 배경지도 <span id="mapAttr">© Kakao Maps</span></p>
     </section>
   </section>
 
@@ -555,6 +563,7 @@ button{font-family:inherit}
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="window.__leafletFailed=true"></script>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=5319f5b0184334165a52b3413de7b6d8&libraries=clusterer&autoload=false" onerror="window.__kakaoFailed=true"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" onerror="window.__clusterFailed=true"></script>
 <script>
 (function(){
@@ -1679,8 +1688,14 @@ button{font-family:inherit}
     renderAptGrid();
   }
 
-  /* ============================== 지도 ============================== */
-  var map=null, markers=[], mapReady=false, clusterGroup=null;
+  /* ============================== 지도 (카카오맵 SDK + OSM Leaflet 폴백) ============================== */
+  var map=null, mapReady=false, mapKind=null;            /* 'kakao' | 'leaflet' */
+  var mapRegion="all";
+  var KAKAO_KEY="5319f5b0184334165a52b3413de7b6d8";
+  var KAKAO_HOME={lat:37.455,lng:126.66,level:9};
+  var KAKAO_CLUSTER_MINLEVEL=6;                          /* 이 레벨 이상: 클러스터 버블, 미만: 개별 점수 핀 */
+
+  /* ---------- 공용: 핀 · 요약 카드 마크업 ---------- */
   function markerHTML(c, big){
     var total=totalOf(c.scores), g=gradeOf(total);
     if(!big) return '<span class="pin-d" style="--c:'+g.color+'" data-pin="'+c.id+'" title="'+esc(c.name)+' '+total+'점"></span>';
@@ -1690,81 +1705,283 @@ button{font-family:inherit}
     return L.divIcon({className:"pin",html:markerHTML(c,big),
       iconSize: big?[32,22]:[13,13], iconAnchor: big?[16,11]:[6.5,6.5], popupAnchor:[0,big?-11:-8]});
   }
-  function refreshPins(){
-    if(!map) return;
-    var big=map.getZoom()>=15;
-    for(var i=0;i<markers.length;i++){
-      var m=markers[i], c=byId(m.__cid);
-      if(!c) continue;
-      m.setIcon(pinIcon(c,big));
-    }
-  }
-  function popupHTML(c){
+  function cardHTML(c){
     var total=totalOf(c.scores), g=gradeOf(total), r=regionOf(c.region);
     return '<div class="mp-card">'+
       '<div class="mp-top"><span class="mp-name">'+esc(c.name)+'</span><span class="mp-grade" style="background:'+g.grad+'">'+g.label+'</span></div>'+
       '<div class="mp-meta">'+r.emoji+' '+r.label+' · '+c.year+'년 · '+comma(c.hh)+'세대</div>'+
       '<div class="mp-score"><b>'+total+'</b><span>/100</span><em>84㎡ 약 '+c.price.toFixed(1)+'억</em></div>'+
+      '<div class="mp-extra">🚇 '+esc(c.station)+' · 도보 '+c.walkMin+'분</div>'+
       '<button class="mp-btn" type="button" data-apt="'+c.id+'">성적표 자세히 보기 →</button>'+
     '</div>';
   }
-  function clusterIcon(cl){
+  function setEngineLabel(t){
+    var n=$("#mapEngine"); if(n) n.textContent=t;
+    var a=$("#mapAttr"); if(a) a.textContent=(t==="카카오맵")?"© Kakao Maps":"© OpenStreetMap 기여자 · OSM Korea";
+  }
+  /* 카드의 '성적표 자세히 보기' → 성적표 탭 이동 (두 지도 엔진 공통) */
+  function bindMapCardButtons(){
+    var box=$("#map"); if(!box || box.__cardBound) return;
+    box.__cardBound=true;
+    box.addEventListener("click",function(ev){
+      var b=ev.target.closest("[data-apt]");
+      if(!b) return;
+      var id=b.getAttribute("data-apt"), c=byId(id); if(!c) return;
+      if(mapKind==="kakao") kHideCard();
+      state.filterRegion=c.region; state.query=""; $("#searchInput").value="";
+      renderRegionChips($("#regionChips"),state.filterRegion,setRegionFilter);
+      renderAptGrid(); selectComplex(id,false); switchTab("diag"); scrollToReport();
+    });
+  }
+
+  /* ============================== 1) 카카오맵 ============================== */
+  var kMap=null, kMarkers=[], kClusterer=null, kCard=null, kPinCache={};
+
+  function kakaoPinImage(c){
+    var total=totalOf(c.scores);
+    if(kPinCache[total]) return kPinCache[total];
+    var color=gradeOf(total).color;
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" viewBox="0 0 34 24">'+
+      '<rect x="1.2" y="1.2" width="31.6" height="19.6" rx="6" fill="#ffffff" stroke="'+color+'" stroke-width="2.4"/>'+
+      '<text x="17" y="15.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,\'Apple SD Gothic Neo\',sans-serif" font-size="11.6" font-weight="700" fill="#101828">'+total+'</text>'+
+      '<path d="M17 21.4 l4.2 0 -4.2 3.2z" fill="'+color+'"/>'+
+    '</svg>';
+    var img=new kakao.maps.MarkerImage("data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg),
+      new kakao.maps.Size(34,24), {offset:new kakao.maps.Point(17,24)});
+    kPinCache[total]=img;
+    return img;
+  }
+  function kakaoClusterStyle(size, fs){
+    return {width:size+"px",height:size+"px",background:"rgba(13,24,54,0.92)",color:"#fff",
+      textAlign:"center",lineHeight:(size-4)+"px",borderRadius:"50%",
+      border:"2px solid rgba(126,240,194,0.9)",fontSize:fs+"px",fontWeight:"800",
+      boxShadow:"0 4px 14px rgba(13,24,54,0.35)"};
+  }
+  function kHideCard(){ if(kCard){ kCard.setMap(null); kCard=null; } }
+  function kShowCard(c){
+    if(!kMap) return;
+    kHideCard();
+    var wrap=document.createElement("div");
+    wrap.className="kc-wrap";
+    wrap.innerHTML='<div class="kc-card">'+
+      '<button class="kc-close" type="button" aria-label="닫기">×</button>'+cardHTML(c)+'</div>';
+    wrap.querySelector(".kc-close").addEventListener("click",function(ev){ ev.stopPropagation(); kHideCard(); });
+    kCard=new kakao.maps.CustomOverlay({
+      position:new kakao.maps.LatLng(c.lat,c.lng),
+      content:wrap, xAnchor:0.5, yAnchor:1, zIndex:20, clickable:true
+    });
+    kCard.setMap(kMap);
+    if(typeof kakao.maps.event.preventMap==="function"){ try{ kakao.maps.event.preventMap(wrap); }catch(e){} }
+    /* 카드가 지도 가장자리를 넘어 잘리지 않도록 살짝 밀어 준다 */
+    setTimeout(function(){
+      var box2=$("#map"); if(!box2) return;
+      var cardEl=wrap.querySelector(".kc-card"); if(!cardEl) return;
+      var mr=box2.getBoundingClientRect(), cr=cardEl.getBoundingClientRect(), pad=10;
+      var shiftX=0, shiftY=0;
+      if(cr.left < mr.left+pad) shiftX=(mr.left+pad)-cr.left;
+      else if(cr.right > mr.right-pad) shiftX=(mr.right-pad)-cr.right;
+      if(cr.top < mr.top+pad) shiftY=(mr.top+pad)-cr.top;
+      if(shiftX||shiftY) kMap.panBy(-shiftX,-shiftY);
+    }, 0);
+  }
+  function kSetRegion(key){
+    if(!kClusterer) return;
+    var add=[], del=[];
+    kMarkers.forEach(function(o){
+      var on=(key==="all"||o.c.region===key);
+      if(on && !o.on){ add.push(o.m); o.on=true; }
+      else if(!on && o.on){ del.push(o.m); o.on=false; }
+    });
+    if(del.length) kClusterer.removeMarkers(del);
+    if(add.length) kClusterer.addMarkers(add);
+  }
+  function kAnimateTo(center, level){
+    if(!kMap) return;
+    kMap.setLevel(level, {animate:true});
+    kMap.panTo(center);
+  }
+  function kFocusRegion(key){
+    if(!kMap) return;
+    kSetRegion(key);
+    kHideCard();
+    if(key==="all"){
+      kAnimateTo(new kakao.maps.LatLng(KAKAO_HOME.lat,KAKAO_HOME.lng), KAKAO_HOME.level);
+      return;
+    }
+    var list=COMPLEXES.filter(function(c){ return c.region===key; });
+    if(!list.length) return;
+    var b=new kakao.maps.LatLngBounds();
+    list.forEach(function(c){ b.extend(new kakao.maps.LatLng(c.lat,c.lng)); });
+    /* setBounds로 목표 중심·레벨을 먼저 계산한 뒤, 이전 화면에서 애니메이션으로 이동 */
+    var prevC=kMap.getCenter(), prevL=kMap.getLevel();
+    kMap.setBounds(b, 34, 34, 34, 34);
+    var tC=kMap.getCenter(), tL=kMap.getLevel();
+    if(tL>=KAKAO_CLUSTER_MINLEVEL) tL=KAKAO_CLUSTER_MINLEVEL-1;   /* 권역은 개별 핀으로 보여 준다 */
+    kMap.setCenter(prevC); kMap.setLevel(prevL, {animate:false});
+    kAnimateTo(tC, tL);
+  }
+  function buildKakaoMap(){
+    if(mapReady) return;
+    var box=$("#map");
+    box.innerHTML=""; box.className="";
+    kMap=new kakao.maps.Map(box,{
+      center:new kakao.maps.LatLng(KAKAO_HOME.lat,KAKAO_HOME.lng),
+      level:KAKAO_HOME.level, draggable:true, scrollwheel:true, disableDoubleClickZoom:false
+    });
+    try{ kMap.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT); }catch(e){}
+    kMarkers=[];
+    COMPLEXES.forEach(function(c){
+      var m=new kakao.maps.Marker({
+        position:new kakao.maps.LatLng(c.lat,c.lng),
+        image:kakaoPinImage(c),
+        title:c.name+" "+totalOf(c.scores)+"점",
+        clickable:true
+      });
+      m.__c=c;
+      kakao.maps.event.addListener(m,"click",function(){ kShowCard(c); });
+      kMarkers.push({m:m,c:c,on:true});
+    });
+    kClusterer=new kakao.maps.MarkerClusterer({
+      map:kMap,
+      markers:kMarkers.map(function(o){ return o.m; }),
+      gridSize:56,
+      averageCenter:true,
+      minLevel:KAKAO_CLUSTER_MINLEVEL,
+      minClusterSize:2,
+      calculator:[10,30,70],
+      styles:[kakaoClusterStyle(30,11),kakaoClusterStyle(35,11.5),kakaoClusterStyle(42,12.5),kakaoClusterStyle(50,13.5)]
+    });
+    kakao.maps.event.addListener(kMap,"click",kHideCard);
+    kakao.maps.event.addListener(kMap,"zoom_changed",kHideCard);
+    mapKind="kakao"; mapReady=true;
+    window.__zipMapKind="kakao";
+    window.__zipMap={
+      kind:"kakao",
+      getLevel:function(){ return kMap.getLevel(); },
+      setLevel:function(l){ kMap.setLevel(l); },
+      getZoom:function(){ return 19-kMap.getLevel(); },
+      setZoom:function(z){ kMap.setLevel(19-z); },
+      getCenter:function(){ var p=kMap.getCenter(); return {lat:p.getLat(),lng:p.getLng()}; },
+      markerCount:function(){ return kMarkers.filter(function(o){ return o.on; }).length; }
+    };
+    setEngineLabel("카카오맵");
+    bindMapCardButtons();
+    if(mapRegion!=="all") kSetRegion(mapRegion);
+  }
+
+  /* ============================== 2) Leaflet + OSM 폴백 ============================== */
+  var lMarkers=[], lClusterGroup=null;
+
+  function lClusterIcon(cl){
     var n=cl.getChildCount();
     var sz=n>=60?48:(n>=25?42:(n>=10?35:29));
     var html='<span class="cl-in" style="width:'+sz+'px;height:'+sz+'px">'+n+'<small>단지</small></span>';
     return L.divIcon({html:html,className:"cl-wrap",iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
   }
-  function initMap(){
+  function lRefreshPins(){
+    if(!map) return;
+    var big=map.getZoom()>=15;
+    for(var i=0;i<lMarkers.length;i++){
+      var m=lMarkers[i].m, c=lMarkers[i].c;
+      if(!c) continue;
+      m.setIcon(pinIcon(c,big));
+    }
+  }
+  function lSetRegion(key){
+    lMarkers.forEach(function(o){
+      var on=(key==="all"||o.c.region===key);
+      if(on===o.on) return;
+      o.on=on;
+      if(lClusterGroup){ if(on) lClusterGroup.addLayer(o.m); else lClusterGroup.removeLayer(o.m); }
+      else { if(on) o.m.addTo(map); else o.m.remove(); }
+    });
+  }
+  function initLeafletMap(){
     if(mapReady) return;
     var box=$("#map");
+    box.innerHTML=""; box.removeAttribute("style");
     if(typeof window.L==="undefined" || window.__leafletFailed){
       $("#mapFallback").classList.add("show");
       box.style.display="none";
+      setEngineLabel("지도 없음");
       return;
     }
-    map=L.map(box,{scrollWheelZoom:true,zoomControl:true}).setView([37.455,126.66],11);
-    window.__zipMap=map;
-    // 배경지도: OSM Korea HOT 타일(한국어 라벨·고줌 정상). Esri는 송도 6·8공구 등 고줌에서
-    // "Map data not yet available" 회색 타일을 내려주므로 교체함(2026-11-23).
+    map=L.map(box,{scrollWheelZoom:true,zoomControl:true}).setView([KAKAO_HOME.lat,KAKAO_HOME.lng],11);
+    if(map.attributionControl && map.attributionControl.setPrefix) map.attributionControl.setPrefix(false);
+    setEngineLabel("OSM 폴백");
+    /* 배경지도: OSM Korea HOT 타일(한국어 라벨·고줌 정상) */
     var tiles=L.tileLayer("https://tiles.osm.kr/hot/{z}/{x}/{y}.png",{
       maxZoom:19, maxNativeZoom:18, minZoom:10,
       attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 기여자 · OSM Korea'
     }).addTo(map);
-    // 개별 타일 몇 장 실패로 지도 전체를 가리지 않도록 6장 이상 실패 시에만 폴백 표시
     var tileErr=0;
     tiles.on("tileerror",function(){ if(++tileErr>=6){ $("#mapFallback").classList.add("show"); } });
-    var bigStart = map.getZoom() >= 15;
-    var canCluster = (typeof L.markerClusterGroup === "function") && !window.__clusterFailed;
+    var bigStart=map.getZoom()>=15;
+    var canCluster=(typeof L.markerClusterGroup==="function") && !window.__clusterFailed;
     if(canCluster){
-      clusterGroup=L.markerClusterGroup({
+      lClusterGroup=L.markerClusterGroup({
         maxClusterRadius:52, disableClusteringAtZoom:15, showCoverageOnHover:false,
         spiderfyOnMaxZoom:true, chunkedLoading:true, removeOutsideVisibleBounds:true,
-        iconCreateFunction:clusterIcon
+        iconCreateFunction:lClusterIcon
       });
     }
+    lMarkers=[];
     COMPLEXES.forEach(function(c){
       var total=totalOf(c.scores);
       var m=L.marker([c.lat,c.lng],{icon:pinIcon(c,bigStart),title:c.name+" "+total+"점",alt:c.name+" "+total+"점",riseOnHover:true});
       m.__cid=c.id;
-      m.bindPopup(popupHTML(c),{maxWidth:230,minWidth:206,closeButton:true,autoPanPadding:[18,18]});
-      if(clusterGroup) clusterGroup.addLayer(m); else m.addTo(map);
-      markers.push(m);
+      m.bindPopup(cardHTML(c),{maxWidth:230,minWidth:206,closeButton:true,autoPanPadding:[18,18]});
+      if(lClusterGroup) lClusterGroup.addLayer(m); else m.addTo(map);
+      lMarkers.push({m:m,c:c,on:true});
     });
-    if(clusterGroup) map.addLayer(clusterGroup);
-    map.on("zoomend",refreshPins);
+    if(lClusterGroup) map.addLayer(lClusterGroup);
+    map.on("zoomend",lRefreshPins);
     L.control.scale({imperial:false,position:"bottomleft"}).addTo(map);
-    mapReady=true;
-    // 팝업 내부 버튼(이벤트 위임)
-    box.addEventListener("click",function(ev){
-      var b=ev.target.closest("[data-apt]");
-      if(!b) return;
-      var id=b.getAttribute("data-apt");
-      var c=byId(id); if(!c) return;
-      state.filterRegion=c.region; state.query=""; $("#searchInput").value="";
-      renderRegionChips($("#regionChips"),state.filterRegion,setRegionFilter);
-      renderAptGrid(); selectComplex(id,false); switchTab("diag"); scrollToReport();
-    });
-    renderMapChips("all");
+    mapKind="leaflet"; mapReady=true;
+    window.__zipMapKind="leaflet";
+    window.__zipMap={
+      kind:"leaflet",
+      getZoom:function(){ return map.getZoom(); },
+      setZoom:function(z){ map.setZoom(z); },
+      getLevel:function(){ return 19-map.getZoom(); },
+      setLevel:function(l){ map.setZoom(19-l); },
+      getCenter:function(){ var c=map.getCenter(); return {lat:c.lat,lng:c.lng}; },
+      markerCount:function(){ return lMarkers.filter(function(o){ return o.on; }).length; }
+    };
+    bindMapCardButtons();
+    if(mapRegion!=="all") lSetRegion(mapRegion);
+  }
+
+  /* ============================== 3) 엔진 선택 · 폴백 ============================== */
+  function kakaoUsable(){
+    return (typeof window.kakao!=="undefined") && window.kakao && window.kakao.maps &&
+           (typeof window.kakao.maps.load==="function") && !window.__kakaoFailed;
+  }
+  function initKakaoMap(){
+    var done=false;
+    function fallback(reason){
+      if(done) return; done=true;
+      window.__kakaoFallbackReason=String(reason||"unknown");
+      initLeafletMap();
+      if(!mapReady){ $("#mapFallback").classList.add("show"); $("#map").style.display="none"; }
+    }
+    var guard=setTimeout(function(){ if(!mapReady) fallback("timeout"); },6000);
+    try{
+      kakao.maps.load(function(){
+        if(done || mapReady){ clearTimeout(guard); return; }
+        try{
+          buildKakaoMap();
+          done=true;
+          clearTimeout(guard);
+        }catch(e){ clearTimeout(guard); fallback(e && e.message ? e.message : String(e)); }
+      });
+    }catch(e){ clearTimeout(guard); fallback(e && e.message ? e.message : String(e)); }
+  }
+  function initMap(){
+    if(mapReady) return;
+    if(kakaoUsable()){ initKakaoMap(); return; }
+    initLeafletMap();
+    if(!mapReady){ $("#mapFallback").classList.add("show"); $("#map").style.display="none"; }
   }
   function renderMapChips(active){
     var box=$("#mapChips"); if(!box) return;
@@ -1785,9 +2002,11 @@ button{font-family:inherit}
   }
   function jumpRegion(key){
     if(!mapReady){ toast("지도를 아직 불러오지 못했습니다"); return; }
+    mapRegion=key;
     renderMapChips(key);
-    if(key==="all"){ map.flyTo([37.455,126.66],11,{duration:.7}); return; }
-    var r=regionOf(key);
+    if(mapKind==="kakao"){ kFocusRegion(key); return; }
+    lSetRegion(key);
+    if(key==="all"){ map.flyTo([KAKAO_HOME.lat,KAKAO_HOME.lng],11,{duration:.7}); return; }
     var pts=COMPLEXES.filter(function(c){ return c.region===key; });
     if(!pts.length) return;
     var bounds=L.latLngBounds(pts.map(function(c){ return [c.lat,c.lng]; })).pad(0.18);
@@ -1911,7 +2130,7 @@ button{font-family:inherit}
     if(key==="budget") calcBudget();
     if(key==="battle") renderBattle();
     if(key==="rank") renderRank();
-    if(key==="map"){ initMap(); if(map) setTimeout(function(){ map.invalidateSize(); },120); }
+    if(key==="map"){ initMap(); setTimeout(function(){ if(mapKind==="leaflet" && map) map.invalidateSize(); else if(mapKind==="kakao" && kMap && kMap.relayout) kMap.relayout(); },140); }
     window.scrollTo({top:0,behavior:"smooth"});
   }
 
@@ -2019,8 +2238,9 @@ button{font-family:inherit}
   renderAptGrid();
   renderForm();
   buildSelects();
+  renderMapChips("all");
   selectComplex("so025",false);
-  // Leaflet 스크립트가 늦게 로드되는 경우를 대비
+  // 지도 SDK(카카오/Leaflet)가 늦게 로드되는 경우를 대비
   window.addEventListener("load",function(){ if(!mapReady && !$("#panel-map").hasAttribute("hidden")) initMap(); });
 })();
 </script>

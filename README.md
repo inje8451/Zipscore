@@ -1,14 +1,25 @@
-# 🏢 집스코어 ZIPSCORE — 인천 아파트 100점 성적표 v3.1
+# 🏢 집스코어 ZIPSCORE — 인천 아파트 100점 성적표 v3.3
 
 인천 **11개 권역 518개 실제 아파트 단지**(300세대 이상)를 교통·학군·단지 스펙·생활 인프라·가격/환금성·미래 가치 6개 영역, 100점 만점으로 채점한 웹 성적표입니다.
 
 - 사이트: **https://inje8451.github.io/Zipscore/**
-- 5개 탭: 📊 성적표 · 💰 예산찾기 · ⚔️ 배틀 · 🏆 인천 518위 랭킹(탭 자체 검색) · 🗺️ 무료 지도(Leaflet + OpenStreetMap Korea HOT 타일 + markercluster)
-- 🗺️ **지도 클러스터링**: 확대 전에는 인접 단지 수로 묶여 보이고(클러스터 버블), 확대하면 단지별 점수 핀으로 펼쳐집니다. 핀 팝업 카드에서 성적표로 이동, 권역 퀵 점프(flyTo)
+- 5개 탭: 📊 성적표 · 💰 예산찾기 · ⚔️ 배틀 · 🏆 인천 518위 랭킹(탭 자체 검색) · 🗺️ 단지 지도(카카오맵 JS SDK · clusterer, 실패 시 OSM Korea Leaflet 자동 폴백)
+- 🗺️ **지도**: 카카오맵 SDK + `MarkerClusterer`로 확대 전에는 인접 단지 수 버블, 확대하면 등급 색 **점수 핀**으로 펼쳐집니다. 핀을 누르면 단지명·권역·총점·등급·84㎡ 시세·역 도보시간 요약 카드가 뜨고 `성적표 자세히 보기`로 이동. 권역 탭 선택 시 해당 권역 단지만 필터링하고 `setBounds`로 부드럽게 이동
 - 📊 **목록**: 권역별 그룹 + 권역당 8곳 노출 후 `▾ 더 보기`로 펼치기(518곳 부드럽게)
 - 🏆 **랭킹**: 40행씩 더 보기 · 단지명 검색 · 권역 필터
 - 💰 **예산찾기**: 연 소득·보유 현금·기존 대출·금리·LTV(일반 70% / 생애최초 80%)로 DSR 40% 최대 대출과 매수 가능 예산을 계산해, 예산 안의 518곳 전체를 점수순으로 추천(20곳씩 더 보기)
 - 🔍 **검색**: 단지명·별칭(더스카이·아크베이·마리나베이·까치마을 등)·권역명, 띄어쓰기 무시
+
+## v3.3 지도 카카오맵 SDK 전환 (2026.11.23)
+- **전환**: 지도 탭을 Leaflet + OSM에서 **카카오맵 JavaScript SDK**(`libraries=clusterer`, `autoload=false` → `kakao.maps.load`)로 교체. 앱키 `5319f5b0184334165a52b3413de7b6d8`, JavaScript SDK 도메인에 `https://inje8451.github.io` 등록 완료
+- **확대 전(광역)**: `kakao.maps.MarkerClusterer`(gridSize 56 · averageCenter · minLevel 6 · styles 4단계) — 네이비 원형 + 민트 테두리 버블에 인접 단지 수 표시, 클릭 시 확대
+- **확대 시(개별)**: 등급 색상 + 총점 숫자 SVG 핀(`kakao.maps.MarkerImage`) — S 92↑ 딥그린 · A+ 86~91 민트 · A 80~85 블루 · B+ 72~79 앰버 · B 71↓ 슬레이트
+- **핀 클릭**: `kakao.maps.CustomOverlay` 요약 카드(단지명·등급·권역·준공·세대수·총점·84㎡ 시세·역 도보시간) + `성적표 자세히 보기` → 📊 성적표 탭의 해당 단지로 이동. 카드가 지도 가장자리에서 잘리지 않도록 `panBy` 보정
+- **권역 필터**: 권역 탭 선택 시 클러스터러에서 다른 권역 마커를 빼고 `setBounds`로 목표 중심·레벨을 계산한 뒤 `setLevel(animate)`+`panTo`로 이동, 권역은 개별 핀(level 5)으로 표시
+- **줌 컨트롤**: 카카오 `ZoomControl`(+/-) 우측 배치
+- **안전한 폴백**: ① 카카오 SDK `onerror`/`kakao.maps` 미로드/`kakao.maps.load` 6초 타임아웃 → **OSM Korea Leaflet** 폴백(클러스터·핀·팝업 동일 동작), ② 둘 다 차단 시 안내 패널. 하단 저작자 문구는 엔진에 따라 `© Kakao Maps` / `© OpenStreetMap 기여자 · OSM Korea`로 자동 전환
+- 소스 동기화: 지도 JS는 `data/map_kakao.js` 한 곳에서 관리하고 `data/make_template3.py`가 `template3.html`에 치환(생성물과 스크립트 불일치 방지)
+- 검증: Chromium E2E **120/120** (카카오 엔진·클러스터·줌·권역 필터·핀 카드 + 카카오 차단 시 Leaflet 폴백 + unpkg 차단 시 카카오 정상 + 전면 차단 안내), 라이브 스크린샷 `preview/v33-kakao-live-*.png`
 
 ## v3.2 지도 고줌 수정 (2026.11.23)
 - **버그**: 송도 6·8공구 등 zoom 15+에서 Esri World Street Map 타일이 `Map data not yet available` 회색 타일로 내려와 지도가 회색으로 덮임
