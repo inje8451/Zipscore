@@ -362,6 +362,30 @@ button{font-family:inherit}
 .foot{margin:22px 16px 0;text-align:center}
 .foot p{margin:0 0 5px;font-size:10.2px;line-height:1.65;color:var(--muted-2)}
 .foot .copyline{font-size:9.8px;color:#b6bfcd;margin-top:9px}
+/* 성적표 카드(이미지) 저장 */
+.share-btn{width:100%;margin-top:12px;border:0;border-radius:13px;padding:13px 14px;display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;color:#fff;background:linear-gradient(135deg,#0e2246 0%,#123a5c 58%,#0b8f66 100%);box-shadow:0 10px 22px rgba(13,24,54,.2);font-family:inherit}
+.share-btn .ico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:16px;flex:0 0 auto}
+.share-btn b{display:block;font-size:13px;font-weight:800;letter-spacing:-.2px}
+.share-btn small{display:block;font-size:10px;font-weight:600;color:rgba(255,255,255,.74);margin-top:2px}
+.share-btn:hover{filter:brightness(1.07)}
+.share-btn:active{transform:translateY(1px)}
+.share-modal{position:fixed;inset:0;z-index:9500;display:none;align-items:center;justify-content:center;background:rgba(8,15,31,.74);padding:12px}
+.share-modal.is-open{display:flex}
+.share-sheet{width:100%;max-width:440px;max-height:94vh;overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;border-radius:20px;padding:14px 14px 16px;box-shadow:0 26px 60px rgba(0,0,0,.42)}
+.share-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.share-head h3{margin:0;font-size:13.6px;letter-spacing:-.2px}
+.share-head .sm-sub{font-size:9.6px;color:var(--muted-2);font-weight:700;word-break:break-all}
+.share-close{margin-left:auto;flex:0 0 auto;border:0;background:#f2f5fa;color:var(--ink-2);width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1}
+.share-preview{border-radius:14px;overflow:hidden;background:#eef1f6;border:1px solid var(--line-2);display:flex;justify-content:center}
+.share-preview img{display:block;width:100%;max-width:100%;max-height:62vh;object-fit:contain;height:auto;-webkit-touch-callout:default}
+.share-guide{margin:10px 0 0;font-size:11px;line-height:1.62;color:var(--ink-2);background:#f8fafd;border:1px solid var(--line-2);border-radius:10px;padding:9px 10px}
+.share-guide b{color:var(--ink)}
+.share-actions{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.share-primary{border:0;border-radius:11px;padding:12px;font-size:12.6px;font-weight:800;color:#fff;background:linear-gradient(135deg,#0e8f66,#07684a);cursor:pointer;font-family:inherit}
+.share-primary:hover{filter:brightness(1.06)}
+.share-ghost{border:1px solid var(--line);border-radius:11px;padding:11px;font-size:12.2px;font-weight:700;color:var(--ink-2);background:#fff;cursor:pointer;font-family:inherit}
+.share-ghost:hover{background:#f8fafd}
+
 .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#101828;color:#fff;font-size:12.5px;font-weight:600;padding:11px 16px;border-radius:12px;box-shadow:0 12px 30px rgba(16,24,40,.28);opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;z-index:9999;max-width:88vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 [hidden]{display:none !important}
@@ -560,6 +584,24 @@ button{font-family:inherit}
   </footer>
 </div>
 
+<div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle" aria-hidden="true">
+  <div class="share-sheet" role="document">
+    <div class="share-head">
+      <div>
+        <h3 id="shareTitle">📸 성적표 카드</h3>
+        <span class="sm-sub" id="shareFileName">zipscore_card.png</span>
+      </div>
+      <button class="share-close" id="shareClose" type="button" aria-label="닫기">✕</button>
+    </div>
+    <div class="share-preview"><img id="shareImg" alt="아파트 성적표 카드 미리보기" src=""></div>
+    <p class="share-guide">📱 <b>아이폰·아이패드</b>는 위 이미지를 <b>길게 눌러 '사진 앱에 저장'</b>하면 바로 저장됩니다. PC·안드로이드는 아래 <b>PNG 다운로드</b>를 누르세요. 카톡·블로그·인스타에 그대로 올릴 수 있는 1080×1350 이미지입니다.</p>
+    <div class="share-actions">
+      <button class="share-primary" id="shareNative" type="button">📤 바로 공유하기</button>
+      <button class="share-ghost" id="shareDownload" type="button">⬇️ PNG 다운로드</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="window.__leafletFailed=true"></script>
@@ -617,11 +659,11 @@ button{font-family:inherit}
   ];
 
   var GRADES = [
-    {min:92, label:"S",  title:"최상위 입지", color:"#0b7a58", grad:"linear-gradient(135deg,#0e8f66,#07684a)"},
-    {min:86, label:"A+", title:"우수한 입지", color:"#0ea472", grad:"linear-gradient(135deg,#10a97a,#0b7a58)"},
-    {min:80, label:"A",  title:"안정적 입지", color:"#1f5fd0", grad:"linear-gradient(135deg,#2f6bff,#1e4fc0)"},
-    {min:72, label:"B+", title:"보완이 필요한 입지", color:"#b54708", grad:"linear-gradient(135deg,#f79009,#b54708)"},
-    {min:0,  label:"B",  title:"개선 여지가 큰 입지", color:"#475467", grad:"linear-gradient(135deg,#7c8899,#475467)"}
+    {min:92, label:"S",  title:"최상위 입지", color:"#0b7a58", grad:"linear-gradient(135deg,#0e8f66,#07684a)", c1:"#0e8f66", c2:"#07684a"},
+    {min:86, label:"A+", title:"우수한 입지", color:"#0ea472", grad:"linear-gradient(135deg,#10a97a,#0b7a58)", c1:"#10a97a", c2:"#0b7a58"},
+    {min:80, label:"A",  title:"안정적 입지", color:"#1f5fd0", grad:"linear-gradient(135deg,#2f6bff,#1e4fc0)", c1:"#2f6bff", c2:"#1e4fc0"},
+    {min:72, label:"B+", title:"보완이 필요한 입지", color:"#b54708", grad:"linear-gradient(135deg,#f79009,#b54708)", c1:"#f79009", c2:"#b54708"},
+    {min:0,  label:"B",  title:"개선 여지가 큰 입지", color:"#475467", grad:"linear-gradient(135deg,#7c8899,#475467)", c1:"#7c8899", c2:"#475467"}
   ];
 
   var BLURBS = {
@@ -1469,6 +1511,7 @@ button{font-family:inherit}
       '<div class="block"><div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>'+
         '<div class="verdict"><h4>총평</h4><p id="verdictText">'+sentence+'</p><ul class="v-list">'+strengthItems+weakItem+'</ul>'+
         '<p class="v-close">단지 특징: '+esc(c.tags)+' · 계약 전 최근 실거래가와 전세가율, 호재 일정을 함께 확인하세요.</p></div>'+
+        '<button class="share-btn" id="shareCardBtn" type="button"><span class="ico">📸</span><span><b>성적표 카드 저장</b><small>카톡·블로그에 바로 올리는 1080×1350 이미지</small></span></button>'+
         '<button class="btn-copy" id="copyBtn" type="button">📋 성적표 요약 복사</button>'+
         '<textarea class="copy-fallback" id="copyFallback" readonly aria-label="복사할 성적표 요약"></textarea>'+
       '</div>'+
@@ -1481,6 +1524,7 @@ button{font-family:inherit}
     animateReport(rep,total);
     lastReport={ mode:"complex", c:c, total:total, grade:g, ord:ord, irank:irc, rrank:rr.rank, rtotal:rr.total };
     $("#copyBtn").addEventListener("click",copySummary);
+    $("#shareCardBtn").addEventListener("click",openShareCard);
   }
 
   function renderCustomReport(name,size,sc){
@@ -1510,6 +1554,7 @@ button{font-family:inherit}
       '<div class="block"><div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>'+
         '<div class="verdict"><h4>총평</h4><p>'+sentence+'</p><ul class="v-list">'+strengthItems+weakItem+'</ul>'+
         '<p class="v-close">계약 전에는 최근 실거래가와 전세가율, 교통·개발 일정을 함께 확인해 보세요.</p></div>'+
+        '<button class="share-btn" id="shareCardBtn" type="button"><span class="ico">📸</span><span><b>성적표 카드 저장</b><small>카톡·블로그에 바로 올리는 1080×1350 이미지</small></span></button>'+
         '<button class="btn-copy" id="copyBtn" type="button">📋 성적표 요약 복사</button>'+
         '<textarea class="copy-fallback" id="copyFallback" readonly aria-label="복사할 성적표 요약"></textarea>'+
       '</div>'+
@@ -1521,6 +1566,7 @@ button{font-family:inherit}
     animateReport(rep,total);
     lastReport={ mode:"custom", name:nameTxt, size:sizeTxt, total:total, grade:g, scores:sc.slice(), ord:ord, answers:state.answers.slice() };
     $("#copyBtn").addEventListener("click",copySummary);
+    $("#shareCardBtn").addEventListener("click",openShareCard);
   }
 
   function animateReport(rep,total){
@@ -2181,6 +2227,306 @@ button{font-family:inherit}
         .catch(function(){ legacyCopy(text); });
     } else legacyCopy(text);
   }
+
+  /* ============================== 성적표 카드(이미지) ============================== */
+  var CARD_W=1080, CARD_H=1350, CARD_PAD=72;
+  var CARD_FONT='Pretendard,"Pretendard Variable","Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR","Malgun Gothic","Helvetica Neue",Arial,sans-serif';
+  var shareBlob=null;
+
+  function cfont(w,s){ return w+" "+s+"px "+CARD_FONT; }
+  function crrect(ctx,x,y,w,h,r){
+    r=Math.min(r,Math.abs(w)/2,Math.abs(h)/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.closePath();
+  }
+  function cw(ctx,font,text){ ctx.save(); ctx.font=font; var w=ctx.measureText(String(text)).width; ctx.restore(); return w; }
+  function cfit(ctx,text,weight,size,minSize,maxW){
+    while(size>minSize && cw(ctx,cfont(weight,size),text)>maxW) size-=1;
+    return size;
+  }
+  function cwrap(ctx,text,font,maxW,maxLines){
+    ctx.save(); ctx.font=font;
+    var s=String(text==null?"":text).replace(/[\r\n]+/g," "), lines=[], cur="", overflow=false;
+    for(var i=0;i<s.length;i++){
+      var t=cur+s.charAt(i);
+      if(cur && ctx.measureText(t).width>maxW){
+        lines.push(cur);
+        if(lines.length===maxLines){ overflow=true; break; }
+        cur=s.charAt(i);
+      } else cur=t;
+    }
+    if(!overflow && cur) lines.push(cur);
+    if(overflow && lines.length){
+      var last=lines[lines.length-1];
+      while(last.length>1 && ctx.measureText(last+"…").width>maxW) last=last.slice(0,-1);
+      lines[lines.length-1]=last+"…";
+    }
+    ctx.restore();
+    return lines;
+  }
+  function cspaced(ctx,text,x,y,sp){
+    var cx=x;
+    for(var i=0;i<text.length;i++){ ctx.fillText(text.charAt(i),cx,y); cx+=ctx.measureText(text.charAt(i)).width+sp; }
+    return cx-x-sp;
+  }
+
+  function cardFacts(r){
+    if(r.mode==="complex"){
+      var c=r.c, rg=regionOf(c.region), zone="";
+      (c.tags||"").split("·").forEach(function(t){
+        t=t.trim();
+        if(!zone && /공구$/.test(t) && t.indexOf("송도")===0) zone=t;
+      });
+      return {
+        name:c.name, badge:(zone||rg.label),
+        sub:c.year+"년 준공 · "+comma(c.hh)+"세대 · 84㎡ "+c.price.toFixed(1)+"억",
+        rank:"인천 "+COMPLEXES.length+"곳 중 "+r.irank+"위  ·  "+rg.label+" "+r.rtotal+"곳 중 "+r.rrank+"위"
+      };
+    }
+    return {
+      name:r.name||"우리 아파트", badge:"직접 진단",
+      sub:(r.size||"평형 미입력")+" · 6문항 자가 진단",
+      rank:"입력한 6개 항목 점수 기준"
+    };
+  }
+
+  function cardComment(r){
+    var o=r.ord, s1=o[0], w=o[o.length-1];
+    var tail=(w.s/w.a.max)<0.6 ? (w.a.short+"("+w.s+"/"+w.a.max+")만 보완하면 완성도가 올라갑니다") : "여섯 영역이 고르게 받쳐 주는 입지입니다";
+    return s1.a.short+" "+s1.s+"/"+s1.a.max+" 강세 · "+tail;
+  }
+
+  function cardRadarPoint(cx,cy,R,i,k){
+    var a=-Math.PI/2+i*Math.PI/3;
+    return [cx+Math.cos(a)*R*k, cy+Math.sin(a)*R*k];
+  }
+  function drawCardRadar(ctx,cx,cy,R,scores){
+    var i, p;
+    ctx.lineWidth=1.5; ctx.strokeStyle="#e6ecf5";
+    [0.25,0.5,0.75,1].forEach(function(lv){
+      ctx.beginPath();
+      for(var j=0;j<6;j++){ var q=cardRadarPoint(cx,cy,R,j,lv); if(j===0) ctx.moveTo(q[0],q[1]); else ctx.lineTo(q[0],q[1]); }
+      ctx.closePath(); ctx.stroke();
+    });
+    for(i=0;i<6;i++){ p=cardRadarPoint(cx,cy,R,i,1); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(p[0],p[1]); ctx.stroke(); }
+    ctx.beginPath();
+    for(i=0;i<6;i++){ p=cardRadarPoint(cx,cy,R,i,Math.max(0.04,scores[i]/AREAS[i].max)); if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]); }
+    ctx.closePath();
+    var fg=ctx.createRadialGradient(cx,cy,12,cx,cy,R);
+    fg.addColorStop(0,"rgba(14,164,114,.36)"); fg.addColorStop(1,"rgba(52,211,153,.14)");
+    ctx.fillStyle=fg; ctx.fill();
+    ctx.lineJoin="round"; ctx.strokeStyle="#0ea472"; ctx.lineWidth=4; ctx.stroke();
+    for(i=0;i<6;i++){
+      p=cardRadarPoint(cx,cy,R,i,Math.max(0.04,scores[i]/AREAS[i].max));
+      ctx.beginPath(); ctx.arc(p[0],p[1],6.5,0,Math.PI*2); ctx.fillStyle="#ffffff"; ctx.fill();
+      ctx.lineWidth=3; ctx.strokeStyle="#0ea472"; ctx.stroke();
+    }
+    ctx.font=cfont(700,24); ctx.fillStyle="#475467"; ctx.textBaseline="middle";
+    for(i=0;i<6;i++){
+      var lp=cardRadarPoint(cx,cy,R,i,1.34), cos=Math.cos(-Math.PI/2+i*Math.PI/3);
+      ctx.textAlign=Math.abs(cos)<0.25?"center":(cos>0?"left":"right");
+      ctx.fillText(AREAS[i].short,lp[0],lp[1]);
+    }
+    ctx.textAlign="left"; ctx.textBaseline="alphabetic";
+  }
+  function drawCardBars(ctx,x,y,w,scores){
+    AREAS.forEach(function(a,i){
+      var v=scores[i], p=v/a.max, by=y+i*50;
+      var col=p>=0.8?"#0ea472":(p>=0.6?"#2f6bff":"#f79009");
+      var light=p>=0.8?"#7ee0bd":(p>=0.6?"#9dbcff":"#fdc46b");
+      ctx.textBaseline="alphabetic"; ctx.textAlign="left";
+      ctx.font=cfont(700,23); ctx.fillStyle="#344054"; ctx.fillText(a.name,x,by);
+      ctx.textAlign="right"; ctx.font=cfont(800,24); ctx.fillStyle="#101828"; ctx.fillText(v+"/"+a.max,x+w,by);
+      ctx.textAlign="left";
+      crrect(ctx,x,by+12,w,10,5); ctx.fillStyle="#eef1f7"; ctx.fill();
+      var fw=Math.max(12,w*p);
+      crrect(ctx,x,by+12,fw,10,5);
+      var lg=ctx.createLinearGradient(x,0,x+fw,0);
+      lg.addColorStop(0,light); lg.addColorStop(1,col);
+      ctx.fillStyle=lg; ctx.fill();
+    });
+  }
+
+  function buildCardCanvas(r){
+    var f=cardFacts(r), g=r.grade, rg=(r.mode==="complex")?regionOf(r.c.region):null;
+    var scores=(r.mode==="complex")?r.c.scores:r.scores;
+    var comment=cardComment(r), stamp=todayLabel();
+    var cv=document.createElement("canvas"); cv.width=CARD_W; cv.height=CARD_H;
+    var ctx=cv.getContext("2d");
+
+    /* 배경 */
+    ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,CARD_W,CARD_H);
+
+    /* 헤더 — 딥네이비 + 딥그린 */
+    var HEAD=272;
+    function headerPath(){
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(CARD_W,0); ctx.lineTo(CARD_W,HEAD-46);
+      ctx.quadraticCurveTo(CARD_W,HEAD,CARD_W-46,HEAD);
+      ctx.lineTo(46,HEAD); ctx.quadraticCurveTo(0,HEAD,0,HEAD-46);
+      ctx.closePath();
+    }
+    var hg=ctx.createLinearGradient(0,0,CARD_W,HEAD);
+    hg.addColorStop(0,"#0a1330"); hg.addColorStop(.5,"#122a52"); hg.addColorStop(1,"#0b3a3c");
+    headerPath(); ctx.fillStyle=hg; ctx.fill();
+    ctx.save(); headerPath(); ctx.clip();
+    var glow=ctx.createRadialGradient(940,-60,20,940,-60,580);
+    glow.addColorStop(0,"rgba(23,196,135,.42)"); glow.addColorStop(1,"rgba(23,196,135,0)");
+    ctx.fillStyle=glow; ctx.fillRect(0,0,CARD_W,HEAD);
+    ctx.restore();
+
+    /* 브랜드 */
+    ctx.textAlign="left"; ctx.textBaseline="alphabetic";
+    ctx.fillStyle="rgba(255,255,255,.66)"; ctx.font=cfont(700,26);
+    cspaced(ctx,"ZIPSCORE",CARD_PAD,106,5);
+    ctx.fillStyle="#ffffff"; ctx.font=cfont(800,44);
+    ctx.fillText("집스코어",CARD_PAD,166);
+
+    /* 권역 배지 */
+    ctx.font=cfont(700,27);
+    var bw=cw(ctx,cfont(700,27),f.badge)+72, bh=62, bx=CARD_W-CARD_PAD-bw, by=74;
+    crrect(ctx,bx,by,bw,bh,31);
+    ctx.fillStyle="rgba(255,255,255,.13)"; ctx.fill();
+    ctx.lineWidth=2; ctx.strokeStyle="rgba(255,255,255,.3)"; ctx.stroke();
+    ctx.beginPath(); ctx.arc(bx+30,by+bh/2,6.5,0,Math.PI*2); ctx.fillStyle="#34d399"; ctx.fill();
+    ctx.fillStyle="#ffffff"; ctx.textAlign="left";
+    ctx.fillText(f.badge,bx+48,by+bh/2+10);
+    ctx.textAlign="right"; ctx.font=cfont(600,22); ctx.fillStyle="rgba(255,255,255,.62)";
+    ctx.fillText(stamp,CARD_W-CARD_PAD,by+bh+40);
+    ctx.textAlign="left";
+
+    /* 단지명 */
+    var nSize=cfit(ctx,f.name,800,62,34,CARD_W-CARD_PAD*2);
+    ctx.font=cfont(800,nSize); ctx.fillStyle="#101828";
+    ctx.fillText(f.name,CARD_PAD,382);
+    ctx.font=cfont(600,28); ctx.fillStyle="#667085";
+    ctx.fillText(f.sub,CARD_PAD,430);
+
+    /* 총점 */
+    var sTxt=String(r.total), sFont=cfont(800,196);
+    ctx.font=sFont; ctx.fillStyle="#0d1836";
+    ctx.fillText(sTxt,CARD_PAD-6,656);
+    var sw=cw(ctx,sFont,sTxt);
+    ctx.font=cfont(700,36); ctx.fillStyle="#98a2b3";
+    ctx.fillText("/ 100점",CARD_PAD-6+sw+16,648);
+
+    /* 등급 배지 */
+    var gbW=322, gbH=116, gbX=CARD_W-CARD_PAD-gbW, gbY=488;
+    var gg=ctx.createLinearGradient(gbX,gbY,gbX+gbW,gbY+gbH);
+    gg.addColorStop(0,g.c1||g.color); gg.addColorStop(1,g.c2||g.color);
+    crrect(ctx,gbX,gbY,gbW,gbH,28); ctx.fillStyle=gg; ctx.fill();
+    ctx.textAlign="center"; ctx.fillStyle="#ffffff"; ctx.font=cfont(800,62);
+    ctx.fillText(g.label,gbX+gbW/2,gbY+82);
+    ctx.fillStyle="#475467"; ctx.font=cfont(700,26);
+    ctx.fillText(g.title,gbX+gbW/2,gbY+gbH+44);
+    ctx.textAlign="left";
+
+    /* 랭킹 */
+    crrect(ctx,CARD_PAD,696,CARD_W-CARD_PAD*2,68,20); ctx.fillStyle="#f4f7fc"; ctx.fill();
+    ctx.textAlign="center"; ctx.fillStyle="#344054"; ctx.font=cfont(700,28);
+    ctx.fillText(f.rank,CARD_W/2,740);
+    ctx.textAlign="left";
+
+    /* 레이더 · 항목 바 */
+    drawCardRadar(ctx,250,944,124,scores);
+    drawCardBars(ctx,528,800,480,scores);
+
+    /* 구분선 */
+    ctx.strokeStyle="#e9eef6"; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(CARD_PAD,1132); ctx.lineTo(CARD_W-CARD_PAD,1132); ctx.stroke();
+
+    /* 한 줄 코멘트 */
+    crrect(ctx,CARD_PAD,1152,CARD_W-CARD_PAD*2,100,20);
+    ctx.fillStyle="#f4fbf8"; ctx.fill();
+    ctx.lineWidth=2; ctx.strokeStyle="#d8f0e7"; ctx.stroke();
+    var cFont=cfont(700,27), cLines=cwrap(ctx,comment,cFont,CARD_W-CARD_PAD*2-56,2);
+    ctx.font=cFont; ctx.fillStyle="#0b5c46"; ctx.textBaseline="alphabetic";
+    var cyTop=cLines.length>1?1180:1205;
+    cLines.forEach(function(line,i){ ctx.fillText(line,CARD_PAD+28,cyTop+i*36); });
+
+    /* 워터마크 */
+    ctx.font=cfont(700,25); ctx.fillStyle="#475467";
+    ctx.fillText("집스코어 ZIPSCORE · inje8451.github.io/Zipscore",CARD_PAD,1302);
+    ctx.font=cfont(600,20); ctx.fillStyle="#a8b2c0";
+    ctx.fillText("교통·학군·단지·인프라·가격·미래가치 6개 영역 100점 만점 · 점수·시세는 공개 데이터 기반 추정 참고값",CARD_PAD,1332);
+
+    window.__zipCardInfo={
+      name:f.name, badge:f.badge, sub:f.sub, rank:f.rank, comment:comment,
+      total:r.total, grade:g.label, scores:scores.slice(),
+      region:(rg?rg.label:""), width:CARD_W, height:CARD_H, stamp:stamp
+    };
+    return cv;
+  }
+
+  function fileNameFor(r){
+    var nm=(r&&r.mode==="complex")?r.c.name:((r&&r.name)||"우리아파트");
+    return "zipscore_"+String(nm).replace(/[\\/:*?"<>|\s]+/g,"_").replace(/_+$/,"_")+".png";
+  }
+  function shareText(r){
+    var f=cardFacts(r);
+    return "[집스코어 ZIPSCORE] "+f.name+" · "+r.total+"점 "+r.grade.label+" · "+f.rank.replace(/\s+/g," ");
+  }
+
+  function openShareCard(){
+    if(!lastReport){ toast("먼저 단지를 선택해 성적표를 열어 주세요"); return; }
+    var cv=buildCardCanvas(lastReport);
+    var info=window.__zipCardInfo;
+    shareBlob=null;
+    var img=$("#shareImg");
+    img.src=cv.toDataURL("image/png");
+    img.alt=info.name+" 성적표 카드 이미지";
+    $("#shareFileName").textContent=fileNameFor(lastReport)+" · 1080×1350";
+    window.__zipShareCard=cv;
+    if(cv.toBlob) cv.toBlob(function(b){ shareBlob=b; },"image/png");
+    var m=$("#shareModal");
+    m.classList.add("is-open"); m.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    $("#shareClose").focus();
+  }
+  function closeShareCard(){
+    var m=$("#shareModal");
+    if(!m || !m.classList.contains("is-open")) return;
+    m.classList.remove("is-open"); m.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    var b=$("#shareCardBtn"); if(b && b.focus) b.focus();
+  }
+  function downloadShareCard(){
+    if(!lastReport) return;
+    var img=$("#shareImg");
+    if(!img || !img.src) return;
+    var a=document.createElement("a");
+    a.href=img.src; a.download=fileNameFor(lastReport);
+    a.rel="noopener"; a.style.display="none";
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ if(a.parentNode) a.parentNode.removeChild(a); },0);
+    toast("성적표 카드 PNG를 저장했습니다");
+  }
+  function shareCardNative(){
+    if(!lastReport) return;
+    var fallback=function(){
+      toast("이 브라우저는 이미지 바로 공유를 지원하지 않습니다. PNG로 저장해 카톡·블로그에 올려 주세요");
+    };
+    if(!shareBlob){ toast("카드를 만드는 중입니다. 잠시 후 다시 눌러 주세요"); return; }
+    var file;
+    try{ file=new File([shareBlob],fileNameFor(lastReport),{type:"image/png"}); }catch(e){ fallback(); return; }
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({files:[file],title:"집스코어 성적표",text:shareText(lastReport)}).catch(function(err){
+        if(!err || err.name!=="AbortError") fallback();
+      });
+    } else fallback();
+  }
+
+  $("#shareClose").addEventListener("click",closeShareCard);
+  $("#shareDownload").addEventListener("click",downloadShareCard);
+  $("#shareNative").addEventListener("click",shareCardNative);
+  $("#shareModal").addEventListener("click",function(e){
+    if(e.target===this || e.target.getAttribute("data-share-close")!==null) closeShareCard();
+  });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeShareCard(); });
 
   /* ============================== 이벤트 / 시작 ============================== */
   document.querySelectorAll(".tab").forEach(function(t){

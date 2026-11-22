@@ -1,16 +1,16 @@
-# 🏢 집스코어 ZIPSCORE — 인천 아파트 100점 성적표 v3.4
+# 🏢 집스코어 ZIPSCORE — 인천 아파트 100점 성적표 v3.5
 
 인천 **11개 권역 518개 실제 아파트 단지(300세대 이상)** 를 6개 영역 100점으로 채점한 **독립 부동산 웹앱**입니다.
-v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산찾기·리브랜딩) → v2.2(송도 현지 팩트 재보정) → v2.2.1(마리나베이 학군 정정) → v3.0(123곳 → 518곳 확장 + 지도 클러스터링 + 목록/랭킹/예산 페이징) → v3.1(518곳 전수 감사) → v3.3(지도 카카오맵 SDK) → **v3.4(송도 6공구 신축·고분양가 점수 보정: songdo6 존 신설·시세 정정·신축 환금성 보정)**
+v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산찾기·리브랜딩) → v2.2(송도 현지 팩트 재보정) → v2.2.1(마리나베이 학군 정정) → v3.0(123곳 → 518곳 확장 + 지도 클러스터링 + 목록/랭킹/예산 페이징) → v3.1(518곳 전수 감사) → v3.3(지도 카카오맵 SDK) → v3.4(송도 6공구 신축·고분양가 점수 보정) → **v3.5(📸 성적표 카드 이미지 저장 — 카톡·블로그 공유용 1080×1350 PNG, 외부 CDN 없이 순수 Canvas)**
 
 | 항목 | 내용 |
 |---|---|
 | 파일 | `work/apt-scorecard/index.html` (단일 HTML, Leaflet + markercluster CDN) |
 | 배포본 | `work/zipscore-pages/index.html` → https://inje8451.github.io/Zipscore/ |
 | 이전 버전 | `index-v1.html`(v1)·Git 히스토리(v2·v2.1·v2.2·v3.0) |
-| 미리보기 | `preview/v34-crystal.png`(6공구 크리스탈 80 A) · `v34-thestar.png` · `v34-lake4.png` · `v34-lux.png` · `v34-lake1.png` · `v34-report-songdo.png` · `v34-rank-songdo.png` · `v34-desktop.png` · `preview/v3-main.png`(성적표) · `v3-map-cluster.png`(클러스터 지도) · `v3-map-pins.png` · `v3-map-popup.png` · `v3-rank.png` · `v3-budget.png` · `v3-battle.png` · `v3-report.png` · `v3-report-fact.png` · `v3-new-gyeyang.png` · `v3-search.png` · `v3-map-fallback.png` · `v31-ocean-top.png` · `v31-ocean-fact.png` |
-| 검증 | `test_e2e_v3.py` — 실제 Chromium E2E **133/133 통과** (`test-report-v3.json`) |
-| 실행 | `cd work/apt-scorecard && python3 test_e2e_v3.py` → `133/133 checks passed — RESULT: PASS` |
+| 미리보기 | `preview/v35-share-card-sample.png`(성적표 카드 PNG 실물·6공구 크리스탈 80 A) · `v35-share-modal.png`(카드 미리보기 모달) · `v35-share-card-first.png` · `v35-share-card-lake4.png` · `preview/v34-crystal.png`(6공구 크리스탈 80 A) · `v34-thestar.png` · `v34-lake4.png` · `v34-lux.png` · `v34-lake1.png` · `v34-report-songdo.png` · `v34-rank-songdo.png` · `v34-desktop.png` · `preview/v3-main.png`(성적표) · `v3-map-cluster.png`(클러스터 지도) · `v3-map-pins.png` · `v3-map-popup.png` · `v3-rank.png` · `v3-budget.png` · `v3-battle.png` · `v3-report.png` · `v3-report-fact.png` · `v3-new-gyeyang.png` · `v3-search.png` · `v3-map-fallback.png` · `v31-ocean-top.png` · `v31-ocean-fact.png` |
+| 검증 | `test_e2e_v3.py` — 실제 Chromium E2E **187/187 통과** (`test-report-v3.json`) |
+| 실행 | `cd work/apt-scorecard && python3 test_e2e_v3.py` → `187/187 checks passed — RESULT: PASS` |
 | 데이터 빌드 | `data/build3.py` → `complexes3.json` → `data/make_html3.py`(← `template3.html`) |
 | 템플릿 생성 | `data/make_template3.py` (v2.2 `template.html` → `template3.html` 패치) |
 
@@ -18,7 +18,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 
 | 탭 | 내용 |
 |---|---|
-| 📊 성적표 | 권역 필터(11개) + 검색(단지명·별칭·권역명, 띄어쓰기 무시) + **권역별 그룹 목록(권역당 8곳 + `▾ 더 보기`)** → 100점 성적표(링·등급·레이더·영역 바·팩트체크·촌평·복사) + 목록에 없는 단지 6문항 직접 진단 |
+| 📊 성적표 | 권역 필터(11개) + 검색(단지명·별칭·권역명, 띄어쓰기 무시) + **권역별 그룹 목록(권역당 8곳 + `▾ 더 보기`)** → 100점 성적표(링·등급·레이더·영역 바·팩트체크·촌평·복사·**📸 성적표 카드 저장**) + 목록에 없는 단지 6문항 직접 진단 |
 | 💰 예산찾기 | 연 소득·보유 현금·기존 대출 월 상환액 + 금리 프리셋(4.0/4.3/4.6%) + LTV(일반 70% / 생애최초 80%) → DSR 40% 최대 대출·LTV 한도·매수 가능 예산·월 원리금 → **예산 이하 518곳 전체 대상 추천**(20곳씩 더 보기) |
 | ⚔️ 배틀 | 518곳 중 A/B 선택(권역 optgroup) → 듀얼 레이더·6영역 우위·갈아타기 예상 자금 |
 | 🏆 랭킹 | 인천 1~518위(공동 순위), 랭킹 탭 자체 검색, 권역 필터, **40행씩 더 보기**, 행 클릭 → 성적표 |
@@ -88,6 +88,34 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 - 역세권이 아닌 팩트(크리스탈·자이더스타 2.1~2.2km, 럭스오션 1.75km, 레이크4차 1.6km)와 대형마트·병원 부재(인프라 12)는 그대로 두었다. 교통 8/20·인프라 12/15가 상한을 만든다.
 - 예산찾기 추천은 시세 정정으로 **480 → 482곳**(레이크1·2차가 예산 이하로 편입) — `test_e2e_v3.py` 기대값도 482로 갱신.
 
+## 3.6 v3.4 → v3.5 📸 성적표 카드 이미지 저장 (2026.11.23)
+
+인제님이 선택한 신규 기능: **내 아파트 성적표 이미지 카드 저장 (카톡·블로그 공유용)**.
+
+- **외부 CDN·라이브러리 0** — html2canvas 같은 라이브러리 없이 `<canvas>` 2D API로 직접 그립니다. 좌표·그라디언트·둥근 모서리·육각 레이더·항목 바·글자 줄바꿈을 모두 canvas 코드로 처리해, 인터넷이 느리거나 CDN이 막혀도 카드는 항상 생성됩니다.
+- **해상도 1080×1350**(4:5, 카톡·인스타·블로그 썸네일 공통) PNG, 파일명 `zipscore_{단지명}.png`.
+- **폰트**: `Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans CJK KR", "Malgun Gothic", sans-serif`. 웹폰트를 ``@font-face``로 받지 않고 기기 기본 한글 폰트를 쓰므로 한글이 네모(토푸)로 깨지지 않습니다.
+
+**카드 구성**
+
+| 위치 | 내용 |
+|---|---|
+| 상단 헤더 | 딥네이비→딥그린 그라디언트 + `ZIPSCORE` · `집스코어`, 우측 권역 배지(`송도 6공구`)와 기준일 |
+| 타이틀 | 단지명(긴 이름은 자동 축소) · `2024년 준공 · 1,504세대 · 84㎡ 10.8억` |
+| 하이라이트 | 총점 큰 숫자 + `/100점`, 등급 배지(`S`·`A+`·`A`·`B+`·`B`, 등급별 그라디언트)와 등급 문구, 인천/권역 랭킹 |
+| 차트·지표 | 좌측 6각 레이더 + 우측 6대 항목 점수 바(교통·학군·단지·인프라·가격·미래가치, 점수 구간별 색) |
+| 하단 | 한 줄 핵심 코멘트(가장 강한 영역 + 보완 포인트) · `집스코어 ZIPSCORE · inje8451.github.io/Zipscore` 워터마크 · 추정 참고값 고지 |
+
+**저장 UX**
+
+1. 성적표(단지 상세) 안 `📸 성적표 카드 저장` 버튼(복사 버튼 위, 네이비·그린 그라디언트) → 미리보기 모달.
+2. 모달에 카드 원본을 `<img>` dataURL로 표시 — **아이폰·아이패드 사파리는 이미지를 길게 눌러 '사진 앱에 저장'** 하면 끝(안내 문구 상시 노출).
+3. `📤 바로 공유하기` — `navigator.canShare({files})` 지원 시 Web Share API로 PNG 파일을 바로 공유(카톡·메시지·에어드롭). 미지원 PC 브라우저에서는 안내 토스트.
+4. `⬇️ PNG 다운로드` — PC·안드로이드용 `<a download>` 다운로드.
+5. 닫기: ✕ 버튼 · 배경 클릭 · ESC 모두 동작하고, 닫으면 배경 스크롤 복원.
+
+6문항 직접 진단 성적표에서도 같은 버튼이 나오며, 이때는 권역 배지 대신 `직접 진단`, 랭킹 대신 `입력한 6개 항목 점수 기준`으로 그립니다.
+
 ## 4. v3.1 채점·시세 규칙
 
 | 영역 | 규칙 기반(신규) 단지 산출 방식 |
@@ -139,7 +167,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 - 배경: OSM Korea HOT 타일(`https://tiles.osm.kr/hot/{z}/{x}/{y}.png`, 한글 라벨·API 키 불필요, `maxNativeZoom:18, maxZoom:19`). Esri로 되돌리거나 다른 타일로 바꾸려면 `initMap()`의 `L.tileLayer` URL과 `attribution`만 교체하면 된다.
 - CDN 순서: Leaflet CSS/JS → markercluster CSS/JS. **markercluster만 차단되면** 클러스터 없이 518개 개별 마커로 자동 폴백(`window.__clusterFailed`), **Leaflet까지 차단되면** 기존 폴백 안내 문구 노출. 타일 로드 실패(`tileerror`) 시에도 폴백 안내.
 
-## 8. 검증 (133/133 PASS)
+## 8. 검증 (187/187 PASS)
 
 - JS 런타임/콘솔 오류 0, `하보카`·`havoka` 문자열 0
 - 탭 5개·패널 5개, hero 518개 단지·11개 권역, 권역 칩 12개, 그룹 헤더 11개, 첫 노출 88칩 + 더 보기 11개
@@ -151,6 +179,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 - 배틀: 기본 A/B·79 vs 92·듀얼 레이더·갈아타기 자금·셀렉트 518옵션
 - 지도: Leaflet·markercluster 로드, OSM Korea 타일 렌더(고줌 회색 없음), 클러스터 버블, 송도 flyTo(zoom 13.4), 확대 시 점수 핀, 팝업 카드 → 성적표 이동, **markercluster CDN만 차단 시 개별 마커 518**, 전체 CDN 차단 시 폴백
 - **6공구(v3.4)**: 크리스탈 80 A(송도 6공구 태그·송빛초 242m·84㎡ 10.8억) · 자이더스타 80 A · 레이크4차 78 B+ · 럭스오션 77 B+ · 레이크1차 78 B+ · 검색 별칭(힐레이크1~4차·럭스오션·크리스탈)
+- **성적표 카드(v3.5, 54개 체크)**: 버튼 노출·문구(성적표 카드 저장/카톡·블로그)·복사 버튼 위 배치 → 모달 열림(`role=dialog`, aria-hidden 토글, 배경 스크롤 잠금) → `data:image/png` dataURL · `naturalWidth/Height 1080×1350` · 파일명 `zipscore_송도자이크리스탈오션.png` · 아이폰 길게 눌러 사진 저장 안내 · 캔버스 1080×1350 · 비백색 픽셀 41.8% · 헤더 딥네이비/그린 면적 · 단지명·총점·항목 바·코멘트·워터마크 영역 잉크 · **한글 글리프 렌더(같은 4자리 문자열 두 개의 잉크 해시가 달라 토푸 아님을 확인)** · 카드 정보(단지명·80 A·`송도 6공구` 배지·6항목 점수·인천 51위/송도 23위·코멘트·준공·세대·시세·기준일) · PNG 시그니처/샘플 저장 · **다운로드 이벤트 파일명·크기·토스트** · Web Share 미지원 시 안내 토스트 · ESC·배경 클릭·✕ 닫기와 스크롤 복원 · 다른 단지(퍼스트파크 92 S) 재사용·파일명 교체 · 6문항 직접 진단 카드(`직접 진단` 배지)
 - 375/390/430px 가로 오버플로 0
 
 ## 9. 손보는 위치
@@ -164,6 +193,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 | 확정 시세 | `data/build3.py`의 `PRICE_FIX` |
 | 팩트 확인 후 승격 | `data/build3.py`의 `FACT_VERIFIED` |
 | 화면·CSS·문구·지도 타일·클러스터 옵션 | `template3.html` (원본은 `data/make_template3.py`가 `template.html`에서 생성) → `data/make_html3.py` |
+| 성적표 카드(이미지) 디자인·모달·저장 로직 | `template3.html`의 `buildCardCanvas()`(1080×1350 좌표), `drawCardRadar()`·`drawCardBars()`·`cardComment()`·`openShareCard()`·`downloadShareCard()`·`shareCardNative()` |
 | 검증 | `python3 test_e2e_v3.py` |
 | 배포 | `bash work/zipscore-pages/deploy.sh` |
 
