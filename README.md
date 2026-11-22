@@ -117,8 +117,10 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 6문항 직접 진단 성적표에서도 같은 버튼이 나오며, 이때는 권역 배지 대신 `직접 진단`, 랭킹 대신 `입력한 6개 항목 점수 기준`으로 그립니다.
 
 **주소·배포(v3.5)** — 카드 워터마크, 페이지 푸터, `og:url`, `canonical`, 요약복사 문구를 `zipscore.github.io`로 통일했습니다(옛 `inje8451.github.io/Zipscore` 표기 0개).
-- 개인 저장소 `inje8451/Zipscore`(main): 반영 완료 → https://inje8451.github.io/Zipscore/
-- 조직 저장소 `Zipscore/zipscore.github.io`(main): **Pickle GitHub 앱 설치가 개인 계정 전체(`repository_selection=all`, 저장소 목록 `inje8451/Zipscore`)에만 걸려 있어 조직 저장소 쓰기가 403**(`Permission to Zipscore/zipscore.github.io.git denied`, Contents API `403 Resource not accessible by integration`, Pages API 404/403)으로 막힘. 조직에 앱을 설치하면 `bash work/zipscore-pages/deploy.sh`가 재푸시→Pages 활성화(`main` `/`)→`https://zipscore.github.io` 라이브 md5 대조까지 자동으로 수행한다.
+- **조직 저장소 `Zipscore/zipscore.github.io`(main)**: 커밋 `5172b8d` 푸시 → Pages 자동 빌드(`status=built`, source `main` `/`) → **https://zipscore.github.io/** 라이브 md5가 로컬 `index.html`과 일치(`c194b24e…`). 조직 대표 주소로 사용.
+- 개인 미러 `inje8451/Zipscore`(main): 같은 내용 반영 → https://inje8451.github.io/Zipscore/ (md5 일치)
+- 두 곳 모두 `ZS_URL=… python3 live_check_v35.py` 브라우저 검증 **16/16 PASS**(카드 생성·모달·1080×1350·워터마크 `zipscore.github.io`·푸터 주소·PNG 다운로드 파일명).
+- 배포 이력: 처음에는 Pickle GitHub 앱 설치가 개인 계정 전체에만 걸려 있어 조직 저장소 쓰기가 `403 Permission to Zipscore/zipscore.github.io.git denied`(Contents API도 `403 Resource not accessible by integration`)로 막혔다. **인제님이 Zipscore 조직에 앱을 설치한 뒤**(installation 184812250) `bash work/zipscore-pages/deploy.sh Zipscore/zipscore.github.io`로 반영됐다.
 
 ## 4. v3.1 채점·시세 규칙
 
