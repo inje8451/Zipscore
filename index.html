@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d1836">
-<meta name="description" content="집스코어 ZIPSCORE — 인천 8개 권역 120개 아파트 단지를 100점으로 채점한 입지 성적표. 연 소득·현금으로 대출 한도(DSR·LTV)를 계산해 살 수 있는 단지를 추려주고, 지도·1:1 배틀·랭킹까지 제공합니다.">
+<meta name="description" content="집스코어 ZIPSCORE — 인천 8개 권역 123개 아파트 단지를 100점으로 채점한 입지 성적표. 연 소득·현금으로 대출 한도(DSR·LTV)를 계산해 살 수 있는 단지를 추려주고, 지도·1:1 배틀·랭킹까지 제공합니다.">
 <meta name="keywords" content="인천 아파트, 송도 아파트, 청라 아파트, 검단 아파트, 영종 아파트, 아파트 성적표, 집점수, ZIPSCORE, 집스코어">
 <meta name="author" content="ZIPSCORE">
 <title>집스코어 ZIPSCORE · 인천 아파트 100점 성적표 · 입지 분석 지도</title>
@@ -14,11 +14,11 @@
 <meta property="og:site_name" content="집스코어 ZIPSCORE">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="집스코어 ZIPSCORE — 우리 단지 몇 점일까?">
-<meta property="og:description" content="인천 8개 권역 120개 단지를 100점으로 채점하고, 내 소득·현금으로 대출 가능액과 살 수 있는 단지를 계산해 드립니다. 지도·배틀·랭킹까지.">
+<meta property="og:description" content="인천 8개 권역 123개 단지를 100점으로 채점하고, 내 소득·현금으로 대출 가능액과 살 수 있는 단지를 계산해 드립니다. 지도·배틀·랭킹까지.">
 <meta property="og:url" content="https://inje8451.github.io/Zipscore/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="집스코어 ZIPSCORE — 인천 아파트 100점 성적표">
-<meta name="twitter:description" content="인천 120개 단지 입지 성적표 · 인터랙티브 지도 · 1:1 배틀 · 인천 랭킹.">
+<meta name="twitter:description" content="인천 123개 단지 입지 성적표 · 인터랙티브 지도 · 1:1 배틀 · 인천 랭킹.">
 <link rel="canonical" href="https://inje8451.github.io/Zipscore/">
 
 <!-- 무료 지도: Leaflet + OpenStreetMap (API 키 불필요) -->
@@ -350,9 +350,9 @@ button{font-family:inherit}
   <header class="hero">
     <div class="brand"><span class="logo">🏢</span><span><b>집스코어</b></span><span class="en">ZIPSCORE</span></div>
     <h1>우리 단지, 인천에서<br><em>몇 점</em>짜리일까?</h1>
-    <p class="lead">인천 120개 아파트를 6개 영역 100점으로 채점했습니다. <b>내 소득·현금으로 대출 한도까지 계산</b>해 살 수 있는 단지를 추려 드립니다.</p>
+    <p class="lead">인천 123개 아파트를 6개 영역 100점으로 채점했습니다. <b>내 소득·현금으로 대출 한도까지 계산</b>해 살 수 있는 단지를 추려 드립니다.</p>
     <div class="hero-meta">
-      <span class="pill" id="heroAptCount">120개 단지</span>
+      <span class="pill" id="heroAptCount">123개 단지</span>
       <span class="pill">8개 권역</span>
       <span class="pill">6개 영역 · 100점</span>
       <span class="pill">💰 예산 맞춤</span>
@@ -373,12 +373,12 @@ button{font-family:inherit}
     <section class="card" id="picker">
       <div class="sec-head">
         <h2>단지 고르기</h2>
-        <span class="tag-soft">사실 기반 보정 v2.1</span>
+        <span class="tag-soft">사실 기반 보정 v2.2</span>
       </div>
       <div class="chips" id="regionChips" role="group" aria-label="권역 필터"></div>
       <div class="search-row">
         <input id="searchInput" type="search" placeholder="단지명 검색 (예: 퍼스트파크)" autocomplete="off" aria-label="단지명 검색">
-        <span class="search-count" id="searchCount">120곳</span>
+        <span class="search-count" id="searchCount">123곳</span>
       </div>
       <div class="apt-grid" id="aptGrid"></div>
       <p class="hint">목록은 권역별로 묶여 있고, 칸 안에서 스크롤됩니다. 단지를 누르면 100점 성적표가 바로 나옵니다. 세대수·준공·거래건수는 국토부 공동주택 자료(2026.09), 역 도보시간은 카카오맵 좌표 기준 추정입니다.</p>
@@ -413,7 +413,7 @@ button{font-family:inherit}
             <li><b>학군·교육환경 20점</b> — 초품아 여부, 학원가 규모·도보 접근</li>
             <li><b>단지 스펙·상품성 15점</b> — 세대수, 연식, 세대당 주차</li>
             <li><b>생활 인프라·환경 15점</b> — 대형마트·병원, 공원·수변</li>
-            <li><b>가격·환금성 15점</b> — 거래 회전율, 전세가율, 방어력</li>
+            <li><b>가격·환금성 15점</b> — 최근 6개월 거래 회전·노후(10) + 권역 내 84㎡ 시세 상위도(5)</li>
             <li><b>미래 가치·호재 15점</b> — 교통망 신설, 개발·정비사업</li>
           </ul>
         </details>
@@ -491,9 +491,13 @@ button{font-family:inherit}
     <section class="card">
       <div class="sec-head">
         <h2>인천 TOP 랭킹</h2>
-        <span class="tag-soft" id="rankTotal">120곳 전체</span>
+        <span class="tag-soft" id="rankTotal">123곳 전체</span>
       </div>
       <div class="chips" id="rankChips" role="group" aria-label="랭킹 권역 필터"></div>
+      <div class="search-row">
+        <input id="rankSearch" type="search" placeholder="랭킹에서 단지 찾기 (예: 더스카이·아크베이·마리나베이)" autocomplete="off" aria-label="랭킹 단지명 검색">
+        <span class="search-count" id="rankCount">전체</span>
+      </div>
       <div class="rank-head" style="margin-top:12px"><span>#</span><span>단지</span><span>점수</span><span>등급</span></div>
       <div id="rankList"></div>
       <p class="hint">행을 누르면 그 단지의 성적표로 이동합니다. 점수는 6개 영역 합산(100점 만점)입니다.</p>
@@ -513,7 +517,7 @@ button{font-family:inherit}
         <div class="map-fallback" id="mapFallback">
           <b>지도를 불러오지 못했습니다.</b><br>
           네트워크(OpenStreetMap 타일) 또는 지도 스크립트가 차단된 환경입니다.<br>
-          아래 <b>인천 랭킹</b> 탭에서 같은 120개 단지의 점수와 위치(권역)를 확인할 수 있습니다.
+          아래 <b>인천 랭킹</b> 탭에서 같은 123개 단지의 점수와 위치(권역)를 확인할 수 있습니다.
         </div>
       </div>
       <div class="map-legend">
@@ -616,126 +620,129 @@ button{font-family:inherit}
 
   /* 6영역 = 교통·학군·단지·인프라·가격·호재 (최대 20·20·15·15·15·15) */
   var COMPLEXES = [
-    {id:"so01",name:"송도아트윈푸르지오",region:"songdo",year:2015,hh:1236,price:8.2,deals:34,lat:37.392495,lng:126.631873,station:"센트럴파크",dist:286,walkMin:5,scores:[20, 19, 12, 15, 13, 14],school:"1공구 학원가 도보권, 초품아",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2015년 · 1,236세대"},
-    {id:"so02",name:"송도더샵퍼스트파크",region:"songdo",year:2017,hh:2597,price:10.8,deals:114,lat:37.387333,lng:126.633576,station:"인천대입구",dist:530,walkMin:8,scores:[17, 19, 14, 14, 15, 13],school:"송일초·예송초 초품아, 1공구 학원가·센트럴파크 도보권",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"F13·14·15 3개 블록 합계 2,597세대",tags:"송도 3공구 · 2017년 · 2,597세대"},
-    {id:"so03",name:"힐스테이트송도더스카이",region:"songdo",year:2024,hh:1525,price:11.5,deals:30,lat:37.401120,lng:126.628385,station:"국제업무지구",dist:171,walkMin:3,scores:[20, 18, 14, 14, 13, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2024년 · 1,525세대"},
-    {id:"so04",name:"송도더샵파크애비뉴",region:"songdo",year:2018,hh:668,price:9.4,deals:20,lat:37.385203,lng:126.636665,station:"인천대입구",dist:266,walkMin:4,scores:[20, 18, 10, 14, 12, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2018년 · 668세대"},
-    {id:"so05",name:"송도더샵마스터뷰",region:"songdo",year:2015,hh:1861,price:8.6,deals:61,lat:37.384102,lng:126.629997,station:"인천대입구",dist:863,walkMin:14,scores:[13, 18, 14, 14, 15, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"21·22·23-1BL 3개 블록 합계 1,861세대",tags:"송도 3공구 · 2015년 · 1,861세대"},
-    {id:"so06",name:"송도더샵센트럴시티",region:"songdo",year:2018,hh:2848,price:8.2,deals:95,lat:37.373871,lng:126.651207,station:"지식정보단지",dist:688,walkMin:11,scores:[15, 16, 14, 14, 15, 13],school:"초품아, 학원가는 차량·셔틀",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2018년 · 2,848세대"},
-    {id:"so07",name:"호반써밋송도",region:"songdo",year:2023,hh:2671,price:7.0,deals:57,lat:37.415682,lng:126.625060,station:"송도달빛축제공원",dist:952,walkMin:15,scores:[13, 17, 15, 12, 14, 15],school:"초품아(예송·해송초), 학원가는 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2023년 · 2,671세대"},
-    {id:"so08",name:"더샵송도아크베이",region:"songdo",year:2025,hh:1030,price:9.0,deals:5,lat:37.398310,lng:126.629140,station:"국제업무지구",dist:250,walkMin:4,scores:[20, 18, 13, 14, 8, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2025년 · 1,030세대"},
-    {id:"so09",name:"글로벌캠퍼스푸르지오",region:"songdo",year:2013,hh:2309,price:7.6,deals:52,lat:37.376523,lng:126.654280,station:"테크노파크",dist:668,walkMin:11,scores:[15, 17, 14, 14, 13, 13],school:"글로벌캠퍼스·초품아, 학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2013년 · 2,309세대"},
-    {id:"so10",name:"송도더샵센트럴파크1차",region:"songdo",year:2010,hh:729,price:9.5,deals:4,lat:37.396734,lng:126.637692,station:"센트럴파크",dist:439,walkMin:7,scores:[19, 20, 11, 15, 7, 14],school:"연송초·신정중 도보권, 1공구 학원가(250곳+)·채드윅 인접",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2010년 · 729세대"},
-    {id:"so11",name:"송도SK뷰",region:"songdo",year:2019,hh:2100,price:8.4,deals:67,lat:37.413551,lng:126.626396,station:"송도달빛축제공원",dist:714,walkMin:11,scores:[15, 14, 14, 12, 15, 15],school:"초품아, 학원가는 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2019년 · 2,100세대"},
-    {id:"so12",name:"송도더샵그린워크1차",region:"songdo",year:2014,hh:736,price:8.8,deals:27,lat:37.398927,lng:126.641496,station:"센트럴파크",dist:842,walkMin:13,scores:[13, 20, 11, 15, 12, 14],school:"신정초 도보권, 학원가 바로 옆(1공구 핵심)",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2014년 · 736세대"},
-    {id:"so13",name:"송도글로벌파크베르디움",region:"songdo",year:2017,hh:1153,price:7.6,deals:47,lat:37.375504,lng:126.656311,station:"테크노파크",dist:755,walkMin:12,scores:[15, 16, 12, 14, 14, 13],school:"초품아 다수, 대학가 중심·학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2017년 · 1,153세대"},
-    {id:"so14",name:"e편한세상송도",region:"songdo",year:2018,hh:2708,price:6.6,deals:98,lat:37.411463,lng:126.617440,station:"송도달빛축제공원",dist:886,walkMin:14,scores:[13, 15, 14, 11, 15, 15],school:"송담초 도보 6분(369m) 초품아·단지 내 유치원. 단 대형 학원가는 1·2공구 신송로로 차량 10분",infra:"달빛축제공원·수변 조망 우수, 대형마트·병원·약국은 차량 필요",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2018년 · 2,708세대"},
-    {id:"so15",name:"송도더샵그린스퀘어",region:"songdo",year:2014,hh:1516,price:7.5,deals:46,lat:37.371824,lng:126.653208,station:"지식정보단지",dist:973,walkMin:16,scores:[13, 16, 13, 14, 14, 13],school:"초품아, 학원가는 1공구 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2014년 · 1,516세대"},
-    {id:"so16",name:"송도에듀포레푸르지오",region:"songdo",year:2016,hh:1406,price:7.4,deals:60,lat:37.373951,lng:126.658981,station:"테크노파크",dist:955,walkMin:15,scores:[13, 16, 12, 14, 15, 13],school:"초품아 다수, 대학가 중심·학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2016년 · 1,406세대"},
-    {id:"so17",name:"랜드마크시티센트럴더샵",region:"songdo",year:2020,hh:3472,price:7.4,deals:84,lat:37.415728,lng:126.620297,station:"송도달빛축제공원",dist:1074,walkMin:17,scores:[11, 15, 14, 12, 15, 15],school:"초품아, 대형 학원가는 1공구 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"아파트 2,230 + 오피스텔 1,242세대",tags:"송도 6·8공구 · 2020년 · 3,472세대"},
-    {id:"so18",name:"디에트르송도시그니처뷰",region:"songdo",year:2023,hh:578,price:9.6,deals:1,lat:37.403624,lng:126.627080,station:"송도달빛축제공원",dist:405,walkMin:6,scores:[19, 18, 11, 14, 7, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2023년 · 578세대"},
-    {id:"so19",name:"송도더샵퍼스트월드",region:"songdo",year:2009,hh:2654,price:7.8,deals:34,lat:37.391076,lng:126.648241,station:"인천대입구",dist:951,walkMin:15,scores:[13, 18, 13, 14, 11, 13],school:"신정·먼우금초 초품아, 2공구 학원가 도보권",infra:"현대아울렛·트리플스트리트 차량 5분",future:"GTX-B 간접·송도 개발 지속",extra:"",tags:"송도 2공구 · 2009년 · 2,654세대"},
-    {id:"so20",name:"더샵송도마리나베이",region:"songdo",year:2020,hh:3100,price:6.9,deals:71,lat:37.412557,lng:126.611628,station:"송도달빛축제공원",dist:1395,walkMin:22,scores:[9, 14, 14, 12, 15, 15],school:"배정 초등 원거리(통학버스), 학원가는 1공구 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2020년 · 3,100세대"},
-    {id:"so21",name:"송도자이크리스탈오션",region:"songdo",year:2024,hh:1504,price:10.8,deals:11,lat:37.388037,lng:126.611828,station:"국제업무지구",dist:2122,walkMin:34,scores:[8, 13, 14, 12, 10, 15],school:"초품아 미확인, 학원가는 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2024년 · 1,504세대"},
-    {id:"so22",name:"송도자이더스타",region:"songdo",year:2024,hh:1533,price:7.8,deals:8,lat:37.384453,lng:126.615200,station:"센트럴파크",dist:2007,walkMin:32,scores:[8, 15, 14, 12, 9, 12],school:"초품아, 학원가는 차량",infra:"공원·수변 위주, 대형 편의시설 차량",future:"힐스테이트 레이크 개발·GTX-B 간접",extra:"",tags:"송도 11공구 · 2024년 · 1,533세대"},
-    {id:"so23",name:"송도럭스오션SK뷰",region:"songdo",year:2025,hh:1114,price:9.5,deals:3,lat:37.392321,lng:126.611660,station:"국제업무지구",dist:1862,walkMin:30,scores:[8, 13, 13, 12, 8, 15],school:"초품아 미확인, 학원가는 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2025년 · 1,114세대"},
-    {id:"ch24",name:"청라센트럴에일린의뜰",region:"cheongna",year:2018,hh:2029,price:7.6,deals:63,lat:37.535248,lng:126.646751,station:"가정",dist:2694,walkMin:43,scores:[8, 14, 14, 13, 15, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2018년 · 2,029세대"},
-    {id:"ch25",name:"청라한양수자인레이크블루",region:"cheongna",year:2019,hh:1534,price:8.0,deals:27,lat:37.537666,lng:126.629841,station:"청라국제도시",dist:2140,walkMin:34,scores:[8, 14, 14, 14, 12, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2019년 · 1,534세대"},
-    {id:"ch26",name:"청라제일풍경채2차",region:"cheongna",year:2017,hh:1581,price:7.2,deals:44,lat:37.537401,lng:126.646925,station:"서구청",dist:2752,walkMin:44,scores:[8, 14, 14, 13, 13, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2017년 · 1,581세대"},
-    {id:"ch27",name:"청라29블럭호반베르디움",region:"cheongna",year:2012,hh:2134,price:6.9,deals:50,lat:37.532012,lng:126.631379,station:"청라국제도시",dist:2783,walkMin:45,scores:[8, 14, 14, 13, 13, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2012년 · 2,134세대"},
-    {id:"ch28",name:"청라롯데캐슬",region:"cheongna",year:2013,hh:1326,price:6.8,deals:23,lat:37.530918,lng:126.646936,station:"가정",dist:2507,walkMin:40,scores:[8, 14, 12, 14, 11, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2013년 · 1,326세대"},
-    {id:"ch29",name:"청라힐데스하임",region:"cheongna",year:2011,hh:1284,price:7.2,deals:37,lat:37.529772,lng:126.652168,station:"가정",dist:2028,walkMin:33,scores:[8, 14, 12, 13, 12, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 1,284세대"},
-    {id:"ch30",name:"청라호수공원한신더휴",region:"cheongna",year:2020,hh:907,price:7.5,deals:18,lat:37.528800,lng:126.629816,station:"청라국제도시",dist:3109,walkMin:50,scores:[8, 14, 12, 14, 11, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2020년 · 907세대"},
-    {id:"ch31",name:"청라한화꿈에그린",region:"cheongna",year:2012,hh:1172,price:7.0,deals:17,lat:37.537782,lng:126.638655,station:"청라국제도시",dist:2418,walkMin:39,scores:[8, 14, 12, 14, 10, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2012년 · 1,172세대"},
-    {id:"ch32",name:"청라린스트라우스",region:"cheongna",year:2013,hh:1040,price:7.1,deals:20,lat:37.535287,lng:126.651883,station:"가정",dist:2296,walkMin:37,scores:[8, 14, 12, 13, 11, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 1,040세대"},
-    {id:"ch33",name:"청라엑슬루타워",region:"cheongna",year:2011,hh:996,price:7.4,deals:23,lat:37.531119,lng:126.651426,station:"가정",dist:2136,walkMin:34,scores:[8, 14, 11, 13, 11, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 996세대"},
-    {id:"ch34",name:"청라자이",region:"cheongna",year:2010,hh:884,price:6.9,deals:14,lat:37.528460,lng:126.658951,station:"가정",dist:1413,walkMin:23,scores:[9, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2010년 · 884세대"},
-    {id:"ch35",name:"청라한라비발디",region:"cheongna",year:2011,hh:992,price:6.9,deals:15,lat:37.539313,lng:126.638359,station:"청라국제도시",dist:2260,walkMin:36,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 992세대"},
-    {id:"ch36",name:"청라SKVIEW",region:"cheongna",year:2011,hh:879,price:6.8,deals:14,lat:37.527032,lng:126.630448,station:"청라국제도시",dist:3312,walkMin:53,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 879세대"},
-    {id:"ch37",name:"청라더샵레이크파크",region:"cheongna",year:2013,hh:766,price:7.3,deals:16,lat:37.530945,lng:126.638507,station:"청라국제도시",dist:3090,walkMin:50,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 766세대"},
-    {id:"ch38",name:"청라푸르지오",region:"cheongna",year:2013,hh:751,price:7.0,deals:14,lat:37.535008,lng:126.638487,station:"청라국제도시",dist:2681,walkMin:43,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 751세대"},
-    {id:"ge39",name:"우미린더시그니처",region:"geomdan",year:2022,hh:1268,price:6.9,deals:46,lat:37.595400,lng:126.711401,station:"아라",dist:395,walkMin:6,scores:[19, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,268세대"},
-    {id:"ge40",name:"검단신도시푸르지오더베뉴",region:"geomdan",year:2021,hh:1540,price:6.8,deals:67,lat:37.598323,lng:126.709442,station:"아라",dist:763,walkMin:12,scores:[15, 15, 14, 12, 15, 12],school:"한별초 271m 초품아, 학원가는 차량",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,540세대"},
-    {id:"ge41",name:"힐스테이트신검단센트럴",region:"geomdan",year:2025,hh:1535,price:7.3,deals:9,lat:37.606786,lng:126.697502,station:"신검단중앙",dist:435,walkMin:7,scores:[19, 15, 14, 12, 10, 12],school:"신검단중앙역 도보권, 학원가 형성 중",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2025년 · 1,535세대"},
-    {id:"ge42",name:"호반써밋1차",region:"geomdan",year:2021,hh:1168,price:6.6,deals:63,lat:37.595475,lng:126.709163,station:"아라",dist:519,walkMin:8,scores:[17, 14, 12, 12, 15, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,168세대"},
-    {id:"ge43",name:"검단금호어울림센트럴",region:"geomdan",year:2021,hh:1452,price:6.7,deals:52,lat:37.596195,lng:126.714279,station:"아라",dist:452,walkMin:7,scores:[17, 14, 12, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,452세대"},
-    {id:"ge44",name:"원당풍림아이원",region:"geomdan",year:2004,hh:1739,price:5.4,deals:53,lat:37.591054,lng:126.677498,station:"완정",dist:442,walkMin:7,scores:[19, 14, 12, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2004년 · 1,739세대"},
-    {id:"ge45",name:"파라곤센트럴파크",region:"geomdan",year:2022,hh:1122,price:6.5,deals:53,lat:37.586488,lng:126.710994,station:"아라",dist:669,walkMin:11,scores:[15, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,122세대"},
-    {id:"ge46",name:"신검단중앙역풍경채어바니티",region:"geomdan",year:2024,hh:1425,price:7.0,deals:7,lat:37.605466,lng:126.700301,station:"신검단중앙",dist:386,walkMin:6,scores:[19, 14, 13, 12, 9, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2024년 · 1,425세대"},
-    {id:"ge47",name:"검단신도시예미지트리플에듀",region:"geomdan",year:2022,hh:1249,price:6.8,deals:57,lat:37.600563,lng:126.713634,station:"아라",dist:930,walkMin:15,scores:[13, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,249세대"},
-    {id:"ge48",name:"검단신도시디에트르더펠리체",region:"geomdan",year:2022,hh:1279,price:6.7,deals:30,lat:37.584127,lng:126.710028,station:"아라",dist:945,walkMin:15,scores:[13, 14, 13, 12, 13, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,279세대"},
-    {id:"ge49",name:"검단신도시디에트르더힐",region:"geomdan",year:2022,hh:1417,price:7.2,deals:50,lat:37.602292,lng:126.709421,station:"신검단중앙",dist:1063,walkMin:17,scores:[11, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,417세대"},
-    {id:"ge50",name:"당하KCC스위첸",region:"geomdan",year:2005,hh:1015,price:5.2,deals:29,lat:37.588862,lng:126.678119,station:"독정",dist:478,walkMin:8,scores:[17, 14, 11, 12, 10, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2005년 · 1,015세대"},
-    {id:"ge51",name:"검단신도시신안인스빌어반퍼스트",region:"geomdan",year:2022,hh:1073,price:6.4,deals:41,lat:37.581624,lng:126.712750,station:"아라",dist:1177,walkMin:19,scores:[11, 14, 13, 12, 13, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,073세대"},
-    {id:"ge52",name:"검단오류역우방아이유쉘",region:"geomdan",year:2021,hh:420,price:5.3,deals:7,lat:37.595333,lng:126.633622,station:"검단오류",dist:420,walkMin:7,scores:[19, 14, 8, 12, 9, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 420세대"},
-    {id:"ge53",name:"검단신도시모아미래도엘리트파크",region:"geomdan",year:2022,hh:658,price:6.4,deals:24,lat:37.583664,lng:126.707609,station:"아라",dist:1076,walkMin:17,scores:[11, 14, 11, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 658세대"},
-    {id:"ye54",name:"운서SKVIEWSKYCITY",region:"yeongjong",year:2022,hh:1153,price:5.2,deals:40,lat:37.482670,lng:126.501120,station:"운서",dist:1293,walkMin:21,scores:[11, 13, 13, 12, 13, 12],school:"운서역 학군, 학원가 소규모",infra:"운서역 상권·공항철도",future:"제3연륙교·공항 배후수요",extra:"",tags:"2022년 · 1,153세대"},
-    {id:"ye55",name:"운서역반도유보라퍼스티지",region:"yeongjong",year:2022,hh:450,price:5.0,deals:16,lat:37.488967,lng:126.498857,station:"운서",dist:611,walkMin:10,scores:[15, 13, 9, 12, 11, 12],school:"운서역 학군, 학원가 소규모",infra:"운서역 상권·공항철도",future:"제3연륙교·공항 배후수요",extra:"",tags:"2022년 · 450세대"},
-    {id:"ye56",name:"하늘도시우미린1단지",region:"yeongjong",year:2012,hh:1680,price:4.7,deals:52,lat:37.492830,lng:126.556381,station:"영종",dist:3493,walkMin:56,scores:[8, 14, 13, 11, 13, 12],school:"초품아, 하늘도시 학원가 도보권",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,680세대"},
-    {id:"ye57",name:"영종센트럴푸르지오자이",region:"yeongjong",year:2019,hh:1604,price:5.3,deals:37,lat:37.489644,lng:126.548695,station:"영종",dist:3250,walkMin:52,scores:[8, 13, 14, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2019년 · 1,604세대"},
-    {id:"ye58",name:"E편한세상영종국제도시센텀베뉴",region:"yeongjong",year:2023,hh:1409,price:5.1,deals:34,lat:37.487688,lng:126.551697,station:"영종",dist:3587,walkMin:57,scores:[8, 13, 13, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2023년 · 1,409세대"},
-    {id:"ye59",name:"E편한세상영종국제도시오션하임",region:"yeongjong",year:2018,hh:1520,price:5.4,deals:43,lat:37.493192,lng:126.567780,station:"영종",dist:4312,walkMin:69,scores:[6, 13, 14, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2018년 · 1,520세대"},
-    {id:"ye60",name:"인천영종한양수자인",region:"yeongjong",year:2012,hh:1304,price:5.0,deals:37,lat:37.491498,lng:126.553516,station:"영종",dist:3395,walkMin:54,scores:[8, 13, 12, 11, 12, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,304세대"},
-    {id:"ye61",name:"영종힐스테이트",region:"yeongjong",year:2012,hh:1628,price:4.9,deals:31,lat:37.490634,lng:126.565732,station:"영종",dist:4306,walkMin:69,scores:[6, 13, 13, 11, 12, 12],school:"하늘도시 초품아, 학원가 소규모",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,628세대"},
-    {id:"ye62",name:"스카이시티자이",region:"yeongjong",year:2018,hh:1034,price:5.0,deals:15,lat:37.491188,lng:126.558853,station:"영종",dist:3778,walkMin:61,scores:[8, 13, 12, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2018년 · 1,034세대"},
-    {id:"ye63",name:"영종국제도시한신더휴스카이파크",region:"yeongjong",year:2019,hh:562,price:5.2,deals:19,lat:37.501044,lng:126.563287,station:"영종",dist:3586,walkMin:57,scores:[8, 13, 10, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2019년 · 562세대"},
-    {id:"ye64",name:"인천영종하늘도시한라비발디",region:"yeongjong",year:2012,hh:1365,price:4.8,deals:18,lat:37.491998,lng:126.563687,station:"영종",dist:4072,walkMin:65,scores:[6, 13, 12, 11, 10, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,365세대"},
-    {id:"ye65",name:"호반써밋스카이센트럴",region:"yeongjong",year:2022,hh:534,price:5.1,deals:19,lat:37.495449,lng:126.567125,station:"영종",dist:4144,walkMin:66,scores:[6, 13, 11, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2022년 · 534세대"},
-    {id:"bu66",name:"더샵부평센트럴시티",region:"bupyeong",year:2022,hh:5678,price:6.0,deals:65,lat:37.477148,lng:126.698465,station:"동암",dist:800,walkMin:13,scores:[15, 17, 15, 14, 15, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2022년 · 5,678세대"},
-    {id:"bu67",name:"부평역해링턴플레이스",region:"bupyeong",year:2024,hh:2413,price:6.6,deals:18,lat:37.483989,lng:126.721995,station:"동수",dist:355,walkMin:6,scores:[19, 17, 15, 14, 11, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2024년 · 2,413세대"},
-    {id:"bu68",name:"힐스테이트부평",region:"bupyeong",year:2023,hh:1409,price:6.1,deals:58,lat:37.484527,lng:126.705939,station:"백운",dist:175,walkMin:3,scores:[20, 16, 13, 13, 14, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2023년 · 1,409세대"},
-    {id:"bu69",name:"부평SKVIEW-해모로",region:"bupyeong",year:2023,hh:1559,price:6.0,deals:67,lat:37.492022,lng:126.733680,station:"부평",dist:904,walkMin:14,scores:[13, 17, 14, 14, 15, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2023년 · 1,559세대"},
-    {id:"bu70",name:"부평동아1단지",region:"bupyeong",year:1989,hh:2497,price:4.8,deals:46,lat:37.495508,lng:126.719032,station:"부평시장",dist:433,walkMin:7,scores:[19, 17, 10, 14, 12, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"1989년 · 2,497세대"},
-    {id:"bu71",name:"래미안부평1단지",region:"bupyeong",year:2014,hh:1145,price:6.2,deals:28,lat:37.503361,lng:126.724018,station:"부평시장",dist:568,walkMin:9,scores:[17, 16, 12, 13, 12, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2014년 · 1,145세대"},
-    {id:"bu72",name:"부개주공3단지",region:"bupyeong",year:1996,hh:1724,price:4.6,deals:80,lat:37.501894,lng:126.738494,station:"삼산체육관",dist:598,walkMin:10,scores:[17, 16, 11, 13, 13, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"1996년 · 1,724세대"},
-    {id:"bu73",name:"삼산타운1단지",region:"bupyeong",year:2005,hh:1873,price:5.6,deals:74,lat:37.512987,lng:126.733628,station:"굴포천",dist:709,walkMin:11,scores:[15, 16, 12, 13, 13, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2005년 · 1,873세대"},
-    {id:"bu74",name:"E편한세상부평그랑힐스",region:"bupyeong",year:2024,hh:5050,price:6.3,deals:129,lat:37.515849,lng:126.699633,station:"갈산",dist:1937,walkMin:31,scores:[8, 16, 15, 13, 15, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2024년 · 5,050세대"},
-    {id:"bu75",name:"부평캐슬앤더샵퍼스트",region:"bupyeong",year:2024,hh:1623,price:6.4,deals:61,lat:37.514847,lng:126.702608,station:"갈산",dist:1688,walkMin:27,scores:[8, 16, 14, 13, 15, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2024년 · 1,623세대"},
-    {id:"bu76",name:"부개역푸르지오",region:"bupyeong",year:2010,hh:1054,price:5.4,deals:24,lat:37.490182,lng:126.737814,station:"부평",dist:1251,walkMin:20,scores:[11, 16, 12, 13, 11, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2010년 · 1,054세대"},
-    {id:"bu77",name:"청천푸르지오",region:"bupyeong",year:1998,hh:2270,price:4.7,deals:42,lat:37.514257,lng:126.708057,station:"갈산",dist:1230,walkMin:20,scores:[11, 16, 12, 13, 11, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"1998년 · 2,270세대"},
-    {id:"bu78",name:"삼산타운2단지",region:"bupyeong",year:2005,hh:1622,price:5.5,deals:43,lat:37.515287,lng:126.737411,station:"삼산체육관",dist:1060,walkMin:17,scores:[11, 16, 12, 13, 11, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2005년 · 1,622세대"},
-    {id:"bu79",name:"금호이수마운트밸리",region:"bupyeong",year:2007,hh:1365,price:4.5,deals:16,lat:37.503847,lng:126.704475,station:"부평구청",dist:1524,walkMin:24,scores:[9, 16, 11, 13, 9, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2007년 · 1,365세대"},
-    {id:"bu80",name:"삼산주공미래타운4차",region:"bupyeong",year:2000,hh:968,price:4.6,deals:26,lat:37.520647,lng:126.744057,station:"삼산체육관",dist:1585,walkMin:25,scores:[9, 16, 10, 13, 10, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2000년 · 968세대"},
-    {id:"na81",name:"구월힐스테이트1단지",region:"namdong",year:2007,hh:5076,price:5.2,deals:119,lat:37.454334,lng:126.712032,station:"석천사거리",dist:305,walkMin:5,scores:[19, 20, 13, 14, 13, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2007년 · 5,076세대"},
-    {id:"na82",name:"구월롯데캐슬골드2단지",region:"namdong",year:2007,hh:3384,price:5.4,deals:63,lat:37.453951,lng:126.716877,station:"모래내시장",dist:323,walkMin:5,scores:[19, 20, 13, 14, 13, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2007년 · 3,384세대"},
-    {id:"na83",name:"한화포레나인천구월",region:"namdong",year:2023,hh:1115,price:6.2,deals:25,lat:37.459098,lng:126.713719,station:"석천사거리",dist:382,walkMin:6,scores:[19, 20, 13, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2023년 · 1,115세대"},
-    {id:"na84",name:"간석래미안자이",region:"namdong",year:2008,hh:2432,price:4.9,deals:62,lat:37.458858,lng:126.710600,station:"석천사거리",dist:230,walkMin:4,scores:[20, 16, 13, 13, 13, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2008년 · 2,432세대"},
-    {id:"na85",name:"인천시청역힐스테이트",region:"namdong",year:2024,hh:746,price:5.8,deals:29,lat:37.458302,lng:126.695344,station:"석바위시장",dist:286,walkMin:5,scores:[20, 16, 12, 13, 12, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2024년 · 746세대"},
-    {id:"na86",name:"어울림마을",region:"namdong",year:2005,hh:1733,price:4.5,deals:34,lat:37.459255,lng:126.707357,station:"석천사거리",dist:390,walkMin:6,scores:[19, 16, 12, 13, 11, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2005년 · 1,733세대"},
-    {id:"na87",name:"포레시안",region:"namdong",year:2011,hh:3208,price:4.7,deals:67,lat:37.461979,lng:126.732299,station:"만수",dist:797,walkMin:13,scores:[15, 15, 14, 13, 14, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2011년 · 3,208세대"},
-    {id:"na88",name:"구월아시아드선수촌센트럴자이",region:"namdong",year:2015,hh:850,price:5.0,deals:18,lat:37.444195,lng:126.713250,station:"인천터미널",dist:1197,walkMin:19,scores:[11, 20, 12, 14, 11, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2015년 · 850세대"},
-    {id:"na89",name:"구월아시아드선수촌5단지",region:"namdong",year:2015,hh:782,price:4.9,deals:25,lat:37.444301,lng:126.716003,station:"모래내시장",dist:1326,walkMin:21,scores:[9, 20, 12, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2015년 · 782세대"},
-    {id:"na90",name:"에코메트로12단지한화꿈에그린",region:"namdong",year:2009,hh:1298,price:4.5,deals:22,lat:37.396414,lng:126.733576,station:"소래포구",dist:506,walkMin:8,scores:[17, 15, 11, 13, 10, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2009년 · 1,298세대"},
-    {id:"na91",name:"소래마을풍림",region:"namdong",year:2000,hh:1517,price:4.4,deals:30,lat:37.406381,lng:126.738575,station:"소래포구",dist:749,walkMin:12,scores:[15, 15, 12, 13, 11, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2000년 · 1,517세대"},
-    {id:"na92",name:"에코메트로11단지한화꿈에그린",region:"namdong",year:2009,hh:1622,price:4.6,deals:43,lat:37.393552,lng:126.730193,station:"소래포구",dist:875,walkMin:14,scores:[13, 15, 12, 13, 11, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2009년 · 1,622세대"},
-    {id:"na93",name:"서창센트럴푸르지오",region:"namdong",year:2018,hh:1160,price:5.0,deals:23,lat:37.428976,lng:126.750577,station:"운연",dist:1313,walkMin:21,scores:[9, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2018년 · 1,160세대"},
-    {id:"na94",name:"e편한세상서창",region:"namdong",year:2017,hh:835,price:5.0,deals:26,lat:37.426060,lng:126.750203,station:"운연",dist:1600,walkMin:26,scores:[8, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2017년 · 835세대"},
-    {id:"na95",name:"더포레스트",region:"namdong",year:2017,hh:1228,price:5.1,deals:18,lat:37.427814,lng:126.743699,station:"운연",dist:1830,walkMin:29,scores:[8, 14, 12, 12, 11, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2017년 · 1,228세대"},
-    {id:"mi96",name:"인천SK스카이뷰",region:"michuhol",year:2016,hh:3971,price:5.8,deals:75,lat:37.449545,lng:126.645480,station:"인하대",dist:423,walkMin:7,scores:[19, 15, 14, 12, 15, 12],school:"용현초·인하대 인접, 학원가는 차량",infra:"용현 상권·인하대",future:"시티오씨엘 개발·수인선",extra:"",tags:"2016년 · 3,971세대"},
-    {id:"mi97",name:"힐스테이트푸르지오주안",region:"michuhol",year:2023,hh:2958,price:6.4,deals:115,lat:37.452735,lng:126.676508,station:"시민공원",dist:712,walkMin:11,scores:[15, 16, 15, 13, 15, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2023년 · 2,958세대"},
-    {id:"mi98",name:"더샵아르테",region:"michuhol",year:2024,hh:1146,price:6.2,deals:27,lat:37.456057,lng:126.690970,station:"석바위시장",dist:212,walkMin:3,scores:[20, 16, 13, 13, 12, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2024년 · 1,146세대"},
-    {id:"mi99",name:"주안더월드스테이트",region:"michuhol",year:2008,hh:3161,price:5.2,deals:67,lat:37.467490,lng:126.685781,station:"주안",dist:524,walkMin:8,scores:[17, 16, 13, 13, 13, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2008년 · 3,161세대"},
-    {id:"mi100",name:"주안역센트레빌",region:"michuhol",year:2021,hh:1458,price:4.8,deals:47,lat:37.466516,lng:126.685638,station:"주안",dist:465,walkMin:7,scores:[17, 16, 12, 13, 14, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2021년 · 1,458세대"},
-    {id:"mi101",name:"서희스타힐스스타디움센트럴시티",region:"michuhol",year:2022,hh:1232,price:5.6,deals:27,lat:37.466682,lng:126.645020,station:"도원",dist:310,walkMin:5,scores:[19, 13, 13, 12, 12, 13],school:"학원가 차량·초품아",infra:"숭의 상권·수인분당선",future:"숭의 재개발·수인선",extra:"",tags:"2022년 · 1,232세대"},
-    {id:"mi102",name:"힐스테이트숭의역",region:"michuhol",year:2025,hh:1012,price:6.0,deals:6,lat:37.461275,lng:126.639233,station:"숭의",dist:110,walkMin:2,scores:[20, 13, 13, 12, 9, 13],school:"숭의역 도보권, 학원가는 차량",infra:"숭의 상권·수인분당선",future:"숭의 재개발·수인선",extra:"",tags:"2025년 · 1,012세대"},
-    {id:"mi103",name:"주안파크자이더플래티넘",region:"michuhol",year:2023,hh:2054,price:5.8,deals:59,lat:37.447132,lng:126.672568,station:"시민공원",dist:1425,walkMin:23,scores:[9, 16, 15, 13, 14, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2023년 · 2,054세대"},
-    {id:"mi104",name:"더샵인천스카이타워1단지",region:"michuhol",year:2020,hh:1309,price:6.6,deals:43,lat:37.470048,lng:126.665159,station:"도화",dist:527,walkMin:8,scores:[17, 13, 12, 12, 13, 12],school:"숭의·도화 학군, 학원가는 차량",infra:"도화역 상권·숭의체육관",future:"도화·숭의 정비사업",extra:"",tags:"2020년 · 1,309세대"},
-    {id:"mi105",name:"용현자이크레스트",region:"michuhol",year:2023,hh:2277,price:6.0,deals:13,lat:37.455723,lng:126.646976,station:"인하대",dist:873,walkMin:14,scores:[13, 15, 15, 12, 10, 12],school:"초품아, 인하대 학원가 차량",infra:"용현 상권·인하대",future:"시티오씨엘 개발·수인선",extra:"",tags:"2023년 · 2,277세대"},
-    {id:"mi106",name:"학익풍림아이원",region:"michuhol",year:2007,hh:2093,price:4.9,deals:40,lat:37.440880,lng:126.660213,station:"인하대",dist:1219,walkMin:20,scores:[11, 14, 13, 12, 11, 13],school:"초품아, 학원가 차량",infra:"학익 상권·문학경기장",future:"시티오씨엘 4단계·학익 개발",extra:"",tags:"2007년 · 2,093세대"},
-    {id:"mi107",name:"시티오씨엘1단지",region:"michuhol",year:2024,hh:1131,price:6.2,deals:6,lat:37.441882,lng:126.643078,station:"인하대",dist:934,walkMin:15,scores:[13, 14, 13, 12, 9, 13],school:"초품아, 학원가 차량",infra:"학익 상권·문학경기장",future:"시티오씨엘 4단계·학익 개발",extra:"",tags:"2024년 · 1,131세대"},
-    {id:"se108",name:"루원E편한세상하늘채",region:"seogu",year:2010,hh:3331,price:5.5,deals:43,lat:37.521091,lng:126.672501,station:"가정",dist:435,walkMin:7,scores:[19, 13, 14, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2010년 · 3,331세대"},
-    {id:"se109",name:"루원시티프라디움",region:"seogu",year:2018,hh:1598,price:6.4,deals:21,lat:37.523550,lng:126.678009,station:"가정",dist:355,walkMin:6,scores:[19, 13, 14, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 1,598세대"},
-    {id:"se110",name:"가재울역트루엘에코시티",region:"seogu",year:2024,hh:1218,price:5.4,deals:34,lat:37.484976,lng:126.686665,station:"가재울",dist:268,walkMin:4,scores:[20, 12, 13, 10, 13, 11],school:"학원가 차량 10분",infra:"가좌 상권·근린공원",future:"가재울역·정비사업",extra:"",tags:"2024년 · 1,218세대"},
-    {id:"se111",name:"가좌두산위브트레지움",region:"seogu",year:2017,hh:1757,price:5.2,deals:51,lat:37.488907,lng:126.685329,station:"가재울",dist:550,walkMin:9,scores:[17, 12, 14, 10, 14, 11],school:"학원가 차량 10분",infra:"가좌 상권·근린공원",future:"가재울역·정비사업",extra:"",tags:"2017년 · 1,757세대"},
-    {id:"se112",name:"루원시티SK리더스뷰",region:"seogu",year:2022,hh:1300,price:6.2,deals:0,lat:37.523840,lng:126.671242,station:"가정",dist:286,walkMin:5,scores:[20, 13, 13, 12, 7, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2022년 · 1,300세대"},
-    {id:"se113",name:"루원시티대성베르힐더센트로",region:"seogu",year:2023,hh:1179,price:6.2,deals:1,lat:37.523550,lng:126.678009,station:"가정",dist:355,walkMin:6,scores:[19, 13, 13, 12, 7, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2023년 · 1,179세대"},
-    {id:"se114",name:"포레나루원시티",region:"seogu",year:2022,hh:1000,price:6.0,deals:0,lat:37.527763,lng:126.677562,station:"가정",dist:444,walkMin:7,scores:[19, 13, 13, 12, 7, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2022년 · 1,000세대"},
-    {id:"se115",name:"루원호반베르디움더센트럴",region:"seogu",year:2018,hh:980,price:5.9,deals:18,lat:37.527906,lng:126.668131,station:"가정",dist:646,walkMin:10,scores:[15, 13, 12, 12, 11, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 980세대"},
-    {id:"se116",name:"루원시티대성베르힐",region:"seogu",year:2017,hh:1147,price:6.1,deals:42,lat:37.522787,lng:126.664124,station:"가정",dist:921,walkMin:15,scores:[13, 13, 12, 12, 13, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2017년 · 1,147세대"},
-    {id:"se117",name:"검암서해그랑블",region:"seogu",year:2003,hh:950,price:4.7,deals:27,lat:37.566594,lng:126.674306,station:"검암",dist:300,walkMin:5,scores:[20, 13, 10, 11, 10, 11],school:"학원가 차량·초품아",infra:"검암역 상권·공항철도",future:"검암역 환승·검단 연장",extra:"",tags:"2003년 · 950세대"},
-    {id:"se118",name:"루원제일풍경채",region:"seogu",year:2018,hh:900,price:5.8,deals:24,lat:37.531375,lng:126.666993,station:"가정",dist:978,walkMin:16,scores:[13, 13, 12, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 900세대"},
-    {id:"se119",name:"석남금호어울림",region:"seogu",year:2007,hh:769,price:4.8,deals:23,lat:37.503704,lng:126.668557,station:"석남",dist:356,walkMin:6,scores:[19, 12, 10, 11, 10, 11],school:"학원가는 차량",infra:"석남역 상권",future:"7호선 석남·청라 연장",extra:"",tags:"2007년 · 769세대"},
-    {id:"se120",name:"루원시티어울림",region:"seogu",year:2015,hh:1243,price:6.0,deals:21,lat:37.534122,lng:126.667987,station:"가정",dist:1181,walkMin:19,scores:[11, 13, 12, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2015년 · 1,243세대"}
+    {id:"so01",name:"송도더샵퍼스트파크",region:"songdo",year:2017,hh:2597,price:12.0,deals:114,lat:37.387333,lng:126.633576,station:"인천대입구",dist:530,walkMin:8,scores:[17, 19, 14, 14, 15, 13],school:"송일초·예송초 초품아, 1공구 학원가·센트럴파크 도보권",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"F13·14·15 3개 블록 합계 2,597세대",tags:"송도 3공구 · 2017년 · 2,597세대",kw:"퍼스트파크 더샵퍼스트파크"},
+    {id:"so02",name:"송도더샵파크애비뉴",region:"songdo",year:2018,hh:668,price:14.2,deals:20,lat:37.385203,lng:126.636665,station:"인천대입구",dist:266,walkMin:4,scores:[20, 18, 10, 14, 14, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2018년 · 668세대",kw:""},
+    {id:"so03",name:"송도더샵마스터뷰",region:"songdo",year:2015,hh:1861,price:8.7,deals:61,lat:37.384102,lng:126.629997,station:"인천대입구",dist:863,walkMin:14,scores:[13, 18, 14, 14, 14, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"21·22·23-1BL 3개 블록 합계 1,861세대",tags:"송도 3공구 · 2015년 · 1,861세대",kw:"마스터뷰"},
+    {id:"so04",name:"힐스테이트송도더스카이",region:"songdo",year:2024,hh:1205,price:12.5,deals:30,lat:37.401120,lng:126.628385,station:"국제업무지구",dist:171,walkMin:3,scores:[20, 12, 13, 14, 14, 13],school:"배정 연송초 직선 960m(도보 15분+)로 초품아 아님, 단지 상가 학원 16곳·1km 61곳. 1공구 신송로 학원가는 차량 8분",infra:"GS더프레시 도보 4분·워터프론트 조망, 현대아울렛 3.1km",future:"GTX-B 인천대입구역 2031년·국제업무지구 개발",extra:"K-apt 1,205세대·5개동(최고 59층), 2024.05 준공",tags:"송도 3공구 · 2024년 · 1,205세대",kw:"더스카이 송도더스카이 힐스테이트더스카이"},
+    {id:"so05",name:"송도더샵센트럴시티",region:"songdo",year:2018,hh:2848,price:9.3,deals:95,lat:37.373871,lng:126.651207,station:"지식정보단지",dist:688,walkMin:11,scores:[15, 16, 14, 14, 14, 13],school:"초품아, 학원가는 차량·셔틀",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2018년 · 2,848세대",kw:"센트럴시티"},
+    {id:"so06",name:"송도더샵센트럴파크1차",region:"songdo",year:2010,hh:729,price:7.6,deals:4,lat:37.396734,lng:126.637692,station:"센트럴파크",dist:439,walkMin:7,scores:[19, 20, 11, 15, 6, 14],school:"연송초·신정중 도보권, 1공구 학원가(250곳+)·채드윅 인접",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2010년 · 729세대",kw:"센트럴파크 센트럴파크1차"},
+    {id:"so07",name:"송도더샵그린워크1차",region:"songdo",year:2014,hh:736,price:8.8,deals:27,lat:37.398927,lng:126.641496,station:"센트럴파크",dist:842,walkMin:13,scores:[13, 20, 11, 15, 12, 14],school:"신정초 도보권, 학원가 바로 옆(1공구 핵심)",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2014년 · 736세대",kw:""},
+    {id:"so08",name:"디에트르송도시그니처뷰",region:"songdo",year:2023,hh:578,price:10.2,deals:1,lat:37.403624,lng:126.627080,station:"송도달빛축제공원",dist:405,walkMin:6,scores:[19, 18, 11, 14, 9, 13],school:"송일·예송초 초품아, 1공구 학원가 차량 5분",infra:"파크·커낼워크 차량 5분",future:"GTX-B 인천대입구역 2031년",extra:"",tags:"송도 3공구 · 2023년 · 578세대",kw:""},
+    {id:"so09",name:"송도SK뷰",region:"songdo",year:2019,hh:2100,price:8.4,deals:67,lat:37.413551,lng:126.626396,station:"송도달빛축제공원",dist:714,walkMin:11,scores:[15, 14, 14, 12, 13, 15],school:"초품아, 학원가는 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2019년 · 2,100세대",kw:""},
+    {id:"so10",name:"글로벌캠퍼스푸르지오",region:"songdo",year:2013,hh:2309,price:7.6,deals:52,lat:37.376523,lng:126.654280,station:"테크노파크",dist:668,walkMin:11,scores:[15, 17, 14, 14, 10, 13],school:"글로벌캠퍼스·초품아, 학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2013년 · 2,309세대",kw:""},
+    {id:"so11",name:"송도센트럴파크푸르지오",region:"songdo",year:2015,hh:551,price:10.1,deals:12,lat:37.392601,lng:126.643997,station:"센트럴파크",dist:813,walkMin:13,scores:[13, 19, 10, 15, 12, 14],school:"신정초 도보 8분(503m)·1공구 학원가 도보권(1km 학원 660곳)",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2015년 · 551세대",kw:"센트럴파크푸르지오"},
+    {id:"so12",name:"송도자이하버뷰2단지",region:"songdo",year:2011,hh:523,price:8.6,deals:16,lat:37.395188,lng:126.643136,station:"센트럴파크",dist:755,walkMin:12,scores:[15, 19, 10, 15, 10, 14],school:"신정초·1공구 학원가 도보권(컨벤시아대로), 학원 밀집지 인접",infra:"센트럴파크·커낼워크·현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"",tags:"송도 1공구 · 2011년 · 523세대",kw:"하버뷰 자이하버뷰"},
+    {id:"so13",name:"호반써밋송도",region:"songdo",year:2023,hh:2671,price:7.0,deals:57,lat:37.415682,lng:126.625060,station:"송도달빛축제공원",dist:952,walkMin:15,scores:[13, 17, 15, 12, 10, 15],school:"초품아(예송·해송초), 학원가는 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2023년 · 2,671세대",kw:""},
+    {id:"so14",name:"송도글로벌파크베르디움",region:"songdo",year:2017,hh:1153,price:7.6,deals:47,lat:37.375504,lng:126.656311,station:"테크노파크",dist:755,walkMin:12,scores:[15, 16, 12, 14, 12, 13],school:"초품아 다수, 대학가 중심·학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2017년 · 1,153세대",kw:""},
+    {id:"so15",name:"송도아트윈푸르지오",region:"songdo",year:2015,hh:1236,price:8.4,deals:34,lat:37.392495,lng:126.631873,station:"센트럴파크",dist:286,walkMin:5,scores:[20, 9, 12, 15, 12, 14],school:"센트럴파크역 도보 3분(242m) 초역세권 주상복합이지만, 단지 코앞 초품아가 아니고(배정 예송초 직선 600m·도보 8분) 도보권에 대형 학원가가 없음(1·2공구 신송로 학원가 차량 8~10분)",infra:"센트럴파크·커낼워크 도보권, 현대아울렛 차량 5분",future:"GTX-B 인천대입구역 2031년·인천발 KTX 2027년",extra:"아파트 999세대 + 오피스텔, 주상복합·최고 60층",tags:"송도 1공구 · 2015년 · 1,236세대",kw:"아트윈 아트윈푸르지오"},
+    {id:"so16",name:"더샵송도아크베이",region:"songdo",year:2025,hh:1030,price:9.7,deals:5,lat:37.398310,lng:126.629140,station:"국제업무지구",dist:250,walkMin:4,scores:[20, 12, 13, 14, 9, 13],school:"배정 연송초 직선 900m(도보 14~18분)로 초품아 아님, 1km 학원 61곳·대형 학원가는 차량",infra:"GS더프레시 도보 4분·워터프론트, 현대아울렛 3.1km",future:"GTX-B 인천대입구역 2031년",extra:"아파트 775세대 + 오피스텔, K-apt 총 1,030세대·6개동",tags:"송도 3공구 · 2025년 · 1,030세대",kw:"아크베이 송도아크베이"},
+    {id:"so17",name:"송도더샵그린스퀘어",region:"songdo",year:2014,hh:1516,price:7.5,deals:46,lat:37.371824,lng:126.653208,station:"지식정보단지",dist:973,walkMin:16,scores:[13, 16, 13, 14, 12, 13],school:"초품아, 학원가는 1공구 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2014년 · 1,516세대",kw:""},
+    {id:"so18",name:"송도더샵퍼스트월드",region:"songdo",year:2009,hh:2654,price:7.8,deals:34,lat:37.391076,lng:126.648241,station:"인천대입구",dist:951,walkMin:15,scores:[13, 18, 13, 14, 10, 13],school:"신정·먼우금초 초품아, 2공구 학원가 도보권",infra:"현대아울렛·트리플스트리트 차량 5분",future:"GTX-B 간접·송도 개발 지속",extra:"",tags:"송도 2공구 · 2009년 · 2,654세대",kw:""},
+    {id:"so19",name:"e편한세상송도",region:"songdo",year:2018,hh:2708,price:6.6,deals:98,lat:37.411463,lng:126.617440,station:"송도달빛축제공원",dist:886,walkMin:14,scores:[13, 15, 14, 11, 11, 15],school:"송담초 도보 6분(369m) 초품아·단지 내 유치원. 단 대형 학원가는 1·2공구 신송로로 차량 10분",infra:"달빛축제공원·수변 조망 우수, 대형마트·병원·약국은 차량 필요",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2018년 · 2,708세대",kw:"이편한세상송도"},
+    {id:"so20",name:"송도에듀포레푸르지오",region:"songdo",year:2016,hh:1406,price:7.4,deals:60,lat:37.373951,lng:126.658981,station:"테크노파크",dist:955,walkMin:15,scores:[13, 16, 12, 14, 11, 13],school:"초품아 다수, 대학가 중심·학원가는 차량",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2016년 · 1,406세대",kw:""},
+    {id:"so21",name:"송도웰카운티1단지",region:"songdo",year:2008,hh:980,price:7.5,deals:9,lat:37.377127,lng:126.648749,station:"지식정보단지",dist:311,walkMin:5,scores:[19, 16, 10, 14, 7, 13],school:"해송초 도보 5분(317m) 초품아·해송중 도보 2분, 750m 안 학원 20곳",infra:"캠퍼스 상권·홈플러스 차량 5분",future:"GTX-B·인천발 KTX 간접",extra:"",tags:"송도 5공구 · 2008년 · 980세대",kw:"웰카운티 송도웰카운티"},
+    {id:"so22",name:"랜드마크시티센트럴더샵",region:"songdo",year:2020,hh:3472,price:7.4,deals:84,lat:37.415728,lng:126.620297,station:"송도달빛축제공원",dist:1074,walkMin:17,scores:[11, 15, 14, 12, 11, 15],school:"초품아, 대형 학원가는 1공구 차량 10분",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"아파트 2,230 + 오피스텔 1,242세대",tags:"송도 6·8공구 · 2020년 · 3,472세대",kw:"랜드마크시티"},
+    {id:"so23",name:"더샵송도마리나베이",region:"songdo",year:2020,hh:3100,price:6.5,deals:71,lat:37.412557,lng:126.611628,station:"송도달빛축제공원",dist:1395,walkMin:22,scores:[9, 17, 14, 12, 11, 15],school:"미송초 도보 6분(288m) 초품아·미송중 도보 8분, 1km 안 학원 64곳",infra:"GS더프레시 도보 3분·워터프론트 오션뷰, 대형마트·병원은 차량",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"25개동 3,100세대, 8공구 워터프론트 대단지",tags:"송도 6·8공구 · 2020년 · 3,100세대",kw:"마리나베이 송도마리나베이"},
+    {id:"so24",name:"송도자이크리스탈오션",region:"songdo",year:2024,hh:1504,price:10.7,deals:11,lat:37.388037,lng:126.611828,station:"국제업무지구",dist:2122,walkMin:34,scores:[8, 16, 14, 12, 12, 15],school:"송빛초 도보 5분(290m) 초품아·1km 학원 34곳, 단 11공구라 역 없음",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2024년 · 1,504세대",kw:"크리스탈오션"},
+    {id:"so25",name:"송도럭스오션SK뷰",region:"songdo",year:2025,hh:1114,price:9.5,deals:3,lat:37.392321,lng:126.611660,station:"국제업무지구",dist:1862,walkMin:30,scores:[8, 13, 13, 12, 9, 15],school:"초품아 미확인, 학원가는 차량",infra:"수변·달빛축제공원 풍부, 대형마트·병원 부족",future:"1호선 8공구 연장 예타·아이넥스시티·트램 계획",extra:"",tags:"송도 6·8공구 · 2025년 · 1,114세대",kw:""},
+    {id:"so26",name:"송도자이더스타",region:"songdo",year:2024,hh:1533,price:7.8,deals:8,lat:37.384453,lng:126.615200,station:"센트럴파크",dist:2007,walkMin:32,scores:[8, 15, 14, 12, 9, 12],school:"초품아, 학원가는 차량",infra:"공원·수변 위주, 대형 편의시설 차량",future:"힐스테이트 레이크 개발·GTX-B 간접",extra:"",tags:"송도 11공구 · 2024년 · 1,533세대",kw:""},
+    {id:"ch27",name:"청라한양수자인레이크블루",region:"cheongna",year:2019,hh:1534,price:8.0,deals:27,lat:37.537666,lng:126.629841,station:"청라국제도시",dist:2140,walkMin:34,scores:[8, 14, 14, 14, 14, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2019년 · 1,534세대",kw:""},
+    {id:"ch28",name:"청라센트럴에일린의뜰",region:"cheongna",year:2018,hh:2029,price:7.6,deals:63,lat:37.535248,lng:126.646751,station:"가정",dist:2694,walkMin:43,scores:[8, 14, 14, 13, 15, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2018년 · 2,029세대",kw:""},
+    {id:"ch29",name:"청라제일풍경채2차",region:"cheongna",year:2017,hh:1581,price:7.2,deals:44,lat:37.537401,lng:126.646925,station:"서구청",dist:2752,walkMin:44,scores:[8, 14, 14, 13, 13, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2017년 · 1,581세대",kw:""},
+    {id:"ch30",name:"청라호수공원한신더휴",region:"cheongna",year:2020,hh:907,price:7.5,deals:18,lat:37.528800,lng:126.629816,station:"청라국제도시",dist:3109,walkMin:50,scores:[8, 14, 12, 14, 13, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2020년 · 907세대",kw:""},
+    {id:"ch31",name:"청라힐데스하임",region:"cheongna",year:2011,hh:1284,price:7.2,deals:37,lat:37.529772,lng:126.652168,station:"가정",dist:2028,walkMin:33,scores:[8, 14, 12, 13, 12, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 1,284세대",kw:""},
+    {id:"ch32",name:"청라29블럭호반베르디움",region:"cheongna",year:2012,hh:2134,price:6.9,deals:50,lat:37.532012,lng:126.631379,station:"청라국제도시",dist:2783,walkMin:45,scores:[8, 14, 14, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2012년 · 2,134세대",kw:""},
+    {id:"ch33",name:"청라한화꿈에그린",region:"cheongna",year:2012,hh:1172,price:7.0,deals:17,lat:37.537782,lng:126.638655,station:"청라국제도시",dist:2418,walkMin:39,scores:[8, 14, 12, 14, 10, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2012년 · 1,172세대",kw:""},
+    {id:"ch34",name:"청라엑슬루타워",region:"cheongna",year:2011,hh:996,price:7.4,deals:23,lat:37.531119,lng:126.651426,station:"가정",dist:2136,walkMin:34,scores:[8, 14, 11, 13, 12, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 996세대",kw:""},
+    {id:"ch35",name:"청라린스트라우스",region:"cheongna",year:2013,hh:1040,price:7.1,deals:20,lat:37.535287,lng:126.651883,station:"가정",dist:2296,walkMin:37,scores:[8, 14, 12, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 1,040세대",kw:""},
+    {id:"ch36",name:"청라더샵레이크파크",region:"cheongna",year:2013,hh:766,price:7.3,deals:16,lat:37.530945,lng:126.638507,station:"청라국제도시",dist:3090,walkMin:50,scores:[8, 14, 11, 13, 11, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 766세대",kw:""},
+    {id:"ch37",name:"청라롯데캐슬",region:"cheongna",year:2013,hh:1326,price:6.8,deals:23,lat:37.530918,lng:126.646936,station:"가정",dist:2507,walkMin:40,scores:[8, 14, 12, 14, 8, 13],school:"초품아, 청라 학원가 차량 5분",infra:"호수공원 도보권·커낼 상권",future:"7호선 연장 2029년·제3연륙교 개통",extra:"",tags:"2013년 · 1,326세대",kw:""},
+    {id:"ch38",name:"청라자이",region:"cheongna",year:2010,hh:884,price:6.9,deals:14,lat:37.528460,lng:126.658951,station:"가정",dist:1413,walkMin:23,scores:[9, 14, 11, 13, 9, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2010년 · 884세대",kw:""},
+    {id:"ch39",name:"청라푸르지오",region:"cheongna",year:2013,hh:751,price:7.0,deals:14,lat:37.535008,lng:126.638487,station:"청라국제도시",dist:2681,walkMin:43,scores:[8, 14, 11, 13, 10, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2013년 · 751세대",kw:""},
+    {id:"ch40",name:"청라한라비발디",region:"cheongna",year:2011,hh:992,price:6.9,deals:15,lat:37.539313,lng:126.638359,station:"청라국제도시",dist:2260,walkMin:36,scores:[8, 14, 11, 13, 9, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 992세대",kw:""},
+    {id:"ch41",name:"청라SKVIEW",region:"cheongna",year:2011,hh:879,price:6.8,deals:14,lat:37.527032,lng:126.630448,station:"청라국제도시",dist:3312,walkMin:53,scores:[8, 14, 11, 13, 8, 13],school:"청라 학원가·초품아 혼재",infra:"호수공원·청라국제도시역 상권",future:"7호선 연장 1단계 2029년·2단계 2033년",extra:"",tags:"2011년 · 879세대",kw:""},
+    {id:"ge42",name:"힐스테이트신검단센트럴",region:"geomdan",year:2025,hh:1535,price:7.3,deals:9,lat:37.606786,lng:126.697502,station:"신검단중앙",dist:435,walkMin:7,scores:[19, 15, 14, 12, 12, 12],school:"신검단중앙역 도보권, 학원가 형성 중",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2025년 · 1,535세대",kw:""},
+    {id:"ge43",name:"우미린더시그니처",region:"geomdan",year:2022,hh:1268,price:6.9,deals:46,lat:37.595400,lng:126.711401,station:"아라",dist:395,walkMin:6,scores:[19, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,268세대",kw:""},
+    {id:"ge44",name:"검단신도시푸르지오더베뉴",region:"geomdan",year:2021,hh:1540,price:6.8,deals:67,lat:37.598323,lng:126.709442,station:"아라",dist:763,walkMin:12,scores:[15, 15, 14, 12, 14, 12],school:"한별초 271m 초품아, 학원가는 차량",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,540세대",kw:""},
+    {id:"ge45",name:"신검단중앙역풍경채어바니티",region:"geomdan",year:2024,hh:1425,price:7.0,deals:7,lat:37.605466,lng:126.700301,station:"신검단중앙",dist:386,walkMin:6,scores:[19, 14, 13, 12, 11, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2024년 · 1,425세대",kw:""},
+    {id:"ge46",name:"호반써밋1차",region:"geomdan",year:2021,hh:1168,price:6.6,deals:63,lat:37.595475,lng:126.709163,station:"아라",dist:519,walkMin:8,scores:[17, 14, 12, 12, 13, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,168세대",kw:""},
+    {id:"ge47",name:"검단금호어울림센트럴",region:"geomdan",year:2021,hh:1452,price:6.7,deals:52,lat:37.596195,lng:126.714279,station:"아라",dist:452,walkMin:7,scores:[17, 14, 12, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 1,452세대",kw:""},
+    {id:"ge48",name:"검단신도시예미지트리플에듀",region:"geomdan",year:2022,hh:1249,price:6.8,deals:57,lat:37.600563,lng:126.713634,station:"아라",dist:930,walkMin:15,scores:[13, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,249세대",kw:""},
+    {id:"ge49",name:"파라곤센트럴파크",region:"geomdan",year:2022,hh:1122,price:6.5,deals:53,lat:37.586488,lng:126.710994,station:"아라",dist:669,walkMin:11,scores:[15, 14, 13, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,122세대",kw:""},
+    {id:"ge50",name:"원당풍림아이원",region:"geomdan",year:2004,hh:1739,price:5.4,deals:53,lat:37.591054,lng:126.677498,station:"완정",dist:442,walkMin:7,scores:[19, 14, 12, 12, 8, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2004년 · 1,739세대",kw:""},
+    {id:"ge51",name:"검단신도시디에트르더힐",region:"geomdan",year:2022,hh:1417,price:7.2,deals:50,lat:37.602292,lng:126.709421,station:"신검단중앙",dist:1063,walkMin:17,scores:[11, 14, 13, 12, 14, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,417세대",kw:""},
+    {id:"ge52",name:"검단신도시디에트르더펠리체",region:"geomdan",year:2022,hh:1279,price:6.7,deals:30,lat:37.584127,lng:126.710028,station:"아라",dist:945,walkMin:15,scores:[13, 14, 13, 12, 12, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,279세대",kw:""},
+    {id:"ge53",name:"당하KCC스위첸",region:"geomdan",year:2005,hh:1015,price:5.2,deals:29,lat:37.588862,lng:126.678119,station:"독정",dist:478,walkMin:8,scores:[17, 14, 11, 12, 8, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2005년 · 1,015세대",kw:""},
+    {id:"ge54",name:"검단신도시신안인스빌어반퍼스트",region:"geomdan",year:2022,hh:1073,price:6.4,deals:41,lat:37.581624,lng:126.712750,station:"아라",dist:1177,walkMin:19,scores:[11, 14, 13, 12, 11, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 1,073세대",kw:""},
+    {id:"ge55",name:"검단오류역우방아이유쉘",region:"geomdan",year:2021,hh:420,price:5.3,deals:7,lat:37.595333,lng:126.633622,station:"검단오류",dist:420,walkMin:7,scores:[19, 14, 8, 12, 7, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2021년 · 420세대",kw:""},
+    {id:"ge56",name:"검단신도시모아미래도엘리트파크",region:"geomdan",year:2022,hh:658,price:6.4,deals:24,lat:37.583664,lng:126.707609,station:"아라",dist:1076,walkMin:17,scores:[11, 14, 11, 12, 10, 12],school:"신도시 학원가 형성·초품아",infra:"검단호수공원·대형마트 차량",future:"1호선 검단연장 2025년 개통 이후 개발 지속",extra:"",tags:"2022년 · 658세대",kw:""},
+    {id:"ye57",name:"운서SKVIEWSKYCITY",region:"yeongjong",year:2022,hh:1153,price:5.2,deals:40,lat:37.482670,lng:126.501120,station:"운서",dist:1293,walkMin:21,scores:[11, 13, 13, 12, 14, 12],school:"운서역 학군, 학원가 소규모",infra:"운서역 상권·공항철도",future:"제3연륙교·공항 배후수요",extra:"",tags:"2022년 · 1,153세대",kw:""},
+    {id:"ye58",name:"영종센트럴푸르지오자이",region:"yeongjong",year:2019,hh:1604,price:5.3,deals:37,lat:37.489644,lng:126.548695,station:"영종",dist:3250,walkMin:52,scores:[8, 13, 14, 11, 14, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2019년 · 1,604세대",kw:""},
+    {id:"ye59",name:"운서역반도유보라퍼스티지",region:"yeongjong",year:2022,hh:450,price:5.0,deals:16,lat:37.488967,lng:126.498857,station:"운서",dist:611,walkMin:10,scores:[15, 13, 9, 12, 11, 12],school:"운서역 학군, 학원가 소규모",infra:"운서역 상권·공항철도",future:"제3연륙교·공항 배후수요",extra:"",tags:"2022년 · 450세대",kw:""},
+    {id:"ye60",name:"E편한세상영종국제도시오션하임",region:"yeongjong",year:2018,hh:1520,price:5.4,deals:43,lat:37.493192,lng:126.567780,station:"영종",dist:4312,walkMin:69,scores:[6, 13, 14, 11, 14, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2018년 · 1,520세대",kw:""},
+    {id:"ye61",name:"E편한세상영종국제도시센텀베뉴",region:"yeongjong",year:2023,hh:1409,price:5.1,deals:34,lat:37.487688,lng:126.551697,station:"영종",dist:3587,walkMin:57,scores:[8, 13, 13, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2023년 · 1,409세대",kw:""},
+    {id:"ye62",name:"하늘도시우미린1단지",region:"yeongjong",year:2012,hh:1680,price:4.7,deals:52,lat:37.492830,lng:126.556381,station:"영종",dist:3493,walkMin:56,scores:[8, 14, 13, 11, 10, 12],school:"초품아, 하늘도시 학원가 도보권",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,680세대",kw:""},
+    {id:"ye63",name:"인천영종한양수자인",region:"yeongjong",year:2012,hh:1304,price:5.0,deals:37,lat:37.491498,lng:126.553516,station:"영종",dist:3395,walkMin:54,scores:[8, 13, 12, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,304세대",kw:""},
+    {id:"ye64",name:"영종국제도시한신더휴스카이파크",region:"yeongjong",year:2019,hh:562,price:5.2,deals:19,lat:37.501044,lng:126.563287,station:"영종",dist:3586,walkMin:57,scores:[8, 13, 10, 11, 13, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2019년 · 562세대",kw:""},
+    {id:"ye65",name:"스카이시티자이",region:"yeongjong",year:2018,hh:1034,price:5.0,deals:15,lat:37.491188,lng:126.558853,station:"영종",dist:3778,walkMin:61,scores:[8, 13, 12, 11, 11, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2018년 · 1,034세대",kw:""},
+    {id:"ye66",name:"호반써밋스카이센트럴",region:"yeongjong",year:2022,hh:534,price:5.1,deals:19,lat:37.495449,lng:126.567125,station:"영종",dist:4144,walkMin:66,scores:[6, 13, 11, 11, 12, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2022년 · 534세대",kw:""},
+    {id:"ye67",name:"영종힐스테이트",region:"yeongjong",year:2012,hh:1628,price:4.9,deals:31,lat:37.490634,lng:126.565732,station:"영종",dist:4306,walkMin:69,scores:[6, 13, 13, 11, 9, 12],school:"하늘도시 초품아, 학원가 소규모",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,628세대",kw:""},
+    {id:"ye68",name:"인천영종하늘도시한라비발디",region:"yeongjong",year:2012,hh:1365,price:4.8,deals:18,lat:37.491998,lng:126.563687,station:"영종",dist:4072,walkMin:65,scores:[6, 13, 12, 11, 8, 12],school:"하늘도시 학원가·초품아 혼재",infra:"중심상업지구, 대형시설 부족",future:"제3연륙교 2026년 개통·공항경제권",extra:"",tags:"2012년 · 1,365세대",kw:""},
+    {id:"bu69",name:"부평역해링턴플레이스",region:"bupyeong",year:2024,hh:2413,price:6.6,deals:18,lat:37.483989,lng:126.721995,station:"동수",dist:355,walkMin:6,scores:[19, 17, 15, 14, 13, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2024년 · 2,413세대",kw:""},
+    {id:"bu70",name:"더샵부평센트럴시티",region:"bupyeong",year:2022,hh:5678,price:6.0,deals:65,lat:37.477148,lng:126.698465,station:"동암",dist:800,walkMin:13,scores:[15, 17, 15, 14, 14, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2022년 · 5,678세대",kw:""},
+    {id:"bu71",name:"힐스테이트부평",region:"bupyeong",year:2023,hh:1409,price:6.1,deals:58,lat:37.484527,lng:126.705939,station:"백운",dist:175,walkMin:3,scores:[20, 16, 13, 13, 14, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2023년 · 1,409세대",kw:""},
+    {id:"bu72",name:"부평SKVIEW-해모로",region:"bupyeong",year:2023,hh:1559,price:6.0,deals:67,lat:37.492022,lng:126.733680,station:"부평",dist:904,walkMin:14,scores:[13, 17, 14, 14, 14, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"2023년 · 1,559세대",kw:""},
+    {id:"bu73",name:"부평동아1단지",region:"bupyeong",year:1989,hh:2497,price:4.8,deals:46,lat:37.495508,lng:126.719032,station:"부평시장",dist:433,walkMin:7,scores:[19, 17, 10, 14, 10, 13],school:"부평역·부평시장 학원가 도보권",infra:"부평역 지하상가·대형마트",future:"GTX-B 부평역 2031년",extra:"",tags:"1989년 · 2,497세대",kw:""},
+    {id:"bu74",name:"래미안부평1단지",region:"bupyeong",year:2014,hh:1145,price:6.2,deals:28,lat:37.503361,lng:126.724018,station:"부평시장",dist:568,walkMin:9,scores:[17, 16, 12, 13, 12, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2014년 · 1,145세대",kw:""},
+    {id:"bu75",name:"E편한세상부평그랑힐스",region:"bupyeong",year:2024,hh:5050,price:6.3,deals:129,lat:37.515849,lng:126.699633,station:"갈산",dist:1937,walkMin:31,scores:[8, 16, 15, 13, 15, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2024년 · 5,050세대",kw:""},
+    {id:"bu76",name:"부평캐슬앤더샵퍼스트",region:"bupyeong",year:2024,hh:1623,price:6.4,deals:61,lat:37.514847,lng:126.702608,station:"갈산",dist:1688,walkMin:27,scores:[8, 16, 14, 13, 15, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2024년 · 1,623세대",kw:""},
+    {id:"bu77",name:"삼산타운1단지",region:"bupyeong",year:2005,hh:1873,price:5.6,deals:74,lat:37.512987,lng:126.733628,station:"굴포천",dist:709,walkMin:11,scores:[15, 16, 12, 13, 11, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2005년 · 1,873세대",kw:""},
+    {id:"bu78",name:"부개주공3단지",region:"bupyeong",year:1996,hh:1724,price:4.6,deals:80,lat:37.501894,lng:126.738494,station:"삼산체육관",dist:598,walkMin:10,scores:[17, 16, 11, 13, 9, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"1996년 · 1,724세대",kw:""},
+    {id:"bu79",name:"부개역푸르지오",region:"bupyeong",year:2010,hh:1054,price:5.4,deals:24,lat:37.490182,lng:126.737814,station:"부평",dist:1251,walkMin:20,scores:[11, 16, 12, 13, 10, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2010년 · 1,054세대",kw:""},
+    {id:"bu80",name:"삼산타운2단지",region:"bupyeong",year:2005,hh:1622,price:5.5,deals:43,lat:37.515287,lng:126.737411,station:"삼산체육관",dist:1060,walkMin:17,scores:[11, 16, 12, 13, 10, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2005년 · 1,622세대",kw:""},
+    {id:"bu81",name:"청천푸르지오",region:"bupyeong",year:1998,hh:2270,price:4.7,deals:42,lat:37.514257,lng:126.708057,station:"갈산",dist:1230,walkMin:20,scores:[11, 16, 12, 13, 9, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"1998년 · 2,270세대",kw:""},
+    {id:"bu82",name:"금호이수마운트밸리",region:"bupyeong",year:2007,hh:1365,price:4.5,deals:16,lat:37.503847,lng:126.704475,station:"부평구청",dist:1524,walkMin:24,scores:[9, 16, 11, 13, 7, 12],school:"학원가 차량 10분·초품아",infra:"부평구청 상권·공원",future:"GTX-B 부평역 간접·정비사업",extra:"",tags:"2007년 · 1,365세대",kw:""},
+    {id:"bu83",name:"삼산주공미래타운4차",region:"bupyeong",year:2000,hh:968,price:4.6,deals:26,lat:37.520647,lng:126.744057,station:"삼산체육관",dist:1585,walkMin:25,scores:[9, 16, 10, 13, 8, 11],school:"삼산 학원가·초품아",infra:"삼산체육관·대형마트",future:"7호선 기존 노선·정비사업",extra:"",tags:"2000년 · 968세대",kw:""},
+    {id:"na84",name:"한화포레나인천구월",region:"namdong",year:2023,hh:1115,price:6.2,deals:25,lat:37.459098,lng:126.713719,station:"석천사거리",dist:382,walkMin:6,scores:[19, 20, 13, 14, 14, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2023년 · 1,115세대",kw:""},
+    {id:"na85",name:"구월롯데캐슬골드2단지",region:"namdong",year:2007,hh:3384,price:5.4,deals:63,lat:37.453951,lng:126.716877,station:"모래내시장",dist:323,walkMin:5,scores:[19, 20, 13, 14, 13, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2007년 · 3,384세대",kw:""},
+    {id:"na86",name:"구월힐스테이트1단지",region:"namdong",year:2007,hh:5076,price:5.2,deals:119,lat:37.454334,lng:126.712032,station:"석천사거리",dist:305,walkMin:5,scores:[19, 20, 13, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2007년 · 5,076세대",kw:""},
+    {id:"na87",name:"인천시청역힐스테이트",region:"namdong",year:2024,hh:746,price:5.8,deals:29,lat:37.458302,lng:126.695344,station:"석바위시장",dist:286,walkMin:5,scores:[20, 16, 12, 13, 14, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2024년 · 746세대",kw:""},
+    {id:"na88",name:"간석래미안자이",region:"namdong",year:2008,hh:2432,price:4.9,deals:62,lat:37.458858,lng:126.710600,station:"석천사거리",dist:230,walkMin:4,scores:[20, 16, 13, 13, 11, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2008년 · 2,432세대",kw:""},
+    {id:"na89",name:"구월아시아드선수촌센트럴자이",region:"namdong",year:2015,hh:850,price:5.0,deals:18,lat:37.444195,lng:126.713250,station:"인천터미널",dist:1197,walkMin:19,scores:[11, 20, 12, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2015년 · 850세대",kw:""},
+    {id:"na90",name:"어울림마을",region:"namdong",year:2005,hh:1733,price:4.5,deals:34,lat:37.459255,lng:126.707357,station:"석천사거리",dist:390,walkMin:6,scores:[19, 16, 12, 13, 8, 12],school:"간석 학원가·초품아",infra:"인천시청·홈플러스 차량 10분",future:"GTX-B 인천시청 2031년·정비사업",extra:"",tags:"2005년 · 1,733세대",kw:""},
+    {id:"na91",name:"구월아시아드선수촌5단지",region:"namdong",year:2015,hh:782,price:4.9,deals:25,lat:37.444301,lng:126.716003,station:"모래내시장",dist:1326,walkMin:21,scores:[9, 20, 12, 14, 12, 12],school:"구월동 학원가(인천 최대) 도보권·초품아",infra:"인천터미널·롯데백화점·홈플러스",future:"구월·간석 재개발, GTX-B 인천시청 2031년",extra:"",tags:"2015년 · 782세대",kw:""},
+    {id:"na92",name:"포레시안",region:"namdong",year:2011,hh:3208,price:4.7,deals:67,lat:37.461979,lng:126.732299,station:"만수",dist:797,walkMin:13,scores:[15, 15, 14, 13, 11, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2011년 · 3,208세대",kw:""},
+    {id:"na93",name:"에코메트로12단지한화꿈에그린",region:"namdong",year:2009,hh:1298,price:4.5,deals:22,lat:37.396414,lng:126.733576,station:"소래포구",dist:506,walkMin:8,scores:[17, 15, 11, 13, 8, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2009년 · 1,298세대",kw:""},
+    {id:"na94",name:"소래마을풍림",region:"namdong",year:2000,hh:1517,price:4.4,deals:30,lat:37.406381,lng:126.738575,station:"소래포구",dist:749,walkMin:12,scores:[15, 15, 12, 13, 8, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2000년 · 1,517세대",kw:""},
+    {id:"na95",name:"에코메트로11단지한화꿈에그린",region:"namdong",year:2009,hh:1622,price:4.6,deals:43,lat:37.393552,lng:126.730193,station:"소래포구",dist:875,walkMin:14,scores:[13, 15, 12, 13, 9, 11],school:"초품아, 학원가는 차량",infra:"소래포구·대형마트 차량 10분",future:"수인분당선 기존 노선·재개발",extra:"",tags:"2009년 · 1,622세대",kw:""},
+    {id:"na96",name:"서창센트럴푸르지오",region:"namdong",year:2018,hh:1160,price:5.0,deals:23,lat:37.428976,lng:126.750577,station:"운연",dist:1313,walkMin:21,scores:[9, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2018년 · 1,160세대",kw:""},
+    {id:"na97",name:"더포레스트",region:"namdong",year:2017,hh:1228,price:5.1,deals:18,lat:37.427814,lng:126.743699,station:"운연",dist:1830,walkMin:29,scores:[8, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2017년 · 1,228세대",kw:""},
+    {id:"na98",name:"e편한세상서창",region:"namdong",year:2017,hh:835,price:5.0,deals:26,lat:37.426060,lng:126.750203,station:"운연",dist:1600,walkMin:26,scores:[8, 14, 12, 12, 12, 11],school:"초품아, 학원가 차량",infra:"서창 상권·근린공원",future:"서창2지구 완성·도로망 개선",extra:"",tags:"2017년 · 835세대",kw:""},
+    {id:"mi99",name:"더샵아르테",region:"michuhol",year:2024,hh:1146,price:6.2,deals:27,lat:37.456057,lng:126.690970,station:"석바위시장",dist:212,walkMin:3,scores:[20, 16, 13, 13, 14, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2024년 · 1,146세대",kw:""},
+    {id:"mi100",name:"힐스테이트푸르지오주안",region:"michuhol",year:2023,hh:2958,price:6.4,deals:115,lat:37.452735,lng:126.676508,station:"시민공원",dist:712,walkMin:11,scores:[15, 16, 15, 13, 15, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2023년 · 2,958세대",kw:""},
+    {id:"mi101",name:"인천SK스카이뷰",region:"michuhol",year:2016,hh:3971,price:5.8,deals:75,lat:37.449545,lng:126.645480,station:"인하대",dist:423,walkMin:7,scores:[19, 15, 14, 12, 13, 12],school:"용현초·인하대 인접, 학원가는 차량",infra:"용현 상권·인하대",future:"시티오씨엘 개발·수인선",extra:"",tags:"2016년 · 3,971세대",kw:""},
+    {id:"mi102",name:"힐스테이트숭의역",region:"michuhol",year:2025,hh:1012,price:6.0,deals:6,lat:37.461275,lng:126.639233,station:"숭의",dist:110,walkMin:2,scores:[20, 13, 13, 12, 10, 13],school:"숭의역 도보권, 학원가는 차량",infra:"숭의 상권·수인분당선",future:"숭의 재개발·수인선",extra:"",tags:"2025년 · 1,012세대",kw:""},
+    {id:"mi103",name:"주안더월드스테이트",region:"michuhol",year:2008,hh:3161,price:5.2,deals:67,lat:37.467490,lng:126.685781,station:"주안",dist:524,walkMin:8,scores:[17, 16, 13, 13, 9, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2008년 · 3,161세대",kw:""},
+    {id:"mi104",name:"더샵인천스카이타워1단지",region:"michuhol",year:2020,hh:1309,price:6.6,deals:43,lat:37.470048,lng:126.665159,station:"도화",dist:527,walkMin:8,scores:[17, 13, 12, 12, 14, 12],school:"숭의·도화 학군, 학원가는 차량",infra:"도화역 상권·숭의체육관",future:"도화·숭의 정비사업",extra:"",tags:"2020년 · 1,309세대",kw:""},
+    {id:"mi105",name:"주안역센트레빌",region:"michuhol",year:2021,hh:1458,price:4.8,deals:47,lat:37.466516,lng:126.685638,station:"주안",dist:465,walkMin:7,scores:[17, 16, 12, 13, 10, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2021년 · 1,458세대",kw:""},
+    {id:"mi106",name:"서희스타힐스스타디움센트럴시티",region:"michuhol",year:2022,hh:1232,price:5.6,deals:27,lat:37.466682,lng:126.645020,station:"도원",dist:310,walkMin:5,scores:[19, 13, 13, 12, 10, 13],school:"학원가 차량·초품아",infra:"숭의 상권·수인분당선",future:"숭의 재개발·수인선",extra:"",tags:"2022년 · 1,232세대",kw:""},
+    {id:"mi107",name:"용현자이크레스트",region:"michuhol",year:2023,hh:2277,price:6.0,deals:13,lat:37.455723,lng:126.646976,station:"인하대",dist:873,walkMin:14,scores:[13, 15, 15, 12, 11, 12],school:"초품아, 인하대 학원가 차량",infra:"용현 상권·인하대",future:"시티오씨엘 개발·수인선",extra:"",tags:"2023년 · 2,277세대",kw:""},
+    {id:"mi108",name:"주안파크자이더플래티넘",region:"michuhol",year:2023,hh:2054,price:5.8,deals:59,lat:37.447132,lng:126.672568,station:"시민공원",dist:1425,walkMin:23,scores:[9, 16, 15, 13, 12, 12],school:"주안역 학원가·초품아",infra:"주안역 상권·롯데마트",future:"GTX-B 인천시청 간접·주안 재개발",extra:"",tags:"2023년 · 2,054세대",kw:""},
+    {id:"mi109",name:"시티오씨엘1단지",region:"michuhol",year:2024,hh:1131,price:6.2,deals:6,lat:37.441882,lng:126.643078,station:"인하대",dist:934,walkMin:15,scores:[13, 14, 13, 12, 11, 13],school:"초품아, 학원가 차량",infra:"학익 상권·문학경기장",future:"시티오씨엘 4단계·학익 개발",extra:"",tags:"2024년 · 1,131세대",kw:""},
+    {id:"mi110",name:"학익풍림아이원",region:"michuhol",year:2007,hh:2093,price:4.9,deals:40,lat:37.440880,lng:126.660213,station:"인하대",dist:1219,walkMin:20,scores:[11, 14, 13, 12, 8, 13],school:"초품아, 학원가 차량",infra:"학익 상권·문학경기장",future:"시티오씨엘 4단계·학익 개발",extra:"",tags:"2007년 · 2,093세대",kw:""},
+    {id:"se111",name:"루원시티프라디움",region:"seogu",year:2018,hh:1598,price:6.4,deals:21,lat:37.523550,lng:126.678009,station:"가정",dist:355,walkMin:6,scores:[19, 13, 14, 12, 14, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 1,598세대",kw:""},
+    {id:"se112",name:"루원E편한세상하늘채",region:"seogu",year:2010,hh:3331,price:5.5,deals:43,lat:37.521091,lng:126.672501,station:"가정",dist:435,walkMin:7,scores:[19, 13, 14, 12, 10, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2010년 · 3,331세대",kw:""},
+    {id:"se113",name:"루원시티SK리더스뷰",region:"seogu",year:2022,hh:1300,price:6.2,deals:0,lat:37.523840,lng:126.671242,station:"가정",dist:286,walkMin:5,scores:[20, 13, 13, 12, 9, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2022년 · 1,300세대",kw:""},
+    {id:"se114",name:"루원시티대성베르힐더센트로",region:"seogu",year:2023,hh:1179,price:6.2,deals:1,lat:37.523550,lng:126.678009,station:"가정",dist:355,walkMin:6,scores:[19, 13, 13, 12, 9, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2023년 · 1,179세대",kw:""},
+    {id:"se115",name:"포레나루원시티",region:"seogu",year:2022,hh:1000,price:6.0,deals:0,lat:37.527763,lng:126.677562,station:"가정",dist:444,walkMin:7,scores:[19, 13, 13, 12, 8, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2022년 · 1,000세대",kw:""},
+    {id:"se116",name:"가재울역트루엘에코시티",region:"seogu",year:2024,hh:1218,price:5.4,deals:34,lat:37.484976,lng:126.686665,station:"가재울",dist:268,walkMin:4,scores:[20, 12, 13, 10, 11, 11],school:"학원가 차량 10분",infra:"가좌 상권·근린공원",future:"가재울역·정비사업",extra:"",tags:"2024년 · 1,218세대",kw:""},
+    {id:"se117",name:"루원호반베르디움더센트럴",region:"seogu",year:2018,hh:980,price:5.9,deals:18,lat:37.527906,lng:126.668131,station:"가정",dist:646,walkMin:10,scores:[15, 13, 12, 12, 11, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 980세대",kw:""},
+    {id:"se118",name:"루원시티대성베르힐",region:"seogu",year:2017,hh:1147,price:6.1,deals:42,lat:37.522787,lng:126.664124,station:"가정",dist:921,walkMin:15,scores:[13, 13, 12, 12, 13, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2017년 · 1,147세대",kw:""},
+    {id:"se119",name:"루원제일풍경채",region:"seogu",year:2018,hh:900,price:5.8,deals:24,lat:37.531375,lng:126.666993,station:"가정",dist:978,walkMin:16,scores:[13, 13, 12, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2018년 · 900세대",kw:""},
+    {id:"se120",name:"가좌두산위브트레지움",region:"seogu",year:2017,hh:1757,price:5.2,deals:51,lat:37.488907,lng:126.685329,station:"가재울",dist:550,walkMin:9,scores:[17, 12, 14, 10, 10, 11],school:"학원가 차량 10분",infra:"가좌 상권·근린공원",future:"가재울역·정비사업",extra:"",tags:"2017년 · 1,757세대",kw:""},
+    {id:"se121",name:"검암서해그랑블",region:"seogu",year:2003,hh:950,price:4.7,deals:27,lat:37.566594,lng:126.674306,station:"검암",dist:300,walkMin:5,scores:[20, 13, 10, 11, 8, 11],school:"학원가 차량·초품아",infra:"검암역 상권·공항철도",future:"검암역 환승·검단 연장",extra:"",tags:"2003년 · 950세대",kw:""},
+    {id:"se122",name:"루원시티어울림",region:"seogu",year:2015,hh:1243,price:6.0,deals:21,lat:37.534122,lng:126.667987,station:"가정",dist:1181,walkMin:19,scores:[11, 13, 12, 12, 12, 12],school:"루원시티 학원가·초품아",infra:"루원시티 상업·공원",future:"루원시티 완성·7호선 석남",extra:"",tags:"2015년 · 1,243세대",kw:""},
+    {id:"se123",name:"석남금호어울림",region:"seogu",year:2007,hh:769,price:4.8,deals:23,lat:37.503704,lng:126.668557,station:"석남",dist:356,walkMin:6,scores:[19, 12, 10, 11, 8, 11],school:"학원가는 차량",infra:"석남역 상권",future:"7호선 석남·청라 연장",extra:"",tags:"2007년 · 769세대",kw:""}
   ];
 
   /* ============================== 유틸 ============================== */
@@ -868,12 +875,17 @@ button{font-family:inherit}
     });
   }
 
+  function normTxt(s){ return (s||"").toLowerCase().replace(/\s+/g,""); }
+  function matchQ(c,qraw){
+    var q=normTxt(qraw); if(!q) return true;
+    return normTxt(c.name).indexOf(q)>=0 || normTxt(c.kw).indexOf(q)>=0 ||
+           normTxt(c.tags).indexOf(q)>=0 || normTxt(regionOf(c.region).label).indexOf(q)>=0;
+  }
   function renderAptGrid(){
-    var box=$("#aptGrid"), q=state.query.trim().toLowerCase();
+    var box=$("#aptGrid"), q=state.query.trim();
     var list=COMPLEXES.filter(function(c){
       if(state.filterRegion!=="all" && c.region!==state.filterRegion) return false;
-      if(!q) return true;
-      return (c.name.toLowerCase().indexOf(q)>=0)||(c.tags&&c.tags.toLowerCase().indexOf(q)>=0);
+      return matchQ(c,q);
     });
     box.innerHTML="";
     $("#searchCount").textContent=list.length+"곳";
@@ -941,6 +953,14 @@ button{font-family:inherit}
       .sort(function(x,y){ return (y.p-x.p)||(x.i-y.i); });
   }
 
+  function priceRankTxt(c){
+    var same=COMPLEXES.filter(function(x){ return x.region===c.region; });
+    var above=same.filter(function(x){ return x.price>c.price+0.001; }).length;
+    var top=Math.max.apply(null,same.map(function(x){ return x.price; }));
+    var rk=above+1;
+    return rk+'위 (권역 최고 '+top.toFixed(1)+'억)';
+  }
+
   function renderComplexReport(c){
     var total=totalOf(c.scores), g=gradeOf(total), rg=regionOf(c.region);
     var ord=orderByScore(c.scores), strong=ord.slice(0,2), weak=ord[ord.length-1];
@@ -978,6 +998,7 @@ button{font-family:inherit}
       '<div class="fact-row"><b>학군</b><span>'+esc(c.school)+'</span></div>'+
       '<div class="fact-row"><b>인프라</b><span>'+esc(c.infra)+'</span></div>'+
       '<div class="fact-row"><b>호재</b><span>'+esc(c.future)+'</span></div>'+
+      '<div class="fact-row"><b>시세</b><span>84㎡ '+c.price.toFixed(1)+'억 · '+rg.label+' '+COMPLEXES.filter(function(x){return x.region===c.region;}).length+'곳 중 '+priceRankTxt(c)+'</span></div>'+
       '<div class="fact-row"><b>거래</b><span>최근 6개월 매매 '+comma(c.deals)+'건'+(c.extra?' · '+esc(c.extra):'')+'</span></div>';
 
     var html=''+
@@ -993,7 +1014,7 @@ button{font-family:inherit}
       '<div class="grade-line"><span class="grade-badge" id="gradeBadge" style="background:'+g.grad+'">'+g.label+'</span><span class="grade-title">'+g.title+'</span></div>'+
       '<div class="rank-line">🏅 인천 '+COMPLEXES.length+'곳 중 <b>'+irc+'위</b> · '+rg.label+' '+rr.total+'곳 중 '+rr.rank+'위</div>'+
       '<p class="confidence">ⓘ 공개 단지 정보·실거래 흐름을 바탕으로 채점한 참고용 분석입니다. 점수 근거는 아래 팩트체크에 표기했습니다.</p>'+
-      '<div class="fact-box"><h4>📌 팩트 체크 (v2.1 보정)</h4>'+factRows+'</div>'+
+      '<div class="fact-box"><h4>📌 팩트 체크 (v2.2 보정)</h4>'+factRows+'</div>'+
       '<div class="block"><div class="block-head"><h3>입지 레이더</h3><span>영역별 배점 대비 달성률</span></div><div class="radar-box">'+radarSVG(c.scores)+'</div></div>'+
       '<div class="block"><div class="block-head"><h3>영역별 점수</h3><span>총 100점</span></div><div class="bars">'+barsHTML(c.scores)+'</div></div>'+
       '<div class="block"><div class="block-head"><h3>자동 분석 촌평</h3><span>TOP 2 · 보완 1</span></div>'+
@@ -1120,8 +1141,8 @@ button{font-family:inherit}
         s.appendChild(grp);
       });
     });
-    $("#selA").value="so14";
-    $("#selB").value="so02";
+    $("#selA").value="so19";
+    $("#selB").value="so01";
   }
   function renderBattle(){
     var a=byId($("#selA").value), b=byId($("#selB").value);
@@ -1169,11 +1190,13 @@ button{font-family:inherit}
   }
 
   /* ============================== 랭킹 ============================== */
-  var rankFilter="all";
+  var rankFilter="all", rankQuery="";
   function renderRank(){
     renderRegionChips($("#rankChips"),rankFilter,function(key){ rankFilter=key; renderRank(); });
-    var list=RANKED.filter(function(c){ return rankFilter==="all"||c.region===rankFilter; });
+    var q=rankQuery.trim();
+    var list=RANKED.filter(function(c){ return (rankFilter==="all"||c.region===rankFilter) && matchQ(c,q); });
     $("#rankTotal").textContent=list.length+"곳 전체";
+    $("#rankCount").textContent=(q?list.length:"전체");
     var localRank={};
     (function(){
       var prev=null, prevRank=0;
@@ -1468,6 +1491,7 @@ button{font-family:inherit}
     t.addEventListener("click",function(){ switchTab(t.getAttribute("data-tab")); });
   });
   $("#searchInput").addEventListener("input",function(e){ state.query=e.target.value; renderAptGrid(); });
+  $("#rankSearch").addEventListener("input",function(e){ rankQuery=e.target.value; renderRank(); });
   $("#customToggle").addEventListener("click",function(){
     var body=$("#customBody"), open=body.hasAttribute("hidden");
     if(open){ body.removeAttribute("hidden"); this.classList.add("is-open"); this.setAttribute("aria-expanded","true"); }
@@ -1517,7 +1541,7 @@ button{font-family:inherit}
   renderAptGrid();
   renderForm();
   buildSelects();
-  selectComplex("so14",false);
+  selectComplex("so19",false);
   // Leaflet 스크립트가 늦게 로드되는 경우를 대비
   window.addEventListener("load",function(){ if(!mapReady && !$("#panel-map").hasAttribute("hidden")) initMap(); });
 })();
