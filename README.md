@@ -6,11 +6,11 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 | 항목 | 내용 |
 |---|---|
 | 파일 | `work/apt-scorecard/index.html` (단일 HTML, Leaflet + markercluster CDN) |
-| 배포본 | `work/zipscore-pages/index.html` → https://inje8451.github.io/Zipscore/ |
+| 배포본 | `work/zipscore-pages/index.html` → **https://zipscore.github.io/** (조직 대표) · https://inje8451.github.io/Zipscore/ (개인 미러). 두 곳 모두 `bash work/zipscore-pages/deploy.sh` 한 번으로 배포 |
 | 이전 버전 | `index-v1.html`(v1)·Git 히스토리(v2·v2.1·v2.2·v3.0) |
 | 미리보기 | `preview/v35-share-card-sample.png`(성적표 카드 PNG 실물·6공구 크리스탈 80 A) · `v35-share-modal.png`(카드 미리보기 모달) · `v35-share-card-first.png` · `v35-share-card-lake4.png` · `preview/v34-crystal.png`(6공구 크리스탈 80 A) · `v34-thestar.png` · `v34-lake4.png` · `v34-lux.png` · `v34-lake1.png` · `v34-report-songdo.png` · `v34-rank-songdo.png` · `v34-desktop.png` · `preview/v3-main.png`(성적표) · `v3-map-cluster.png`(클러스터 지도) · `v3-map-pins.png` · `v3-map-popup.png` · `v3-rank.png` · `v3-budget.png` · `v3-battle.png` · `v3-report.png` · `v3-report-fact.png` · `v3-new-gyeyang.png` · `v3-search.png` · `v3-map-fallback.png` · `v31-ocean-top.png` · `v31-ocean-fact.png` |
-| 검증 | `test_e2e_v3.py` — 실제 Chromium E2E **187/187 통과** (`test-report-v3.json`) |
-| 실행 | `cd work/apt-scorecard && python3 test_e2e_v3.py` → `187/187 checks passed — RESULT: PASS` |
+| 검증 | `test_e2e_v3.py` — 실제 Chromium E2E **191/191 통과** (`test-report-v3.json`) · 라이브 검증 `live_check_v35.py` 14/14 (`test-report-v35-live.json`) |
+| 실행 | `cd work/apt-scorecard && python3 test_e2e_v3.py` → `191/191 checks passed — RESULT: PASS` · 라이브 `ZS_URL=https://zipscore.github.io/ python3 live_check_v35.py` |
 | 데이터 빌드 | `data/build3.py` → `complexes3.json` → `data/make_html3.py`(← `template3.html`) |
 | 템플릿 생성 | `data/make_template3.py` (v2.2 `template.html` → `template3.html` 패치) |
 
@@ -104,7 +104,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 | 타이틀 | 단지명(긴 이름은 자동 축소) · `2024년 준공 · 1,504세대 · 84㎡ 10.8억` |
 | 하이라이트 | 총점 큰 숫자 + `/100점`, 등급 배지(`S`·`A+`·`A`·`B+`·`B`, 등급별 그라디언트)와 등급 문구, 인천/권역 랭킹 |
 | 차트·지표 | 좌측 6각 레이더 + 우측 6대 항목 점수 바(교통·학군·단지·인프라·가격·미래가치, 점수 구간별 색) |
-| 하단 | 한 줄 핵심 코멘트(가장 강한 영역 + 보완 포인트) · `집스코어 ZIPSCORE · inje8451.github.io/Zipscore` 워터마크 · 추정 참고값 고지 |
+| 하단 | 한 줄 핵심 코멘트(가장 강한 영역 + 보완 포인트) · `집스코어 ZIPSCORE · zipscore.github.io` 워터마크 · 추정 참고값 고지 |
 
 **저장 UX**
 
@@ -115,6 +115,10 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 5. 닫기: ✕ 버튼 · 배경 클릭 · ESC 모두 동작하고, 닫으면 배경 스크롤 복원.
 
 6문항 직접 진단 성적표에서도 같은 버튼이 나오며, 이때는 권역 배지 대신 `직접 진단`, 랭킹 대신 `입력한 6개 항목 점수 기준`으로 그립니다.
+
+**주소·배포(v3.5)** — 카드 워터마크, 페이지 푸터, `og:url`, `canonical`, 요약복사 문구를 `zipscore.github.io`로 통일했습니다(옛 `inje8451.github.io/Zipscore` 표기 0개).
+- 개인 저장소 `inje8451/Zipscore`(main): 반영 완료 → https://inje8451.github.io/Zipscore/
+- 조직 저장소 `Zipscore/zipscore.github.io`(main): **Pickle GitHub 앱 설치가 개인 계정 전체(`repository_selection=all`, 저장소 목록 `inje8451/Zipscore`)에만 걸려 있어 조직 저장소 쓰기가 403**(`Permission to Zipscore/zipscore.github.io.git denied`, Contents API `403 Resource not accessible by integration`, Pages API 404/403)으로 막힘. 조직에 앱을 설치하면 `bash work/zipscore-pages/deploy.sh`가 재푸시→Pages 활성화(`main` `/`)→`https://zipscore.github.io` 라이브 md5 대조까지 자동으로 수행한다.
 
 ## 4. v3.1 채점·시세 규칙
 
@@ -179,7 +183,8 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 - 배틀: 기본 A/B·79 vs 92·듀얼 레이더·갈아타기 자금·셀렉트 518옵션
 - 지도: Leaflet·markercluster 로드, OSM Korea 타일 렌더(고줌 회색 없음), 클러스터 버블, 송도 flyTo(zoom 13.4), 확대 시 점수 핀, 팝업 카드 → 성적표 이동, **markercluster CDN만 차단 시 개별 마커 518**, 전체 CDN 차단 시 폴백
 - **6공구(v3.4)**: 크리스탈 80 A(송도 6공구 태그·송빛초 242m·84㎡ 10.8억) · 자이더스타 80 A · 레이크4차 78 B+ · 럭스오션 77 B+ · 레이크1차 78 B+ · 검색 별칭(힐레이크1~4차·럭스오션·크리스탈)
-- **성적표 카드(v3.5, 54개 체크)**: 버튼 노출·문구(성적표 카드 저장/카톡·블로그)·복사 버튼 위 배치 → 모달 열림(`role=dialog`, aria-hidden 토글, 배경 스크롤 잠금) → `data:image/png` dataURL · `naturalWidth/Height 1080×1350` · 파일명 `zipscore_송도자이크리스탈오션.png` · 아이폰 길게 눌러 사진 저장 안내 · 캔버스 1080×1350 · 비백색 픽셀 41.8% · 헤더 딥네이비/그린 면적 · 단지명·총점·항목 바·코멘트·워터마크 영역 잉크 · **한글 글리프 렌더(같은 4자리 문자열 두 개의 잉크 해시가 달라 토푸 아님을 확인)** · 카드 정보(단지명·80 A·`송도 6공구` 배지·6항목 점수·인천 51위/송도 23위·코멘트·준공·세대·시세·기준일) · PNG 시그니처/샘플 저장 · **다운로드 이벤트 파일명·크기·토스트** · Web Share 미지원 시 안내 토스트 · ESC·배경 클릭·✕ 닫기와 스크롤 복원 · 다른 단지(퍼스트파크 92 S) 재사용·파일명 교체 · 6문항 직접 진단 카드(`직접 진단` 배지)
+- **성적표 카드(v3.5, 58개 체크)**: 버튼 노출·문구(성적표 카드 저장/카톡·블로그)·복사 버튼 위 배치 → 모달 열림(`role=dialog`, aria-hidden 토글, 배경 스크롤 잠금) → `data:image/png` dataURL · `naturalWidth/Height 1080×1350` · 파일명 `zipscore_송도자이크리스탈오션.png` · 아이폰 길게 눌러 사진 저장 안내 · 캔버스 1080×1350 · 비백색 픽셀 41.8% · 헤더 딥네이비/그린 면적 · 단지명·총점·항목 바·코멘트·워터마크 영역 잉크 · **한글 글리프 렌더(같은 4자리 문자열 두 개의 잉크 해시가 달라 토푸 아님을 확인)** · 카드 정보(단지명·80 A·`송도 6공구` 배지·6항목 점수·인천 51위/송도 23위·코멘트·준공·세대·시세·기준일·워터마크 `zipscore.github.io`) · PNG 시그니처/샘플 저장 · **다운로드 이벤트 파일명·크기·토스트** · Web Share 미지원 시 안내 토스트 · ESC·배경 클릭·✕ 닫기와 스크롤 복원 · 다른 단지(퍼스트파크 92 S) 재사용·파일명 교체 · 6문항 직접 진단 카드(`직접 진단` 배지)
+- **주소 표기(v3.5)**: 페이지 푸터·카드 워터마크·og:url·canonical·요약복사 문구가 모두 `zipscore.github.io`이고, HTML 안에 옛 주소 `inje8451.github.io` 문자열이 0개
 - 375/390/430px 가로 오버플로 0
 
 ## 9. 손보는 위치
@@ -195,7 +200,7 @@ v2(32단지·3탭) → v2.1(단지 팩트 보정·무료 지도·DSR/LTV 예산�
 | 화면·CSS·문구·지도 타일·클러스터 옵션 | `template3.html` (원본은 `data/make_template3.py`가 `template.html`에서 생성) → `data/make_html3.py` |
 | 성적표 카드(이미지) 디자인·모달·저장 로직 | `template3.html`의 `buildCardCanvas()`(1080×1350 좌표), `drawCardRadar()`·`drawCardBars()`·`cardComment()`·`openShareCard()`·`downloadShareCard()`·`shareCardNative()` |
 | 검증 | `python3 test_e2e_v3.py` |
-| 배포 | `bash work/zipscore-pages/deploy.sh` |
+| 배포 | `bash work/zipscore-pages/deploy.sh` — `inje8451/Zipscore` + `Zipscore/zipscore.github.io` 순차 반영·Pages 상태 확인·라이브 md5 대조 |
 
 ## 10. 한계
 
