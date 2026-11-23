@@ -451,7 +451,7 @@ button{font-family:inherit}
         <span class="search-count" id="searchCount">518곳</span>
       </div>
       <div class="apt-grid" id="aptGrid"></div>
-      <p class="hint">목록은 권역별로 묶여 있고, 칸 안에서 스크롤됩니다. <b>더 보기</b>로 권역 전체를 펼칠 수 있습니다. 단지를 누르면 100점 성적표가 바로 나옵니다. 세대수·준공·거래건수는 국토부 공동주택 자료(2026.09), 역 도보시간은 실측 좌표 직선거리 환산 추정입니다.</p>
+      <p class="hint">목록은 권역별로 묶여 있고, 칸 안에서 스크롤됩니다. <b>더 보기</b>로 권역 전체를 펼칠 수 있습니다. 단지를 누르면 100점 성적표가 바로 나옵니다. 세대수·준공은 국토부 공동주택 기본정보(2026.09), 실거래는 국토부 실거래 최근 6개월 신고분, 역·학교 거리는 개통역·인천 초등학교 전수 좌표에서 잰 직선거리입니다.</p>
     </section>
 
     <div id="report" aria-live="polite"></div>
@@ -1718,8 +1718,8 @@ button{font-family:inherit}
           '<div class="mline"><span>취득세 (약 '+(taxRate*100).toFixed(1)+'%)</span><b>'+money(tax)+'</b></div>'+
           '<div class="mline"><span>중개보수 (약 '+(brokRate*100).toFixed(1)+'%)</span><b>'+money(broker)+'</b></div>'+
           '<div class="mline"><span>이사·부대비용</span><b>약 300만원</b></div>'+
-          '<div class="mline total"><span>'+(isSaving?'갈아타면 회수(추정)':'추가로 필요한 자금(추정)')+'</span><b>'+money(Math.abs(total))+'</b></div>'+
-          '<p class="mnote">※ 추정 참고값으로 계산했습니다. 대출·보유세·기존 주택 처분 시점에 따라 달라지고, B가 더 싼 경우 A 매도 대금에서 비용을 빼고 남는 금액을 회수하게 됩니다. 취득세는 1주택 취득 기준(6억 이하 1.1% · 6~9억 2.2% · 9억 초과 3.3%)입니다.</p>'+
+          '<div class="mline total"><span>'+(isSaving?'갈아타면 회수(계산)':'추가로 필요한 자금(계산)')+'</span><b>'+money(Math.abs(total))+'</b></div>'+
+          '<p class="mnote">※ 실거래 중위 시세로 계산한 참고 금액입니다. 대출·보유세·기존 주택 처분 시점에 따라 달라지고, B가 더 싼 경우 A 매도 대금에서 비용을 빼고 남는 금액을 회수하게 됩니다. 취득세는 1주택 취득 기준(6억 이하 1.1% · 6~9억 2.2% · 9억 초과 3.3%)입니다.</p>'+
         '</div></div>';
   }
 
